@@ -499,3 +499,127 @@ input[type="number"]:focus-visible {
 }
 
 [hidden] { display: none !important; }
+
+/* ---------- The life layer: blink, talk, wave, bloom, visitors ----------
+   Every animation is gentle, starts only after the learner acts or as
+   ambient garden motion, and switches off under reduced motion. */
+
+.m-eyes {
+  transform-box: fill-box;
+  transform-origin: 50% 55%;
+}
+
+.m-mouth-open { opacity: 0; }
+
+/* While speech plays, Meni talks (static open mouth if motion is reduced) */
+.talking .m-mouth-open { opacity: 1; }
+.talking .m-mouth-closed { opacity: 0; }
+
+.m-arm {
+  transform-box: fill-box;
+  transform-origin: 30% 88%;
+}
+
+.bloom-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 14px;
+}
+
+.bloom-row svg {
+  width: 74px;
+  height: auto;
+  flex: none;
+}
+
+.bloom-caption {
+  font-weight: 700;
+  color: var(--navy);
+}
+
+.bloom-stem,
+.bloom-head {
+  transform-box: fill-box;
+}
+
+.bloom-stem { transform-origin: 50% 100%; }
+.bloom-head { transform-origin: 50% 60%; }
+
+.sun-rays,
+.v-wing-l,
+.v-wing-r,
+.v-drift,
+.v-bob,
+.v-float {
+  transform-box: fill-box;
+}
+
+.sun-rays { transform-origin: 50% 50%; }
+.v-wing-l { transform-origin: 100% 50%; }
+.v-wing-r { transform-origin: 0% 50%; }
+
+@media (prefers-reduced-motion: no-preference) {
+  .m-eyes { animation: m-blink 5.4s infinite; }
+  .meni-says .m-eyes { animation-delay: 1.2s; }
+
+  .talking .m-mouth-open { animation: m-talk-open 0.55s infinite; }
+  .talking .m-mouth-closed { animation: m-talk-closed 0.55s infinite; }
+
+  .m-arm { animation: m-wave 1.9s ease-in-out infinite; }
+
+  .bloom-stem { animation: bloom-grow 0.9s ease-out both; }
+  .bloom-head { animation: bloom-pop 0.7s 0.75s cubic-bezier(0.34, 1.56, 0.64, 1) both; }
+
+  .sun-rays { animation: sun-turn 90s linear infinite; }
+  .v-wing-l { animation: flutter-l 0.5s ease-in-out infinite alternate; }
+  .v-wing-r { animation: flutter-r 0.5s ease-in-out infinite alternate; }
+  .v-drift { animation: v-drift 8s ease-in-out infinite alternate; }
+  .v-bob { animation: v-bob 3.2s ease-in-out infinite; }
+  .v-float { animation: v-bob 5s ease-in-out infinite; }
+}
+
+@keyframes m-blink {
+  0%, 94%, 100% { transform: scaleY(1); }
+  96.5% { transform: scaleY(0.1); }
+}
+
+@keyframes m-talk-open {
+  0%, 44% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+
+@keyframes m-talk-closed {
+  0%, 44% { opacity: 0; }
+  50%, 100% { opacity: 1; }
+}
+
+@keyframes m-wave {
+  0%, 100% { transform: rotate(0deg); }
+  50% { transform: rotate(-13deg); }
+}
+
+@keyframes bloom-grow {
+  from { transform: scaleY(0); }
+}
+
+@keyframes bloom-pop {
+  from { transform: scale(0); }
+}
+
+@keyframes sun-turn {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes flutter-l { to { transform: scaleX(0.5); } }
+@keyframes flutter-r { to { transform: scaleX(0.5); } }
+
+@keyframes v-drift {
+  0% { transform: translate(0, 0); }
+  100% { transform: translate(10px, -6px); }
+}
+
+@keyframes v-bob {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+}

@@ -31,6 +31,7 @@ const STRINGS = {
   officeHours: (date) => `Bring a question to Meni's office hours, ${date}.`,
   savedQuestionsTitle: "Your questions for office hours",
   scamAlert: "Take care: this lesson is about scams",
+  newFlower: "A new flower for your garden!",
   trustLine: "Meni is a free learning companion from Austin AI Hub. Everything stays on this phone.",
   setupLink: "Facilitator setup",
 };
@@ -59,6 +60,7 @@ function defaultState() {
     completed: [], // [{ id, date }]
     lastVisit: null, // 'YYYY-MM-DD'
     saved: [], // [{ title, question }]
+    chime: true, // soft chime when a flower grows
   };
 }
 
@@ -93,6 +95,13 @@ function friendlyDate(iso) {
     month: "long",
     day: "numeric",
   });
+}
+
+function greeting() {
+  const h = new Date().getHours();
+  if (h < 12) return "Good morning!";
+  if (h < 17) return "Good afternoon!";
+  return "Good evening!";
 }
 
 /* ---------------- Lesson progress ---------------- */
@@ -131,9 +140,14 @@ function applyScale(name) {
 
 let speaking = false;
 
+function setTalking(on) {
+  document.querySelectorAll(".meni-holder").forEach((el) => el.classList.toggle("talking", on));
+}
+
 function stopSpeaking() {
   if ("speechSynthesis" in window) window.speechSynthesis.cancel();
   speaking = false;
+  setTalking(false);
   const btn = document.getElementById("read-btn");
   if (btn) btn.querySelector(".read-label").textContent = STRINGS.readToMe;
 }
@@ -150,9 +164,37 @@ function toggleSpeak(text) {
   u.onend = () => stopSpeaking();
   u.onerror = () => stopSpeaking();
   speaking = true;
+  setTalking(true);
   const btn = document.getElementById("read-btn");
   if (btn) btn.querySelector(".read-label").textContent = STRINGS.stopReading;
   window.speechSynthesis.speak(u);
+}
+
+/* ---------------- Soft chime: two gentle notes when a flower grows ---------------- */
+
+let audioCtx = null;
+
+function playChime() {
+  if (!state.chime) return;
+  try {
+    audioCtx = audioCtx || new (window.AudioContext || window.webkitAudioContext)();
+    const t = audioCtx.currentTime;
+    [[659.25, 0], [783.99, 0.13]].forEach(([freq, dt]) => {
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      osc.type = "sine";
+      osc.frequency.value = freq;
+      gain.gain.setValueAtTime(0.0001, t + dt);
+      gain.gain.exponentialRampToValueAtTime(0.1, t + dt + 0.02);
+      gain.gain.exponentialRampToValueAtTime(0.0001, t + dt + 0.6);
+      osc.connect(gain);
+      gain.connect(audioCtx.destination);
+      osc.start(t + dt);
+      osc.stop(t + dt + 0.65);
+    });
+  } catch (e) {
+    /* No sound is never an error. */
+  }
 }
 
 /* ---------------- Small inline icons (always paired with text labels) ---------------- */
@@ -190,7 +232,7 @@ function esc(s) {
 function header() {
   return `
     <header class="app-header">
-      <div class="brand">${MENI.mark}<span>${STRINGS.appName}</span></div>
+      <div class="brand"><span class="meni-holder">${MENI.mark()}</span><span>${STRINGS.appName}</span></div>
       <button class="btn-secondary btn-small" id="text-size-btn" type="button">
         <span aria-hidden="true" style="font-weight:800">Aa</span> ${STRINGS.sizeLabel}
       </button>
@@ -236,7 +278,7 @@ function renderSizeChooser(opts = {}) {
     ${firstRun ? "" : header()}
     <main>
       ${firstRun ? `
-        <div class="hello-stage"><div class="disc">${MENI.classic}</div></div>
+        <div class="hello-stage"><div class="disc">${MENI.waving("delighted")}</div></div>
         <h1 class="center">${STRINGS.hello}</h1>` : ""}
       <div class="card teach-text center" id="size-sample">${STRINGS.sizeSample}</div>
       <div class="size-row" role="group" aria-label="${STRINGS.sizeLabel}">
@@ -345,24 +387,30 @@ function renderLessonAsk(lesson) {
   app().querySelectorAll("#answers button").forEach((btn) =>
     btn.addEventListener("click", () => {
       completeLesson(lesson.id);
+      playChime();
       renderLessonDone(lesson, Number(btn.dataset.answer));
     })
   );
 }
 
-/* Step 3 of 3: Meni answers, warmly. No scores, no X marks, ever. */
+/* Step 3 of 3: Meni answers, warmly. No scores, no X marks, ever.
+   The first answer is always the confident path (delighted Meni);
+   the second is the gentler path (curious Meni, head tilted, never
+   cross). Both get equally warm words. */
 function renderLessonDone(lesson, answerIdx) {
   stopSpeaking();
   const response = lesson.answers[answerIdx].response;
+  const avatar = answerIdx === 0 ? MENI.waving("delighted") : MENI.classic("curious");
 
   app().innerHTML = `
     ${header()}
     <main>
       ${stepDots(3)}
       <div class="meni-says">
-        <div class="meni-avatar">${MENI.waving}</div>
+        <div class="meni-avatar meni-holder">${avatar}</div>
         <div class="bubble teach-text" role="status">${esc(response)}</div>
       </div>
+      ${bloomFigure()}
       ${readButton()}
       <div class="btn-stack">
         <button type="button" class="btn-secondary" id="save-question">${STRINGS.saveForMia}</button>
@@ -383,6 +431,27 @@ function renderLessonDone(lesson, answerIdx) {
   });
 
   document.getElementById("see-garden").addEventListener("click", renderGarden);
+}
+
+/* The just-earned flower sprouts and opens on the response screen,
+   then appears planted in the garden. */
+function bloomFigure() {
+  const count = state.completed.length;
+  if (!count) return "";
+  const f = GARDEN.flowers[(count - 1) % GARDEN.flowers.length];
+  return `
+    <div class="bloom-row">
+      <svg viewBox="0 0 90 112" aria-hidden="true" focusable="false">
+        <g transform="translate(45 0)">
+          <g class="bloom-stem">
+            <path d="M0 106 Q3 76 0 48" fill="none" stroke="${GARDEN.stem}" stroke-width="5" stroke-linecap="round"/>
+            <ellipse cx="-9" cy="80" rx="9" ry="4.5" fill="${GARDEN.stem}" transform="rotate(-32 -9 80)"/>
+          </g>
+          <g class="bloom-head">${flowerHead(f, 44)}</g>
+        </g>
+      </svg>
+      <span class="bloom-caption">${STRINGS.newFlower}</span>
+    </div>`;
 }
 
 /* ---------------- Screen 3: the garden ---------------- */
@@ -435,9 +504,12 @@ function gardenSVG(count) {
      garden grows, and neighbors never crowd each other. */
   const slots = [0, 4, 8, 2, 6, 1, 5, 3, 7];
 
+  /* Completed lessons bloom; the next lesson is already sprouting. */
+  const showSprout = Boolean(nextLesson());
+  const total = count + (showSprout ? 1 : 0);
   let flowers = "";
-  for (let i = 0; i < count; i++) {
-    const isSprout = i === count - 1;
+  for (let i = 0; i < total; i++) {
+    const isSprout = showSprout && i === total - 1;
     const x = 34 + slots[i % slots.length] * 36.5 + Math.floor(i / slots.length) * 18;
     const baseY = groundY + ((i * 7) % 10);
     const h = isSprout ? 22 : 42 + ((i * 19) % 26);
@@ -464,7 +536,7 @@ function gardenSVG(count) {
     rays += `<line x1="${(300 + 30 * Math.cos(ang)).toFixed(1)}" y1="${(52 + 30 * Math.sin(ang)).toFixed(1)}" x2="${(300 + 40 * Math.cos(ang)).toFixed(1)}" y2="${(52 + 40 * Math.sin(ang)).toFixed(1)}" stroke="${GARDEN.sun}" stroke-width="4.5" stroke-linecap="round"/>`;
   }
 
-  return `<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A garden with ${count} flowers, one for each lesson learned">
+  return `<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A garden with ${count} flowers, one for each lesson learned${showSprout ? ", and a new sprout for tomorrow" : ""}">
     <defs>
       <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
         <stop offset="0" stop-color="${GARDEN.sky[0]}"/>
@@ -477,11 +549,54 @@ function gardenSVG(count) {
     </defs>
     <rect width="360" height="240" fill="url(#sky)"/>
     <circle cx="300" cy="52" r="46" fill="url(#glow)"/>
-    <circle cx="300" cy="52" r="21" fill="${GARDEN.sun}"/>${rays}
+    <circle cx="300" cy="52" r="21" fill="${GARDEN.sun}"/>
+    <g class="sun-rays">${rays}</g>
     <path d="M0 196 Q90 178 180 190 Q270 200 360 186 L360 240 L0 240 Z" fill="${GARDEN.hillA}"/>
     <path d="M0 214 Q120 202 220 212 Q300 219 360 210 L360 240 L0 240 Z" fill="${GARDEN.hillB}"/>
     ${flowers}
+    ${visitorsSVG(count)}
   </svg>`;
+}
+
+/* Milestone visitors: every 5th lesson, the garden gains a resident.
+   Decorative only — no streaks, no pressure, nothing is ever lost. */
+function visitorsSVG(count) {
+  let out = "";
+  if (count >= 5) {
+    out += `<g class="v-drift"><g transform="translate(84 66)">
+      <g class="v-wing-l"><ellipse cx="-6.5" cy="-3" rx="6.5" ry="5" fill="#F2A6B8"/><ellipse cx="-5.5" cy="4" rx="5" ry="3.8" fill="#C9ABE3"/></g>
+      <g class="v-wing-r"><ellipse cx="6.5" cy="-3" rx="6.5" ry="5" fill="#F2A6B8"/><ellipse cx="5.5" cy="4" rx="5" ry="3.8" fill="#C9ABE3"/></g>
+      <ellipse rx="2.2" ry="7" fill="#6B3E14"/>
+      <path d="M-1.5 -6 Q-4 -11 -6 -11 M1.5 -6 Q4 -11 6 -11" fill="none" stroke="#6B3E14" stroke-width="1.4" stroke-linecap="round"/>
+    </g></g>`;
+  }
+  if (count >= 10) {
+    out += `<g class="v-float"><path d="M148 52 Q155 44 162 52 M162 52 Q169 44 176 52" fill="none" stroke="#7A93A8" stroke-width="2.6" stroke-linecap="round"/>
+      <path d="M104 66 Q109 60 114 66 M114 66 Q119 60 124 66" fill="none" stroke="#7A93A8" stroke-width="2" stroke-linecap="round"/></g>`;
+  }
+  if (count >= 15) {
+    out += `<g class="v-bob"><g transform="translate(224 104)">
+      <ellipse cx="-1" cy="-5" rx="4" ry="2.6" fill="#FFFFFF" opacity="0.85"/>
+      <ellipse rx="6" ry="4.2" fill="#F5C462"/>
+      <path d="M-2 -4 V4 M2 -4 V4" stroke="#6B3E14" stroke-width="1.6"/>
+      <circle cx="5" cy="-1" r="1" fill="#1B2036"/>
+    </g></g>`;
+  }
+  if (count >= 20) {
+    out += `<g transform="translate(310 0)">
+      <ellipse cx="0" cy="224" rx="14" ry="4" fill="#8FA6B8"/>
+      <path d="M-4 224 h8 v-16 h-8 z" fill="#9FB4C4"/>
+      <ellipse cx="0" cy="206" rx="17" ry="6" fill="#9FB4C4"/>
+      <ellipse cx="0" cy="204.5" rx="12" ry="4" fill="#A9CDE3"/>
+      <g transform="translate(11 197)">
+        <circle r="5" fill="#E8872B"/>
+        <circle cx="3" cy="-1.5" r="0.9" fill="#1B2036"/>
+        <path d="M5 0 l4 1.5 -4 1.5 z" fill="#F5C462"/>
+        <path d="M-4.5 1 q-3 2 -1 4" fill="none" stroke="#6B3E14" stroke-width="1.3" stroke-linecap="round"/>
+      </g>
+    </g>`;
+  }
+  return out;
 }
 
 function renderGarden() {
@@ -520,8 +635,8 @@ function renderGarden() {
       </div>
       <div class="garden-hero">${gardenSVG(count)}</div>
       <div class="meni-says">
-        <div class="meni-avatar">${MENI.classic}</div>
-        <div class="bubble" role="status">${message}</div>
+        <div class="meni-avatar">${MENI.classic("smile")}</div>
+        <div class="bubble" role="status">${greeting()} ${message}</div>
       </div>
       ${officeCard}
       ${savedList}
@@ -570,6 +685,13 @@ function renderSetup() {
         <input type="number" id="replant" inputmode="numeric" min="0" max="${sequence().length}" value="${state.completed.length}">
         <p class="footnote" style="margin-top:8px">For a new or replaced phone: enter how many lessons the learner had finished. The garden regrows instantly, and today's lesson stays available.</p>
       </div>
+      <div class="setup-field">
+        <label id="chime-label">Soft chime when a flower grows</label>
+        <div class="btn-stack" role="group" aria-labelledby="chime-label" style="margin-top:0">
+          <button type="button" class="btn-secondary" data-chime="on">Chime on</button>
+          <button type="button" class="btn-secondary" data-chime="off">Chime off</button>
+        </div>
+      </div>
       <div class="btn-stack">
         <button type="button" class="btn-primary" id="setup-done">Done — back to Meni</button>
       </div>
@@ -598,6 +720,22 @@ function renderSetup() {
     state.officeHoursDate = e.target.value || null;
     saveState();
   });
+
+  const chimeButtons = app().querySelectorAll("[data-chime]");
+  function markChime() {
+    chimeButtons.forEach((b) =>
+      b.classList.toggle("selected", (b.dataset.chime === "on") === state.chime)
+    );
+  }
+  markChime();
+  chimeButtons.forEach((b) =>
+    b.addEventListener("click", () => {
+      state.chime = b.dataset.chime === "on";
+      saveState();
+      markChime();
+      if (state.chime) playChime();
+    })
+  );
 
   /* Replant: rebuild progress as the first N lessons, dated long ago so
      today's lesson is still available. The garden never shrinks by
