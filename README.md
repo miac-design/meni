@@ -38,7 +38,7 @@ the very first screen. There you can:
 
 ```
 index.html            app shell (three screens rendered by js/app.js)
-css/styles.css        design tokens: cream #FFF9F2, navy #1B2036, orange #E8872B
+css/styles.css        design tokens: mint #F3F8EE, sage #E4F0DB, navy #1B2036, orange #E8872B
 js/meni.js            Meni the bear — three inline SVG poses
 js/lessons.js         lesson content as plain data (core course + packs)
 js/app.js             screens, one-lesson-per-day gating, garden, audio, storage

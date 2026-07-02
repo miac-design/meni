@@ -12,7 +12,8 @@ const OUT = join(dirname(fileURLToPath(import.meta.url)), "..", "icons");
 
 /* ---------- Palette ---------- */
 const hex = (s) => [1, 3, 5].map((i) => parseInt(s.slice(i, i + 2), 16));
-const CREAM = hex("#FFF9F2");
+const CREAM = hex("#FFF9F2"); // eye glints stay warm white
+const MINT = hex("#F3F8EE"); // icon background matches the app
 const ORANGE = hex("#E8872B");
 const PALE = hex("#F6C08A");
 const BROWN = hex("#6B3E14");
@@ -47,9 +48,9 @@ function markShapes() {
 function render(size, scale, offX, offY) {
   const img = new Uint8Array(size * size * 3);
   for (let i = 0; i < img.length; i += 3) {
-    img[i] = CREAM[0];
-    img[i + 1] = CREAM[1];
-    img[i + 2] = CREAM[2];
+    img[i] = MINT[0];
+    img[i + 1] = MINT[1];
+    img[i + 2] = MINT[2];
   }
   for (const [cx, cy, rx, ry, color] of markShapes()) {
     const pcx = offX + cx * scale;

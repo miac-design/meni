@@ -16,21 +16,21 @@
 }
 
 :root {
-  --cream: #FFF9F2;
-  --peach: #FFEFDC;
+  --cream: #F3F8EE;
+  --peach: #E9F4E0;
   --white: #FFFFFF;
   --navy: #1B2036;
   --navy-soft: #3A405C;
   --orange: #E8872B;
-  --orange-soft: #FDEBD7;
+  --orange-soft: #E4F0DB; /* soft sage fill (bubbles, selected states) */
   --orange-pale: #F6C08A;
   --brown: #6B3E14;
   --toy-red: #D6452B;
   --gold: #F2B33D;
   --gold-deep: #C9A227;
 
-  --shadow: 0 4px 16px rgba(107, 62, 20, 0.12), 0 1px 3px rgba(107, 62, 20, 0.08);
-  --shadow-lift: 0 8px 24px rgba(107, 62, 20, 0.16);
+  --shadow: 0 4px 16px rgba(74, 94, 60, 0.12), 0 1px 3px rgba(74, 94, 60, 0.08);
+  --shadow-lift: 0 8px 24px rgba(74, 94, 60, 0.16);
 
   /* A = 1, AA = 1.2, AAA = 1.45 — set on <html> by the size chooser */
   --scale: 1;
@@ -106,7 +106,7 @@ header.app-header {
   width: 42px;
   height: 42px;
   flex: none;
-  filter: drop-shadow(0 2px 3px rgba(107, 62, 20, 0.18));
+  filter: drop-shadow(0 2px 3px rgba(74, 94, 60, 0.18));
 }
 
 /* ---------- Buttons: soft pills that clearly look pressable ---------- */
@@ -305,7 +305,7 @@ p {
   width: 12px;
   height: 12px;
   border-radius: 50%;
-  background: var(--orange-pale);
+  background: #A5C892;
   opacity: 0.5;
 }
 

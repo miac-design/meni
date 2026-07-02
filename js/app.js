@@ -17,8 +17,8 @@ const STRINGS = {
   next: "Next",
   readToMe: "Read it to me",
   stopReading: "Stop reading",
-  saveForMia: "Save this question for Mia",
-  savedForMia: "Saved! Bring it to office hours.",
+  saveForMia: "Save this question for Meni",
+  savedForMia: "Saved! Bring it to Meni's office hours.",
   seeGarden: "See my garden",
   skipAhead: "I already know this",
   yourGarden: "Your garden",
@@ -28,7 +28,7 @@ const STRINGS = {
   gardenGrowing: "Your garden is growing, one lesson at a time.",
   allDone: "You've finished every lesson for now. See you at office hours!",
   startLesson: "Start today's lesson",
-  officeHours: (date) => `Bring a question to office hours, ${date}.`,
+  officeHours: (date) => `Bring a question to Meni's office hours, ${date}.`,
   savedQuestionsTitle: "Your questions for office hours",
   scamAlert: "Take care: this lesson is about scams",
   trustLine: "Meni is a free learning companion from Austin AI Hub. Everything stays on this phone.",
@@ -373,8 +373,48 @@ function renderLessonDone(lesson, answerIdx) {
 
 /* ---------------- Screen 3: the garden ---------------- */
 
+/* Spring pastel garden (the palette Mia picked, July 2026).
+   Every flower differs in color AND shape so the garden reads as a real
+   mixed bed, and each keeps its spot forever as the garden grows. */
+const GARDEN = {
+  sky: ["#E7F4E1", "#F8FBF3"],
+  sun: "#F5C462",
+  hillA: "#A5C892",
+  hillB: "#7CA36C",
+  stem: "#6C945C",
+  flowers: [
+    { c: "#F2A6B8", shape: "daisy", center: "#FFFFFF" }, // blush
+    { c: "#C9ABE3", shape: "five", center: "#FFFFFF" },  // lilac
+    { c: "#F7D486", shape: "daisy", center: "#FFFFFF" }, // butter
+    { c: "#F49B6A", shape: "tulip" },                     // soft coral
+    { c: "#A9CDE3", shape: "five", center: "#FFFFFF" },  // powder blue
+    { c: "#FFFFFF", shape: "daisy", center: "#F5C462" }, // white daisy
+  ],
+};
+
+function flowerHead(f, topY) {
+  if (f.shape === "tulip") {
+    return `<g transform="translate(0 ${topY})"><path d="M-8 2 C-9 -11 -4 -15 0 -7 C4 -15 9 -11 8 2 C5 7 -5 7 -8 2 Z" fill="${f.c}" stroke="rgba(0,0,0,0.10)" stroke-width="1"/></g>`;
+  }
+  if (f.shape === "five") {
+    let petals = "";
+    for (let p = 0; p < 5; p++) {
+      const a = (Math.PI * 2 * p) / 5 - Math.PI / 2;
+      petals += `<circle cx="${(9.5 * Math.cos(a)).toFixed(1)}" cy="${(9.5 * Math.sin(a)).toFixed(1)}" r="6.5" fill="${f.c}"/>`;
+    }
+    return `<g transform="translate(0 ${topY})">${petals}<circle r="5.5" fill="${f.center}"/></g>`;
+  }
+  let petals = "";
+  for (let p = 0; p < 8; p++) {
+    const a = (Math.PI * 2 * p) / 8;
+    const px = (9 * Math.cos(a)).toFixed(1);
+    const py = (9 * Math.sin(a)).toFixed(1);
+    petals += `<ellipse cx="${px}" cy="${py}" rx="6" ry="4.5" transform="rotate(${((a * 180) / Math.PI).toFixed(0)} ${px} ${py})" fill="${f.c}" stroke="${f.c === "#FFFFFF" ? "rgba(0,0,0,0.10)" : "none"}" stroke-width="0.8"/>`;
+  }
+  return `<g transform="translate(0 ${topY})">${petals}<circle r="5" fill="${f.center}"/></g>`;
+}
+
 function gardenSVG(count) {
-  const petalColors = ["#E8872B", "#D6452B", "#F2B33D"];
   const groundY = 186;
 
   /* Fixed planting slots: each flower keeps its spot forever as the
@@ -388,50 +428,44 @@ function gardenSVG(count) {
     const baseY = groundY + ((i * 7) % 10);
     const h = isSprout ? 22 : 42 + ((i * 19) % 26);
     const topY = baseY - h;
-    const stem = `<path d="M${x} ${baseY} Q${x + 3} ${baseY - h / 2} ${x} ${topY}" fill="none" stroke="#C9A227" stroke-width="4.5" stroke-linecap="round"/>`;
-    const leaf = `<ellipse cx="${x - 8}" cy="${baseY - h / 2.4}" rx="8" ry="4" fill="#C9A227" transform="rotate(-32 ${x - 8} ${baseY - h / 2.4})"/>`;
+    const stem = `<path d="M0 ${baseY} Q3 ${baseY - h / 2} 0 ${topY + 5}" fill="none" stroke="${GARDEN.stem}" stroke-width="4.5" stroke-linecap="round"/>`;
+    const leaf = `<ellipse cx="-8" cy="${baseY - h / 2.4}" rx="8" ry="4" fill="${GARDEN.stem}" transform="rotate(-32 -8 ${baseY - h / 2.4})"/>`;
 
+    /* The position lives on an inner group: the CSS sway animation
+       replaces the outer group's transform, so it must carry none. */
     if (isSprout) {
-      flowers += `<g class="sway">${stem}
-        <ellipse cx="${x - 7}" cy="${topY + 3}" rx="8" ry="4.5" fill="#C9A227" transform="rotate(-35 ${x - 7} ${topY + 3})"/>
-        <ellipse cx="${x + 7}" cy="${topY + 3}" rx="8" ry="4.5" fill="#C9A227" transform="rotate(35 ${x + 7} ${topY + 3})"/>
-      </g>`;
+      flowers += `<g class="sway"><g transform="translate(${x} 0)">${stem}
+        <ellipse cx="-7" cy="${topY + 3}" rx="8" ry="4.5" fill="${GARDEN.stem}" transform="rotate(-35 -7 ${topY + 3})"/>
+        <ellipse cx="7" cy="${topY + 3}" rx="8" ry="4.5" fill="${GARDEN.stem}" transform="rotate(35 7 ${topY + 3})"/>
+      </g></g>`;
     } else {
-      const color = petalColors[i % petalColors.length];
-      let petals = "";
-      for (let p = 0; p < 6; p++) {
-        const ang = (Math.PI * 2 * p) / 6 + (i % 2) * 0.5;
-        petals += `<circle cx="${(x + 10 * Math.cos(ang)).toFixed(1)}" cy="${(topY + 10 * Math.sin(ang)).toFixed(1)}" r="7" fill="${color}"/>`;
-      }
-      flowers += `<g class="sway">${stem}${leaf}${petals}
-        <circle cx="${x}" cy="${topY}" r="6.5" fill="#F2B33D"/>
-        <circle cx="${x}" cy="${topY}" r="3" fill="#FFF9F2"/>
-      </g>`;
+      const f = GARDEN.flowers[i % GARDEN.flowers.length];
+      flowers += `<g class="sway"><g transform="translate(${x} 0)">${stem}${leaf}${flowerHead(f, topY)}</g></g>`;
     }
   }
 
   let rays = "";
   for (let r = 0; r < 8; r++) {
     const ang = (Math.PI * 2 * r) / 8 + 0.39;
-    rays += `<line x1="${(300 + 30 * Math.cos(ang)).toFixed(1)}" y1="${(52 + 30 * Math.sin(ang)).toFixed(1)}" x2="${(300 + 40 * Math.cos(ang)).toFixed(1)}" y2="${(52 + 40 * Math.sin(ang)).toFixed(1)}" stroke="#F2B33D" stroke-width="4.5" stroke-linecap="round"/>`;
+    rays += `<line x1="${(300 + 30 * Math.cos(ang)).toFixed(1)}" y1="${(52 + 30 * Math.sin(ang)).toFixed(1)}" x2="${(300 + 40 * Math.cos(ang)).toFixed(1)}" y2="${(52 + 40 * Math.sin(ang)).toFixed(1)}" stroke="${GARDEN.sun}" stroke-width="4.5" stroke-linecap="round"/>`;
   }
 
   return `<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A garden with ${count} flowers, one for each lesson learned">
     <defs>
       <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0" stop-color="#FFE7C4"/>
-        <stop offset="1" stop-color="#FFF7EC"/>
+        <stop offset="0" stop-color="${GARDEN.sky[0]}"/>
+        <stop offset="1" stop-color="${GARDEN.sky[1]}"/>
       </linearGradient>
       <radialGradient id="glow" cx="0.5" cy="0.5" r="0.5">
-        <stop offset="0" stop-color="#F2B33D" stop-opacity="0.55"/>
-        <stop offset="1" stop-color="#F2B33D" stop-opacity="0"/>
+        <stop offset="0" stop-color="${GARDEN.sun}" stop-opacity="0.55"/>
+        <stop offset="1" stop-color="${GARDEN.sun}" stop-opacity="0"/>
       </radialGradient>
     </defs>
     <rect width="360" height="240" fill="url(#sky)"/>
     <circle cx="300" cy="52" r="46" fill="url(#glow)"/>
-    <circle cx="300" cy="52" r="21" fill="#F2B33D"/>${rays}
-    <path d="M0 196 Q90 178 180 190 Q270 200 360 186 L360 240 L0 240 Z" fill="#8B5A2B"/>
-    <path d="M0 214 Q120 202 220 212 Q300 219 360 210 L360 240 L0 240 Z" fill="#6B3E14"/>
+    <circle cx="300" cy="52" r="21" fill="${GARDEN.sun}"/>${rays}
+    <path d="M0 196 Q90 178 180 190 Q270 200 360 186 L360 240 L0 240 Z" fill="${GARDEN.hillA}"/>
+    <path d="M0 214 Q120 202 220 212 Q300 219 360 210 L360 240 L0 240 Z" fill="${GARDEN.hillB}"/>
     ${flowers}
   </svg>`;
 }
