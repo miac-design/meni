@@ -12,36 +12,37 @@ const OUT = join(dirname(fileURLToPath(import.meta.url)), "..", "icons");
 
 /* ---------- Palette ---------- */
 const hex = (s) => [1, 3, 5].map((i) => parseInt(s.slice(i, i + 2), 16));
-const CREAM = hex("#FFF9F2"); // eye glints stay warm white
+const WHITE = hex("#FFFFFF");
 const MINT = hex("#F3F8EE"); // icon background matches the app
 const ORANGE = hex("#E8872B");
+const DEEP = hex("#DC7717");
 const PALE = hex("#F6C08A");
-const BROWN = hex("#6B3E14");
+const BLUSH = hex("#F49B6A");
 const NAVY = hex("#1B2036");
 const RED = hex("#D6452B");
 
 /* ---------- Meni mark as filled ellipses in a 120x120 space ----------
-   Outlines are drawn as a larger shape underneath its fill
-   (outer radius = r + strokeWidth/2, inner = r - strokeWidth/2). */
+   Soft flat style, matching js/meni.js. Shape: [cx, cy, rx, ry, color,
+   alpha?] — alpha defaults to 1. */
 function markShapes() {
-  const s = [];
-  const outlined = (cx, cy, rx, ry, sw, fill) => {
-    s.push([cx, cy, rx + sw / 2, ry + sw / 2, BROWN]);
-    s.push([cx, cy, rx - sw / 2, ry - sw / 2, fill]);
-  };
-  outlined(29, 30, 15, 15, 3, ORANGE); // left ear
-  outlined(91, 30, 15, 15, 3, ORANGE); // right ear
-  s.push([29, 30, 7, 7, PALE]); // inner ears
-  s.push([91, 30, 7, 7, PALE]);
-  outlined(60, 19, 5.5, 9, 2.5, RED); // red tuft
-  outlined(60, 64, 42, 42, 3, ORANGE); // head
-  outlined(60, 79, 19, 14, 2.5, PALE); // muzzle
-  s.push([42, 57, 8, 8, NAVY]); // eyes: wide-set, oversized, navy
-  s.push([78, 57, 8, 8, NAVY]);
-  s.push([44.5, 54.5, 2.4, 2.4, CREAM]); // eye glints
-  s.push([80.5, 54.5, 2.4, 2.4, CREAM]);
-  s.push([60, 74, 6, 4.5, RED]); // nose
-  return s;
+  return [
+    [27, 28, 13.5, 13.5, DEEP], // ears
+    [93, 28, 13.5, 13.5, DEEP],
+    [27, 28, 6.5, 6.5, PALE],
+    [93, 28, 6.5, 6.5, PALE],
+    [61, 22, 4.2, 6.5, RED], // tuft
+    [60, 64, 44, 40, ORANGE], // head
+    [60, 78, 17, 13, PALE], // muzzle
+    [31, 74, 6, 6, BLUSH, 0.55], // blush cheeks
+    [89, 74, 6, 6, BLUSH, 0.55],
+    [44, 59, 7, 8, NAVY], // eyes: oversized, navy
+    [76, 59, 7, 8, NAVY],
+    [46.5, 56, 2.6, 2.6, WHITE], // big glints
+    [78.5, 56, 2.6, 2.6, WHITE],
+    [41.5, 61.5, 1.2, 1.2, WHITE], // small glints
+    [73.5, 61.5, 1.2, 1.2, WHITE],
+    [60, 75.5, 5, 3.6, RED], // nose
+  ];
 }
 
 /* ---------- Rasterizer with 3x3 supersampled edge coverage ---------- */
@@ -52,7 +53,7 @@ function render(size, scale, offX, offY) {
     img[i + 1] = MINT[1];
     img[i + 2] = MINT[2];
   }
-  for (const [cx, cy, rx, ry, color] of markShapes()) {
+  for (const [cx, cy, rx, ry, color, alpha = 1] of markShapes()) {
     const pcx = offX + cx * scale;
     const pcy = offY + cy * scale;
     const prx = rx * scale;
@@ -72,7 +73,7 @@ function render(size, scale, offX, offY) {
           }
         }
         if (!inside) continue;
-        const a = inside / 9;
+        const a = (inside / 9) * alpha;
         const i = (y * size + x) * 3;
         img[i] = Math.round(color[0] * a + img[i] * (1 - a));
         img[i + 1] = Math.round(color[1] * a + img[i + 1] * (1 - a));

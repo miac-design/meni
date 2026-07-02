@@ -623,3 +623,29 @@ input[type="number"]:focus-visible {
   0%, 100% { transform: translateY(0); }
   50% { transform: translateY(-4px); }
 }
+
+/* ---------- Favorite flower chooser (first run, one tap) ---------- */
+
+.color-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--gap);
+  margin-top: 14px;
+}
+
+.color-grid .color-pick {
+  flex-direction: column;
+  gap: 6px;
+  min-height: 108px;
+  border-radius: var(--radius);
+  background: var(--white);
+  border: 2px solid var(--navy);
+  box-shadow: var(--shadow);
+  padding: 12px 8px;
+  font-weight: 700;
+}
+
+.color-grid .color-pick svg {
+  width: 40px;
+  height: 52px;
+}

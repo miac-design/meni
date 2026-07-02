@@ -32,6 +32,9 @@ const STRINGS = {
   savedQuestionsTitle: "Your questions for office hours",
   scamAlert: "Take care: this lesson is about scams",
   newFlower: "A new flower for your garden!",
+  favTitle: "Which flower do you like best?",
+  favHint: "Your garden will grow extra flowers of your favorite kind.",
+  favSkip: "Surprise me with all of them",
   trustLine: "Meni is a free learning companion from Austin AI Hub. Everything stays on this phone.",
   setupLink: "Facilitator setup",
 };
@@ -61,6 +64,8 @@ function defaultState() {
     lastVisit: null, // 'YYYY-MM-DD'
     saved: [], // [{ title, question }]
     chime: true, // soft chime when a flower grows
+    favAsked: false, // has the favorite-color question been offered?
+    favColor: null, // index into GARDEN.flowers, or null for the full mix
   };
 }
 
@@ -139,6 +144,7 @@ function applyScale(name) {
 /* ---------------- Audio: "Read it to me" (Web Speech API) ---------------- */
 
 let speaking = false;
+let audioEl = null;
 
 function setTalking(on) {
   document.querySelectorAll(".meni-holder").forEach((el) => el.classList.toggle("talking", on));
@@ -146,28 +152,57 @@ function setTalking(on) {
 
 function stopSpeaking() {
   if ("speechSynthesis" in window) window.speechSynthesis.cancel();
+  if (audioEl) {
+    audioEl.pause();
+    audioEl = null;
+  }
   speaking = false;
   setTalking(false);
   const btn = document.getElementById("read-btn");
   if (btn) btn.querySelector(".read-label").textContent = STRINGS.readToMe;
 }
 
-function toggleSpeak(text) {
+function startSpeakingUI() {
+  speaking = true;
+  setTalking(true);
+  const btn = document.getElementById("read-btn");
+  if (btn) btn.querySelector(".read-label").textContent = STRINGS.stopReading;
+}
+
+function speakSynth(text) {
   if (!("speechSynthesis" in window)) return;
-  if (speaking) {
-    stopSpeaking();
-    return;
-  }
   const u = new SpeechSynthesisUtterance(text);
   u.lang = "en-US";
   u.rate = 0.95;
   u.onend = () => stopSpeaking();
   u.onerror = () => stopSpeaking();
-  speaking = true;
-  setTalking(true);
-  const btn = document.getElementById("read-btn");
-  if (btn) btn.querySelector(".read-label").textContent = STRINGS.stopReading;
+  startSpeakingUI();
   window.speechSynthesis.speak(u);
+}
+
+/* Lessons may carry recorded human audio (lesson.audio = { teach, ask,
+   done } file paths — a v1 upgrade). When a recording exists we play it;
+   otherwise the built-in voice reads the text. */
+function toggleSpeak(text, audioUrl) {
+  if (speaking) {
+    stopSpeaking();
+    return;
+  }
+  if (audioUrl) {
+    audioEl = new Audio(audioUrl);
+    audioEl.onended = () => stopSpeaking();
+    audioEl.onerror = () => {
+      audioEl = null;
+      speakSynth(text);
+    };
+    startSpeakingUI();
+    audioEl.play().catch(() => {
+      audioEl = null;
+      speakSynth(text);
+    });
+    return;
+  }
+  speakSynth(text);
 }
 
 /* ---------------- Soft chime: two gentle notes when a flower grows ---------------- */
@@ -256,8 +291,10 @@ function readButton() {
   </button>`;
 }
 
-function wireRead(text) {
-  document.getElementById("read-btn").addEventListener("click", () => toggleSpeak(text));
+function wireRead(text, audioUrl) {
+  document
+    .getElementById("read-btn")
+    .addEventListener("click", () => toggleSpeak(text, audioUrl));
 }
 
 function alertBanner(lesson) {
@@ -321,6 +358,58 @@ function renderSizeChooser(opts = {}) {
   if (!firstRun) wireHeader(opts.returnTo);
 }
 
+/* ---------------- Screen 1b: favorite flower (first run, one tap) ---------------- */
+
+const FLOWER_NAMES = ["Pink", "Purple", "Yellow", "Orange", "Blue", "White"];
+
+function flowerSwatch(i) {
+  return `<svg viewBox="0 0 44 56" aria-hidden="true" focusable="false">
+    <g transform="translate(22 0)">
+      <path d="M0 52 Q2 38 0 26" fill="none" stroke="${GARDEN.stem}" stroke-width="4" stroke-linecap="round"/>
+      ${flowerHead(GARDEN.flowers[i], 20)}
+    </g>
+  </svg>`;
+}
+
+function renderColorPick() {
+  stopSpeaking();
+  app().innerHTML = `
+    ${header()}
+    <main>
+      <h1>${STRINGS.favTitle}</h1>
+      <p>${STRINGS.favHint}</p>
+      <div class="color-grid" role="group" aria-label="${STRINGS.favTitle}">
+        ${GARDEN.flowers
+          .map(
+            (f, i) => `
+          <button type="button" class="color-pick" data-fav="${i}">
+            ${flowerSwatch(i)}<span>${FLOWER_NAMES[i]}</span>
+          </button>`
+          )
+          .join("")}
+      </div>
+      <div class="btn-stack">
+        <button type="button" class="btn-quiet" id="fav-skip">${STRINGS.favSkip}</button>
+      </div>
+    </main>`;
+
+  wireHeader();
+  app().querySelectorAll("[data-fav]").forEach((btn) =>
+    btn.addEventListener("click", () => {
+      state.favColor = Number(btn.dataset.fav);
+      state.favAsked = true;
+      saveState();
+      renderHome();
+    })
+  );
+  document.getElementById("fav-skip").addEventListener("click", () => {
+    state.favColor = null;
+    state.favAsked = true;
+    saveState();
+    renderHome();
+  });
+}
+
 /* ---------------- Screen 2: the daily lesson, three small steps ---------------- */
 
 /* Step 1 of 3: the idea. Two sentences, nothing else to decide. */
@@ -344,7 +433,7 @@ function renderLessonTeach(lesson) {
     </main>`;
 
   wireHeader("lesson");
-  wireRead(`${lesson.title}. ${lesson.teach}`);
+  wireRead(`${lesson.title}. ${lesson.teach}`, lesson.audio && lesson.audio.teach);
   document.getElementById("next-btn").addEventListener("click", () => renderLessonAsk(lesson));
 
   /* Skip-ahead path: never feels like a test. The flower still grows. */
@@ -381,7 +470,8 @@ function renderLessonAsk(lesson) {
 
   wireHeader("lesson");
   wireRead(
-    `${lesson.question} Your choices are: ${lesson.answers.map((a) => a.label).join(", or ")}.`
+    `${lesson.question} Your choices are: ${lesson.answers.map((a) => a.label).join(", or ")}.`,
+    lesson.audio && lesson.audio.ask
   );
 
   app().querySelectorAll("#answers button").forEach((btn) =>
@@ -419,7 +509,7 @@ function renderLessonDone(lesson, answerIdx) {
     </main>`;
 
   wireHeader("lesson");
-  wireRead(response);
+  wireRead(response, lesson.audio && lesson.audio.done);
 
   document.getElementById("save-question").addEventListener("click", (e) => {
     if (!state.saved.some((q) => q.title === lesson.title)) {
@@ -438,7 +528,7 @@ function renderLessonDone(lesson, answerIdx) {
 function bloomFigure() {
   const count = state.completed.length;
   if (!count) return "";
-  const f = GARDEN.flowers[(count - 1) % GARDEN.flowers.length];
+  const f = flowerFor(count - 1);
   return `
     <div class="bloom-row">
       <svg viewBox="0 0 90 112" aria-hidden="true" focusable="false">
@@ -474,6 +564,14 @@ const GARDEN = {
     { c: "#FFFFFF", shape: "daisy", center: "#F5C462" }, // white daisy
   ],
 };
+
+/* Which flower grows at position i: every third one is the learner's
+   favorite (if they picked one); the rest keep the full pastel mix. */
+function flowerFor(i) {
+  const f = GARDEN.flowers;
+  if (state.favColor != null && i % 3 === 0) return f[state.favColor % f.length];
+  return f[i % f.length];
+}
 
 function flowerHead(f, topY) {
   if (f.shape === "tulip") {
@@ -525,8 +623,7 @@ function gardenSVG(count) {
         <ellipse cx="7" cy="${topY + 3}" rx="8" ry="4.5" fill="${GARDEN.stem}" transform="rotate(35 7 ${topY + 3})"/>
       </g></g>`;
     } else {
-      const f = GARDEN.flowers[i % GARDEN.flowers.length];
-      flowers += `<g class="sway"><g transform="translate(${x} 0)">${stem}${leaf}${flowerHead(f, topY)}</g></g>`;
+      flowers += `<g class="sway"><g transform="translate(${x} 0)">${stem}${leaf}${flowerHead(flowerFor(i), topY)}</g></g>`;
     }
   }
 
@@ -536,11 +633,26 @@ function gardenSVG(count) {
     rays += `<line x1="${(300 + 30 * Math.cos(ang)).toFixed(1)}" y1="${(52 + 30 * Math.sin(ang)).toFixed(1)}" x2="${(300 + 40 * Math.cos(ang)).toFixed(1)}" y2="${(52 + 40 * Math.sin(ang)).toFixed(1)}" stroke="${GARDEN.sun}" stroke-width="4.5" stroke-linecap="round"/>`;
   }
 
+  /* Evening (7pm-6am on the phone's clock): dusk sky, moon and stars. */
+  const hour = new Date().getHours();
+  const night = hour >= 19 || hour < 6;
+  const sky = night ? ["#DEE4F1", "#EFF3EA"] : GARDEN.sky;
+  const skyLight = night
+    ? `<mask id="moon-m"><rect width="360" height="240" fill="white"/><circle cx="309" cy="45" r="15" fill="black"/></mask>
+       <circle cx="300" cy="50" r="17" fill="#F5C462" mask="url(#moon-m)"/>
+       <circle cx="252" cy="36" r="1.8" fill="#F5C462"/><circle cx="272" cy="66" r="1.4" fill="#F5C462"/><circle cx="332" cy="76" r="1.6" fill="#F5C462"/>`
+    : `<circle cx="300" cy="52" r="46" fill="url(#glow)"/>
+       <circle cx="300" cy="52" r="21" fill="${GARDEN.sun}"/>
+       <g class="sun-rays">${rays}</g>`;
+
+  /* After 5 lessons, Meni moves into the garden for good. */
+  const resident = count >= 5 ? MENI.group("classic", "smile", 0.27, 12, 176) : "";
+
   return `<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A garden with ${count} flowers, one for each lesson learned${showSprout ? ", and a new sprout for tomorrow" : ""}">
     <defs>
       <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0" stop-color="${GARDEN.sky[0]}"/>
-        <stop offset="1" stop-color="${GARDEN.sky[1]}"/>
+        <stop offset="0" stop-color="${sky[0]}"/>
+        <stop offset="1" stop-color="${sky[1]}"/>
       </linearGradient>
       <radialGradient id="glow" cx="0.5" cy="0.5" r="0.5">
         <stop offset="0" stop-color="${GARDEN.sun}" stop-opacity="0.55"/>
@@ -548,14 +660,51 @@ function gardenSVG(count) {
       </radialGradient>
     </defs>
     <rect width="360" height="240" fill="url(#sky)"/>
-    <circle cx="300" cy="52" r="46" fill="url(#glow)"/>
-    <circle cx="300" cy="52" r="21" fill="${GARDEN.sun}"/>
-    <g class="sun-rays">${rays}</g>
+    ${skyLight}
     <path d="M0 196 Q90 178 180 190 Q270 200 360 186 L360 240 L0 240 Z" fill="${GARDEN.hillA}"/>
     <path d="M0 214 Q120 202 220 212 Q300 219 360 210 L360 240 L0 240 Z" fill="${GARDEN.hillB}"/>
     ${flowers}
+    ${seasonSVG()}
+    ${resident}
     ${visitorsSVG(count)}
   </svg>`;
+}
+
+/* Season touches (decorative only, from the phone's date) and the
+   evening sky (from the phone's clock). The garden lives in real time. */
+function seasonSVG() {
+  const m = new Date().getMonth(); // 0-11
+  if (m === 11 || m <= 1) {
+    // winter: snow settles along the hilltops, a few flakes in the air
+    return `<path d="M0 196 Q90 178 180 190 Q270 200 360 186 L360 192 Q270 206 180 196 Q90 184 0 202 Z" fill="#FFFFFF" opacity="0.9"/>
+      <circle cx="60" cy="70" r="2" fill="#FFFFFF"/><circle cx="130" cy="95" r="1.6" fill="#FFFFFF"/><circle cx="250" cy="80" r="1.8" fill="#FFFFFF"/>`;
+  }
+  if (m >= 8 && m <= 10) {
+    // fall: a pumpkin and two dropped gold leaves
+    return `<g transform="translate(104 218)">
+      <ellipse rx="12" ry="9" fill="#E8872B"/>
+      <ellipse rx="5.5" ry="9" fill="#F49B6A"/>
+      <path d="M0 -9 q3 -4 1 -7" fill="none" stroke="#6B3E14" stroke-width="2.5" stroke-linecap="round"/>
+    </g>
+    <ellipse cx="135" cy="224" rx="4" ry="2" fill="#F2B33D" transform="rotate(20 135 224)"/>
+    <ellipse cx="86" cy="228" rx="4" ry="2" fill="#F5C462" transform="rotate(-25 86 228)"/>`;
+  }
+  if (m >= 2 && m <= 4) {
+    // spring: a little cluster of new blossoms
+    return `<g transform="translate(104 214)">
+      <path d="M-8 8 Q-8 0 -6 -4 M0 8 Q0 -2 0 -6 M8 8 Q8 1 6 -3" fill="none" stroke="#6C945C" stroke-width="2.5" stroke-linecap="round"/>
+      <circle cx="-6" cy="-6" r="4" fill="#F2A6B8"/><circle cx="-6" cy="-6" r="1.6" fill="#FFFFFF"/>
+      <circle cx="0" cy="-8" r="4" fill="#F2A6B8"/><circle cx="0" cy="-8" r="1.6" fill="#FFFFFF"/>
+      <circle cx="6" cy="-5" r="4" fill="#F2A6B8"/><circle cx="6" cy="-5" r="1.6" fill="#FFFFFF"/>
+    </g>`;
+  }
+  // summer: a ladybug rests near the front
+  return `<g transform="translate(104 219)">
+    <circle r="5.5" fill="#D6452B"/>
+    <path d="M0 -5.5 A5.5 5.5 0 0 1 0 5.5" fill="none" stroke="#6B3E14" stroke-width="1.2"/>
+    <circle cx="-2.5" cy="-1.5" r="1.1" fill="#1B2036"/><circle cx="2.5" cy="1" r="1.1" fill="#1B2036"/><circle cx="-1.5" cy="2.5" r="1.1" fill="#1B2036"/>
+    <circle cx="0" cy="-5.5" r="2.2" fill="#1B2036"/>
+  </g>`;
 }
 
 /* Milestone visitors: every 5th lesson, the garden gains a resident.
@@ -782,6 +931,10 @@ function renderHome() {
     return;
   }
   applyScale(state.textScale);
+  if (!state.favAsked) {
+    renderColorPick();
+    return;
+  }
   const next = nextLesson();
   if (next && !completedToday()) renderLessonTeach(next);
   else renderGarden();

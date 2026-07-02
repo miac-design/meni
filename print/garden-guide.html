@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>My Meni garden guide</title>
+  <style>
+    /* Big-print handout: print it, hand it over in person at office hours. */
+    * { box-sizing: border-box; margin: 0; }
+    @page { margin: 14mm; }
+    body {
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+      background: #F3F8EE;
+      color: #1B2036;
+      font-size: 19px;
+      line-height: 1.5;
+      padding: 28px 24px;
+      max-width: 760px;
+      margin: 0 auto;
+    }
+    @media print { body { background: #FFFFFF; padding: 0; } }
+    header { display: flex; align-items: center; gap: 16px; margin-bottom: 6px; }
+    header svg { width: 64px; height: 64px; flex: none; }
+    h1 { font-size: 30px; line-height: 1.2; }
+    .lede { margin-bottom: 22px; }
+    h2 { font-size: 23px; margin: 26px 0 12px; }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+    .cell {
+      background: #FFFFFF;
+      border: 2px solid #1B2036;
+      border-radius: 16px;
+      padding: 14px 10px 10px;
+      text-align: center;
+      font-weight: 700;
+    }
+    .cell svg { width: 56px; height: 72px; display: block; margin: 0 auto 6px; }
+    .visitors .cell { font-weight: 400; }
+    .visitors .cell strong { display: block; font-size: 21px; }
+    .visitors .cell svg { height: 56px; }
+    footer {
+      margin-top: 28px;
+      border-top: 2px solid #1B2036;
+      padding-top: 14px;
+      font-size: 17px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <span id="meni-mark"></span>
+    <h1>My Meni garden guide</h1>
+  </header>
+  <p class="lede">Every lesson you finish grows one flower. Your garden never
+  loses a flower — it only grows. The little sprout is tomorrow's lesson,
+  already on its way.</p>
+
+  <h2>The flowers</h2>
+  <div class="grid" id="flowers"></div>
+
+  <h2>Friends who move in</h2>
+  <div class="grid visitors" id="visitors"></div>
+
+  <footer>
+    After 5 lessons, Meni himself moves into your garden and stays.
+    Bring your questions to Meni's office hours — tap
+    <strong>“Save this question for Meni”</strong> in the app and it will be
+    waiting on your garden page. &nbsp;·&nbsp; Austin AI Hub
+  </footer>
+
+  <script>
+    /* Self-contained copies of the app's drawings (see js/meni.js and
+       js/app.js) so this sheet prints with no other files needed. */
+    var STEM = "#6C945C";
+    var FLOWERS = [
+      { c: "#F2A6B8", shape: "daisy", center: "#FFFFFF", name: "Pink daisy" },
+      { c: "#C9ABE3", shape: "five", center: "#FFFFFF", name: "Purple star" },
+      { c: "#F7D486", shape: "daisy", center: "#FFFFFF", name: "Yellow daisy" },
+      { c: "#F49B6A", shape: "tulip", name: "Orange tulip" },
+      { c: "#A9CDE3", shape: "five", center: "#FFFFFF", name: "Blue star" },
+      { c: "#FFFFFF", shape: "daisy", center: "#F5C462", name: "White daisy" },
+    ];
+
+    function flowerHead(f, topY) {
+      if (f.shape === "tulip") {
+        return '<g transform="translate(0 ' + topY + ')"><path d="M-8 2 C-9 -11 -4 -15 0 -7 C4 -15 9 -11 8 2 C5 7 -5 7 -8 2 Z" fill="' + f.c + '" stroke="rgba(0,0,0,0.10)" stroke-width="1"/></g>';
+      }
+      var petals = "", p, a, px, py;
+      if (f.shape === "five") {
+        for (p = 0; p < 5; p++) {
+          a = (Math.PI * 2 * p) / 5 - Math.PI / 2;
+          petals += '<circle cx="' + (9.5 * Math.cos(a)).toFixed(1) + '" cy="' + (9.5 * Math.sin(a)).toFixed(1) + '" r="6.5" fill="' + f.c + '"/>';
+        }
+        return '<g transform="translate(0 ' + topY + ')">' + petals + '<circle r="5.5" fill="' + f.center + '"/></g>';
+      }
+      for (p = 0; p < 8; p++) {
+        a = (Math.PI * 2 * p) / 8;
+        px = (9 * Math.cos(a)).toFixed(1);
+        py = (9 * Math.sin(a)).toFixed(1);
+        petals += '<ellipse cx="' + px + '" cy="' + py + '" rx="6" ry="4.5" transform="rotate(' + ((a * 180) / Math.PI).toFixed(0) + ' ' + px + ' ' + py + ')" fill="' + f.c + '" stroke="' + (f.c === "#FFFFFF" ? "rgba(0,0,0,0.10)" : "none") + '" stroke-width="0.8"/>';
+      }
+      return '<g transform="translate(0 ' + topY + ')">' + petals + '<circle r="5" fill="' + f.center + '"/></g>';
+    }
+
+    function flowerCell(f) {
+      return '<div class="cell"><svg viewBox="0 0 44 60"><g transform="translate(22 0)">' +
+        '<path d="M0 56 Q2 40 0 26" fill="none" stroke="' + STEM + '" stroke-width="4" stroke-linecap="round"/>' +
+        flowerHead(f, 20) + '</g></svg>' + f.name + '</div>';
+    }
+
+    document.getElementById("flowers").innerHTML = FLOWERS.map(flowerCell).join("");
+
+    var VISITORS = [
+      { at: "5 lessons", name: "Butterfly", svg: '<svg viewBox="0 0 44 44"><g transform="translate(22 22)"><ellipse cx="-6.5" cy="-3" rx="6.5" ry="5" fill="#F2A6B8"/><ellipse cx="-5.5" cy="4" rx="5" ry="3.8" fill="#C9ABE3"/><ellipse cx="6.5" cy="-3" rx="6.5" ry="5" fill="#F2A6B8"/><ellipse cx="5.5" cy="4" rx="5" ry="3.8" fill="#C9ABE3"/><ellipse rx="2.2" ry="7" fill="#6B3E14"/><path d="M-1.5 -6 Q-4 -11 -6 -11 M1.5 -6 Q4 -11 6 -11" fill="none" stroke="#6B3E14" stroke-width="1.4" stroke-linecap="round"/></g></svg>' },
+      { at: "10 lessons", name: "Birds", svg: '<svg viewBox="0 0 44 44"><path d="M8 20 Q15 12 22 20 M22 20 Q29 12 36 20" fill="none" stroke="#7A93A8" stroke-width="2.6" stroke-linecap="round"/><path d="M14 30 Q19 24 24 30 M24 30 Q29 24 34 30" fill="none" stroke="#7A93A8" stroke-width="2" stroke-linecap="round"/></svg>' },
+      { at: "15 lessons", name: "Bee", svg: '<svg viewBox="0 0 44 44"><g transform="translate(22 24)"><ellipse cx="-1" cy="-6" rx="5" ry="3.2" fill="#DDE8EE"/><ellipse rx="7.5" ry="5.2" fill="#F5C462"/><path d="M-2.5 -5 V5 M2.5 -5 V5" stroke="#6B3E14" stroke-width="2"/><circle cx="6" cy="-1" r="1.2" fill="#1B2036"/></g></svg>' },
+      { at: "20 lessons", name: "Birdbath", svg: '<svg viewBox="0 0 44 44"><g transform="translate(22 4)"><ellipse cx="0" cy="36" rx="12" ry="3.4" fill="#8FA6B8"/><path d="M-3.4 36 h6.8 v-14 h-6.8 z" fill="#9FB4C4"/><ellipse cx="0" cy="20" rx="14" ry="5" fill="#9FB4C4"/><ellipse cx="0" cy="18.8" rx="10" ry="3.4" fill="#A9CDE3"/><g transform="translate(9 12)"><circle r="4.2" fill="#E8872B"/><circle cx="2.5" cy="-1.2" r="0.8" fill="#1B2036"/><path d="M4.2 0 l3.4 1.2 -3.4 1.2 z" fill="#F5C462"/></g></g></svg>' },
+    ];
+
+    document.getElementById("visitors").innerHTML = VISITORS.map(function (v) {
+      return '<div class="cell">' + v.svg + '<strong>' + v.name + '</strong>arrives at ' + v.at + '</div>';
+    }).join("");
+
+    /* Meni mark, matching js/meni.js */
+    document.getElementById("meni-mark").innerHTML =
+      '<svg viewBox="0 0 120 120"><circle cx="27" cy="28" r="13.5" fill="#DC7717"/><circle cx="93" cy="28" r="13.5" fill="#DC7717"/><circle cx="27" cy="28" r="6.5" fill="#F6C08A"/><circle cx="93" cy="28" r="6.5" fill="#F6C08A"/><ellipse cx="61" cy="22" rx="4.2" ry="6.5" fill="#D6452B" transform="rotate(9 60 22)"/><ellipse cx="60" cy="64" rx="44" ry="40" fill="#E8872B"/><ellipse cx="60" cy="78" rx="17" ry="13" fill="#F6C08A"/><circle cx="31" cy="74" r="6" fill="#F49B6A" opacity="0.55"/><circle cx="89" cy="74" r="6" fill="#F49B6A" opacity="0.55"/><ellipse cx="44" cy="59" rx="7" ry="8" fill="#1B2036"/><ellipse cx="76" cy="59" rx="7" ry="8" fill="#1B2036"/><circle cx="46.5" cy="56" r="2.6" fill="#FFFFFF"/><circle cx="78.5" cy="56" r="2.6" fill="#FFFFFF"/><path d="M55 73 Q60 70.5 65 73 Q65 77.5 60 78.5 Q55 77.5 55 73 Z" fill="#D6452B"/><path d="M60 78.5 v3.5 M54 86 Q60 90.5 66 86" fill="none" stroke="#6B3E14" stroke-width="2.2" stroke-linecap="round"/></svg>';
+  </script>
+</body>
+</html>

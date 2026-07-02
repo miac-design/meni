@@ -1,11 +1,12 @@
 /* Meni the bear — original illustrated character inspired by the vintage toy.
-   Design DNA: wide-set oversized navy eyes, red head tuft, pale belly and
-   muzzle, stubby seated pose, warm orange body, dark brown line work.
+   Style: soft flat (no hard outlines) — modern mascot, not clip-art.
+   Kept from the toy's DNA: warm orange body, pale round belly and muzzle,
+   oversized navy eyes, the little red tuft on top, stubby seated pose.
+   Meni is never angry, never sad, never disappointed — he celebrates,
+   wonders, and welcomes.
 
-   Poses: mark (head badge), classic (seated), waving (one arm up).
-   Expressions: "smile" (default), "delighted" (open happy mouth),
-   "curious" (head tilt + little round mouth). Meni is never angry,
-   never sad, never disappointed — he celebrates, wonders, and welcomes.
+   Expressions: "smile" (default), "delighted" (open happy mouth with
+   tongue), "curious" (head tilt + little round mouth).
 
    Animation hooks (all driven by CSS, all off under reduced motion):
    - .m-eyes    blinks every few seconds
@@ -15,11 +16,13 @@
 
 const MENI_COLORS = {
   body: "#E8872B",
+  deep: "#DC7717", // limbs and ears: one tone deeper so flat shapes read
   pale: "#F6C08A",
+  blush: "#F49B6A",
   line: "#6B3E14",
   eyes: "#1B2036",
   red: "#D6452B",
-  glint: "#FFF9F2",
+  glint: "#FFFFFF",
 };
 
 function meniHead(cx, cy, s, expr = "smile") {
@@ -27,31 +30,38 @@ function meniHead(cx, cy, s, expr = "smile") {
 
   let closedMouth;
   if (expr === "curious") {
-    closedMouth = `<circle cx="${cx}" cy="${cy + 21.5 * s}" r="${3 * s}" fill="${c.line}" class="m-mouth-closed"/>`;
+    closedMouth = `<circle cx="${cx}" cy="${cy + 20 * s}" r="${2.8 * s}" fill="${c.line}" class="m-mouth-closed"/>`;
   } else if (expr === "delighted") {
-    closedMouth = `<path d="M${cx - 8 * s} ${cy + 19 * s} Q${cx} ${cy + 30 * s} ${cx + 8 * s} ${cy + 19 * s} Z" fill="${c.line}" class="m-mouth-closed"/>`;
+    closedMouth = `<g class="m-mouth-closed">
+      <path d="M${cx - 7 * s} ${cy + 17 * s} Q${cx} ${cy + 27 * s} ${cx + 7 * s} ${cy + 17 * s} Z" fill="${c.line}"/>
+      <ellipse cx="${cx}" cy="${cy + 21.5 * s}" rx="${3.4 * s}" ry="${2 * s}" fill="${c.blush}"/>
+    </g>`;
   } else {
-    closedMouth = `<path d="M${cx - 7 * s} ${cy + 21 * s} Q${cx} ${cy + 26 * s} ${cx + 7 * s} ${cy + 21 * s}" fill="none" stroke="${c.line}" stroke-width="${2.5 * s}" stroke-linecap="round" class="m-mouth-closed"/>`;
+    closedMouth = `<path d="M${cx} ${cy + 13.5 * s} v${3.5 * s} M${cx - 6 * s} ${cy + 18 * s} Q${cx} ${cy + 22.5 * s} ${cx + 6 * s} ${cy + 18 * s}" fill="none" stroke="${c.line}" stroke-width="${2.2 * s}" stroke-linecap="round" class="m-mouth-closed"/>`;
   }
-  const openMouth = `<ellipse cx="${cx}" cy="${cy + 22 * s}" rx="${5.5 * s}" ry="${4.5 * s}" fill="${c.line}" class="m-mouth-open"/>`;
+  const openMouth = `<ellipse cx="${cx}" cy="${cy + 19.5 * s}" rx="${4.8 * s}" ry="${3.8 * s}" fill="${c.line}" class="m-mouth-open"/>`;
 
-  const tilt = expr === "curious" ? ` transform="rotate(-7 ${cx} ${cy + 34 * s})"` : "";
+  const tilt = expr === "curious" ? ` transform="rotate(-6 ${cx} ${cy + 34 * s})"` : "";
 
   return `<g${tilt}>
-    <circle cx="${cx - 31 * s}" cy="${cy - 34 * s}" r="${15 * s}" fill="${c.body}" stroke="${c.line}" stroke-width="${3 * s}"/>
-    <circle cx="${cx + 31 * s}" cy="${cy - 34 * s}" r="${15 * s}" fill="${c.body}" stroke="${c.line}" stroke-width="${3 * s}"/>
-    <circle cx="${cx - 31 * s}" cy="${cy - 34 * s}" r="${7 * s}" fill="${c.pale}"/>
-    <circle cx="${cx + 31 * s}" cy="${cy - 34 * s}" r="${7 * s}" fill="${c.pale}"/>
-    <ellipse cx="${cx}" cy="${cy - 45 * s}" rx="${5.5 * s}" ry="${9 * s}" fill="${c.red}" stroke="${c.line}" stroke-width="${2.5 * s}"/>
-    <circle cx="${cx}" cy="${cy}" r="${42 * s}" fill="${c.body}" stroke="${c.line}" stroke-width="${3 * s}"/>
-    <ellipse cx="${cx}" cy="${cy + 15 * s}" rx="${19 * s}" ry="${14 * s}" fill="${c.pale}" stroke="${c.line}" stroke-width="${2.5 * s}"/>
+    <circle cx="${cx - 33 * s}" cy="${cy - 36 * s}" r="${13.5 * s}" fill="${c.deep}"/>
+    <circle cx="${cx + 33 * s}" cy="${cy - 36 * s}" r="${13.5 * s}" fill="${c.deep}"/>
+    <circle cx="${cx - 33 * s}" cy="${cy - 36 * s}" r="${6.5 * s}" fill="${c.pale}"/>
+    <circle cx="${cx + 33 * s}" cy="${cy - 36 * s}" r="${6.5 * s}" fill="${c.pale}"/>
+    <ellipse cx="${cx + 1 * s}" cy="${cy - 42 * s}" rx="${4.2 * s}" ry="${6.5 * s}" fill="${c.red}" transform="rotate(9 ${cx} ${cy - 42 * s})"/>
+    <ellipse cx="${cx}" cy="${cy}" rx="${44 * s}" ry="${40 * s}" fill="${c.body}"/>
+    <ellipse cx="${cx}" cy="${cy + 14 * s}" rx="${17 * s}" ry="${13 * s}" fill="${c.pale}"/>
+    <circle cx="${cx - 29 * s}" cy="${cy + 10 * s}" r="${6 * s}" fill="${c.blush}" opacity="0.55"/>
+    <circle cx="${cx + 29 * s}" cy="${cy + 10 * s}" r="${6 * s}" fill="${c.blush}" opacity="0.55"/>
     <g class="m-eyes">
-      <circle cx="${cx - 18 * s}" cy="${cy - 7 * s}" r="${8 * s}" fill="${c.eyes}"/>
-      <circle cx="${cx + 18 * s}" cy="${cy - 7 * s}" r="${8 * s}" fill="${c.eyes}"/>
-      <circle cx="${cx - 15.5 * s}" cy="${cy - 9.5 * s}" r="${2.4 * s}" fill="${c.glint}"/>
-      <circle cx="${cx + 20.5 * s}" cy="${cy - 9.5 * s}" r="${2.4 * s}" fill="${c.glint}"/>
+      <ellipse cx="${cx - 16 * s}" cy="${cy - 5 * s}" rx="${7 * s}" ry="${8 * s}" fill="${c.eyes}"/>
+      <ellipse cx="${cx + 16 * s}" cy="${cy - 5 * s}" rx="${7 * s}" ry="${8 * s}" fill="${c.eyes}"/>
+      <circle cx="${cx - 13.5 * s}" cy="${cy - 8 * s}" r="${2.6 * s}" fill="${c.glint}"/>
+      <circle cx="${cx + 18.5 * s}" cy="${cy - 8 * s}" r="${2.6 * s}" fill="${c.glint}"/>
+      <circle cx="${cx - 18.5 * s}" cy="${cy - 2.5 * s}" r="${1.2 * s}" fill="${c.glint}" opacity="0.85"/>
+      <circle cx="${cx + 13.5 * s}" cy="${cy - 2.5 * s}" r="${1.2 * s}" fill="${c.glint}" opacity="0.85"/>
     </g>
-    <ellipse cx="${cx}" cy="${cy + 10 * s}" rx="${6 * s}" ry="${4.5 * s}" fill="${c.red}"/>
+    <path d="M${cx - 5 * s} ${cy + 9 * s} Q${cx} ${cy + 6.5 * s} ${cx + 5 * s} ${cy + 9 * s} Q${cx + 5 * s} ${cy + 13.5 * s} ${cx} ${cy + 14.5 * s} Q${cx - 5 * s} ${cy + 13.5 * s} ${cx - 5 * s} ${cy + 9 * s} Z" fill="${c.red}"/>
     ${closedMouth}
     ${openMouth}
   </g>`;
@@ -59,24 +69,24 @@ function meniHead(cx, cy, s, expr = "smile") {
 
 function meniBody(waving) {
   const c = MENI_COLORS;
-  const leftArm = `<ellipse cx="55" cy="142" rx="14" ry="28" transform="rotate(20 55 142)" fill="${c.body}" stroke="${c.line}" stroke-width="3"/>`;
+  const leftArm = `<ellipse cx="56" cy="142" rx="13" ry="27" transform="rotate(20 56 142)" fill="${c.deep}"/>`;
   /* The waving arm sits in a clean group so the CSS wave animation can
      rotate it without fighting an attribute transform. */
   const rightArm = waving
     ? `<g class="m-arm"><g>
-         <ellipse cx="154" cy="112" rx="13" ry="28" transform="rotate(28 154 112)" fill="${c.body}" stroke="${c.line}" stroke-width="3"/>
-         <circle cx="166" cy="89" r="7" fill="${c.pale}"/>
+         <ellipse cx="153" cy="113" rx="12.5" ry="27" transform="rotate(28 153 113)" fill="${c.deep}"/>
+         <circle cx="164.5" cy="90.5" r="6.5" fill="${c.pale}"/>
        </g></g>`
-    : `<ellipse cx="145" cy="142" rx="14" ry="28" transform="rotate(-20 145 142)" fill="${c.body}" stroke="${c.line}" stroke-width="3"/>`;
+    : `<ellipse cx="144" cy="142" rx="13" ry="27" transform="rotate(-20 144 142)" fill="${c.deep}"/>`;
   return `
     ${leftArm}
     ${rightArm}
-    <ellipse cx="100" cy="152" rx="52" ry="50" fill="${c.body}" stroke="${c.line}" stroke-width="3"/>
-    <ellipse cx="100" cy="162" rx="30" ry="28" fill="${c.pale}"/>
-    <ellipse cx="62" cy="196" rx="21" ry="14" fill="${c.body}" stroke="${c.line}" stroke-width="3"/>
-    <ellipse cx="138" cy="196" rx="21" ry="14" fill="${c.body}" stroke="${c.line}" stroke-width="3"/>
-    <ellipse cx="62" cy="198" rx="11" ry="7" fill="${c.pale}"/>
-    <ellipse cx="138" cy="198" rx="11" ry="7" fill="${c.pale}"/>
+    <ellipse cx="100" cy="152" rx="50" ry="48" fill="${c.body}"/>
+    <ellipse cx="100" cy="162" rx="29" ry="27" fill="${c.pale}"/>
+    <ellipse cx="63" cy="195" rx="20" ry="13" fill="${c.deep}"/>
+    <ellipse cx="137" cy="195" rx="20" ry="13" fill="${c.deep}"/>
+    <ellipse cx="63" cy="197" rx="10" ry="6.5" fill="${c.pale}"/>
+    <ellipse cx="137" cy="197" rx="10" ry="6.5" fill="${c.pale}"/>
   `;
 }
 
@@ -92,15 +102,24 @@ const MENI = {
   classic(expr = "smile") {
     return `<svg viewBox="0 0 200 230" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
       ${meniBody(false)}
-      ${meniHead(100, 62, 1, expr)}
+      ${meniHead(100, 64, 0.92, expr)}
     </svg>`;
+  },
+
+  /* Bare group for placing Meni inside another SVG scene (the garden).
+     Draws at 200x230 design size, scaled and positioned by the caller. */
+  group(pose, expr, scale, x, y) {
+    return `<g transform="translate(${x} ${y}) scale(${scale})">
+      ${meniBody(pose === "waving")}
+      ${meniHead(100, 64, 0.92, expr)}
+    </g>`;
   },
 
   /* One arm raised, for greetings and celebrations. */
   waving(expr = "smile") {
     return `<svg viewBox="0 0 200 230" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
       ${meniBody(true)}
-      ${meniHead(100, 62, 1, expr)}
+      ${meniHead(100, 64, 0.92, expr)}
     </svg>`;
   },
 };
