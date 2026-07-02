@@ -551,6 +551,11 @@ function renderSetup() {
         <label for="office-date">Next office hours date</label>
         <input type="date" id="office-date" value="${state.officeHoursDate || ""}">
       </div>
+      <div class="setup-field">
+        <label for="replant">Replant a garden (lessons already learned)</label>
+        <input type="number" id="replant" inputmode="numeric" min="0" max="${sequence().length}" value="${state.completed.length}">
+        <p class="footnote" style="margin-top:8px">For a new or replaced phone: enter how many lessons the learner had finished. The garden regrows instantly, and today's lesson stays available.</p>
+      </div>
       <div class="btn-stack">
         <button type="button" class="btn-primary" id="setup-done">Done — back to Meni</button>
       </div>
@@ -577,6 +582,19 @@ function renderSetup() {
 
   document.getElementById("office-date").addEventListener("change", (e) => {
     state.officeHoursDate = e.target.value || null;
+    saveState();
+  });
+
+  /* Replant: rebuild progress as the first N lessons, dated long ago so
+     today's lesson is still available. The garden never shrinks by
+     accident — this is a deliberate facilitator action. */
+  document.getElementById("replant").addEventListener("change", (e) => {
+    const n = Math.max(0, Math.min(sequence().length, Number(e.target.value) || 0));
+    e.target.value = n;
+    if (n === state.completed.length) return;
+    state.completed = sequence()
+      .slice(0, n)
+      .map((l) => ({ id: l.id, date: "1970-01-01" }));
     saveState();
   });
 

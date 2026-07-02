@@ -32,6 +32,8 @@ the very first screen. There you can:
 - pick the example pack for later lessons ("Everyday life" or "Work and rights" —
   the learner never sees these labels),
 - set the next office hours date (shown on the garden screen),
+- replant a garden (set how many lessons the learner already finished —
+  for replaced or new phones),
 - erase all progress on the phone (two taps, for re-gifting a device).
 
 ## Structure
@@ -77,6 +79,7 @@ Edit `js/lessons.js`. Each lesson is:
 }
 ```
 
+Each track is a 20-day journey (10 core lessons + 10 pack lessons).
 Bump `CACHE` in `sw.js` whenever content or code changes so installed phones
 pick up the new version.
 

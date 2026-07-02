@@ -469,7 +469,8 @@ p {
   margin-bottom: 8px;
 }
 
-input[type="date"] {
+input[type="date"],
+input[type="number"] {
   font: inherit;
   color: var(--navy);
   background: var(--white);
@@ -481,7 +482,8 @@ input[type="date"] {
   width: 100%;
 }
 
-input[type="date"]:focus-visible {
+input[type="date"]:focus-visible,
+input[type="number"]:focus-visible {
   outline: 3px solid var(--orange);
   outline-offset: 3px;
 }
