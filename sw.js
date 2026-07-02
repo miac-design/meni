@@ -2,13 +2,14 @@
    Cache-first: once installed at office hours, the app works with no
    connection at all. Nothing is ever fetched except the app's own files. */
 
-const CACHE = "meni-v1";
+const CACHE = "meni-v2";
 
 const ASSETS = [
   "./",
   "./index.html",
   "./manifest.webmanifest",
   "./css/styles.css",
+  "./fonts/nunito-latin.woff2",
   "./js/meni.js",
   "./js/lessons.js",
   "./js/app.js",

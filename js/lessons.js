@@ -18,7 +18,7 @@ const CORE_LESSONS = [
     id: "core-1",
     title: "AI is already in your life",
     teach:
-      "AI stands for artificial intelligence. It sounds brand new, but you have probably used it for years. It helps pick what you see every time you search the internet.",
+      "AI stands for artificial intelligence. You have probably used it for years — it helps choose what you see when you search the internet.",
     question: "Have you ever used Google?",
     answers: [
       {
@@ -35,7 +35,7 @@ const CORE_LESSONS = [
     id: "core-2",
     title: "Talking to AI is like ordering food",
     teach:
-      "You can ask AI questions in plain words, just like talking to a person. Think of ordering food: the clearer your order, the more you get what you want. You never need special computer words.",
+      "You can talk to AI in plain words, like ordering food. The clearer your order, the more you get what you want — no computer words needed.",
     question: "Which order gets you the right sandwich?",
     answers: [
       {
@@ -54,7 +54,7 @@ const CORE_LESSONS = [
     id: "core-3",
     title: "Asking a good question",
     teach:
-      "AI gives better answers when you add a little detail. Instead of “write a letter,” try “write a short, friendly letter to my granddaughter about my garden.” The details tell AI what you really want.",
+      "AI gives better answers when you add a little detail. Instead of “write a letter,” try “write a short, friendly letter to my granddaughter.”",
     question: "Which question will get a better answer?",
     answers: [
       {
@@ -73,7 +73,7 @@ const CORE_LESSONS = [
     id: "core-4",
     title: "Check what AI tells you",
     teach:
-      "AI sounds very confident, but it can be wrong. Sometimes it makes things up without knowing it. For important things, like health or money, check with a person or a source you trust.",
+      "AI sounds confident, but it can be wrong — sometimes it makes things up. For big things like health or money, check with a person you trust.",
     question: "AI tells you a fact about a new medicine. What is a good next step?",
     answers: [
       {
@@ -92,7 +92,7 @@ const CORE_LESSONS = [
     id: "core-5",
     title: "AI makes mistakes",
     teach:
-      "AI learned from things people wrote, and people make mistakes. So AI can mix up names, dates, and facts. Remember: AI suggests, and you decide.",
+      "AI learned from things people wrote, and people make mistakes. So remember: AI suggests, and you decide.",
     question: "Who makes the final decision, you or the AI?",
     answers: [
       {
@@ -119,7 +119,7 @@ const PACKS = {
       title: "Spotting a scam message",
       alert: true,
       teach:
-        "Scammers now use AI to write messages that look very real. A scam almost always rushes you: “Act now!” or “Send it today!” Real banks and real family members do not rush you for money or codes.",
+        "Scammers use AI to write messages that look very real. A scam almost always rushes you — real banks and real family do not rush you for money or codes.",
       question:
         "A text says: “Grandma, I'm in trouble, send gift cards right now!” What do you do?",
       answers: [
@@ -139,7 +139,7 @@ const PACKS = {
       id: "ev-2",
       title: "Getting ready for the doctor",
       teach:
-        "AI can help you prepare for a doctor visit. You can ask it: “Help me make a list of questions about my knee pain.” You bring the list, and the doctor does the medical part.",
+        "AI can help you get ready for a doctor visit. Ask it: “Help me make a list of questions about my knee pain.”",
       question: "What is AI good for before a doctor visit?",
       answers: [
         {
@@ -160,7 +160,7 @@ const PACKS = {
       id: "wk-1",
       title: "AI can help with your resume",
       teach:
-        "A resume is a short list of what you can do. AI can help you say it clearly and proudly. You bring the true facts, and it helps with the wording.",
+        "A resume is a short list of what you can do. You bring the true facts, and AI helps you say them clearly and proudly.",
       question: "What do you give AI so it can help with your resume?",
       answers: [
         {
@@ -179,7 +179,7 @@ const PACKS = {
       id: "wk-2",
       title: "Practicing for an interview",
       teach:
-        "You can practice a job interview with AI. Ask it: “Ask me three common interview questions for a kitchen job.” Practicing first makes the real interview feel easier.",
+        "You can practice a job interview with AI. Ask it: “Ask me three common interview questions for a kitchen job.”",
       question: "Would you like to try a practice question at office hours?",
       answers: [
         {
