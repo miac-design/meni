@@ -79,7 +79,7 @@ Edit `js/lessons.js`. Each lesson is:
 }
 ```
 
-Each track is a 20-day journey (10 core lessons + 10 pack lessons).
+Each track is a 22-day journey (12 core lessons + 10 pack lessons).
 Bump `CACHE` in `sw.js` whenever content or code changes so installed phones
 pick up the new version.
 

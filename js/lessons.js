@@ -11,6 +11,9 @@
      question  one question
      answers   [{ label, response }] — exactly two big buttons
      alert     true ONLY for scam-spotting lessons (reserved red styling)
+
+   Array order = day order. Ids are permanent labels, not positions
+   (core-11 and core-12 were added before the core-10 recap on purpose).
 */
 
 const CORE_LESSONS = [
@@ -178,6 +181,44 @@ const CORE_LESSONS = [
         label: "\u201cPhotos don't lie\u201d",
         response:
           "They used to be more trustworthy! These days AI can make fake photos, so wondering first keeps you sharp.",
+      },
+    ],
+  },
+  {
+    id: "core-11",
+    title: "Talk instead of type",
+    teach:
+      "If typing is hard on your hands, good news: you can talk to AI out loud. Most phone keyboards have a little microphone button — tap it and just speak.",
+    question: "Typing hurts your hands today. What can you try?",
+    answers: [
+      {
+        label: "Tap the microphone and speak",
+        response:
+          "Yes! Speaking works just as well as typing. Your words become text all by themselves.",
+      },
+      {
+        label: "Skip using AI",
+        response:
+          "No need to skip! The little microphone button lets you talk instead. We can find it together at office hours.",
+      },
+    ],
+  },
+  {
+    id: "core-12",
+    title: "What AI can't do",
+    teach:
+      "AI is good with words, but it doesn't know you, and it doesn't have feelings. It can't replace your doctor, your family, or your own good judgment.",
+    question: "Who knows what's best for your life?",
+    answers: [
+      {
+        label: "I do",
+        response:
+          "Exactly. AI is a helpful tool in your hands — and you are the one holding it.",
+      },
+      {
+        label: "The AI",
+        response:
+          "AI doesn't even know your name unless you tell it! You know your life best. AI just helps with the words along the way.",
       },
     ],
   },
