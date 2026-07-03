@@ -11,6 +11,9 @@
      question  one question
      answers   [{ label, response }] — exactly two big buttons
      alert     true ONLY for scam-spotting lessons (reserved red styling)
+     skill     plain-words "I can..." line the lesson earns (My skills list)
+     share     optional teach-back prompt shown after the answer
+     mission   optional try-it-in-real-life prompt shown after the answer
 
    Array order = day order. Ids are permanent labels, not positions
    (core-11 and core-12 were added before the core-10 recap on purpose).
@@ -19,6 +22,7 @@
 const CORE_LESSONS = [
   {
     id: "core-1",
+    skill: "I know I have already used AI.",
     title: "AI is already in your life",
     teach:
       "AI stands for artificial intelligence. You have probably used it for years — it helps choose what you see when you search the internet.",
@@ -36,6 +40,7 @@ const CORE_LESSONS = [
   },
   {
     id: "core-2",
+    skill: "I can talk to AI in plain words.",
     title: "Talking to AI is like ordering food",
     teach:
       "You can talk to AI in plain words, like ordering food. The clearer your order, the more you get what you want — no computer words needed.",
@@ -55,6 +60,7 @@ const CORE_LESSONS = [
   },
   {
     id: "core-3",
+    skill: "I can ask AI a clear question.",
     title: "Asking a good question",
     teach:
       "AI gives better answers when you add a little detail. Instead of “write a letter,” try “write a short, friendly letter to my granddaughter.”",
@@ -74,6 +80,7 @@ const CORE_LESSONS = [
   },
   {
     id: "core-4",
+    skill: "I know to double-check what AI says.",
     title: "Check what AI tells you",
     teach:
       "AI sounds confident, but it can be wrong — sometimes it makes things up. For big things like health or money, check with a person you trust.",
@@ -93,6 +100,7 @@ const CORE_LESSONS = [
   },
   {
     id: "core-5",
+    skill: "I know AI makes mistakes — and I decide.",
     title: "AI makes mistakes",
     teach:
       "AI learned from things people wrote, and people make mistakes. So remember: AI suggests, and you decide.",
@@ -111,6 +119,7 @@ const CORE_LESSONS = [
   },
   {
     id: "core-6",
+    skill: "I know I can't break AI by asking.",
     title: "You can't break it",
     teach:
       "Many people worry they will press a wrong button and break something. You can't break AI by asking questions — asking is always safe.",
@@ -129,6 +138,7 @@ const CORE_LESSONS = [
   },
   {
     id: "core-7",
+    skill: "I can ask AI to try again.",
     title: "If the answer isn't right, ask again",
     teach:
       "Sometimes AI's first answer is not what you wanted. That's normal — just ask again with different words, like giving directions.",
@@ -148,6 +158,8 @@ const CORE_LESSONS = [
   },
   {
     id: "core-8",
+    skill: "I keep my passwords and numbers private.",
+    share: "Fun idea: ask someone you know if they knew this rule. Now you can teach it!",
     title: "Keep your private things private",
     teach:
       "AI only knows what you type to it. Keep passwords, bank numbers, and your Social Security number to yourself — no honest helper ever needs them.",
@@ -167,6 +179,8 @@ const CORE_LESSONS = [
   },
   {
     id: "core-9",
+    skill: "I know photos can be faked now.",
+    share: "Fun idea: ask someone you know if they can always tell a fake photo. You know the trick now!",
     title: "Pictures can be made up now",
     teach:
       "AI can now make photos and videos that look real but never happened. If a picture seems shocking or strange, it's smart to wonder: \u201cIs this real?\u201d",
@@ -186,6 +200,8 @@ const CORE_LESSONS = [
   },
   {
     id: "core-11",
+    skill: "I can talk to my phone instead of typing.",
+    mission: "Try it today: tap the little microphone on your keyboard and just say hello.",
     title: "Talk instead of type",
     teach:
       "If typing is hard on your hands, good news: you can talk to AI out loud. Most phone keyboards have a little microphone button — tap it and just speak.",
@@ -205,6 +221,7 @@ const CORE_LESSONS = [
   },
   {
     id: "core-12",
+    skill: "I know what AI can't do.",
     title: "What AI can't do",
     teach:
       "AI is good with words, but it doesn't know you, and it doesn't have feelings. It can't replace your doctor, your family, or your own good judgment.",
@@ -224,6 +241,7 @@ const CORE_LESSONS = [
   },
   {
     id: "core-10",
+    skill: "I finished the AI basics.",
     title: "Look how far you've come",
     teach:
       "You now know what AI is, how to talk to it, and how to check its answers. That's more than most people know — truly.",
@@ -251,6 +269,7 @@ const PACKS = {
   everyday: [
     {
       id: "ev-1",
+      skill: "I can spot a scam message.",
       title: "Spotting a scam message",
       alert: true,
       teach:
@@ -272,6 +291,7 @@ const PACKS = {
     },
     {
       id: "ev-2",
+      skill: "I can get ready for a doctor visit with AI.",
       title: "Getting ready for the doctor",
       teach:
         "AI can help you get ready for a doctor visit. Ask it: “Help me make a list of questions about my knee pain.”",
@@ -291,6 +311,8 @@ const PACKS = {
     },
     {
       id: "ev-3",
+      skill: "I know the gift card rule.",
+      share: "Fun idea: ask someone you know if they have heard the gift card rule. You can teach it now!",
       title: "The gift card rule",
       alert: true,
       teach:
@@ -311,6 +333,8 @@ const PACKS = {
     },
     {
       id: "ev-4",
+      skill: "I know how to beat a fake voice call.",
+      share: "Fun idea: talk with your family about picking a secret code word together.",
       title: "A voice that sounds like family",
       alert: true,
       teach:
@@ -332,6 +356,7 @@ const PACKS = {
     },
     {
       id: "ev-5",
+      skill: "I can write a warm message with AI's help.",
       title: "A birthday message with help",
       teach:
         "AI is lovely for special messages. Try: \u201cHelp me write a short, warm birthday message for my sister who loves her garden.\u201d",
@@ -351,6 +376,7 @@ const PACKS = {
     },
     {
       id: "ev-6",
+      skill: "I can get an official letter explained in plain words.",
       title: "Official letters in plain words",
       teach:
         "Official letters can be full of confusing words. You can read one to AI and ask: \u201cExplain this letter in plain, simple words.\u201d",
@@ -370,6 +396,7 @@ const PACKS = {
     },
     {
       id: "ev-7",
+      skill: "I can get big medical words explained.",
       title: "Big words from the doctor",
       teach:
         "Doctors sometimes use words nobody knows. Ask AI: \u201cWhat does hypertension mean, in plain words?\u201d — then check anything important with your doctor.",
@@ -389,6 +416,8 @@ const PACKS = {
     },
     {
       id: "ev-8",
+      skill: "I know prize-fee messages are scams.",
+      share: "Fun idea: tell someone you know: real prizes never ask for money first.",
       title: "Too good to be true",
       alert: true,
       teach:
@@ -409,6 +438,8 @@ const PACKS = {
     },
     {
       id: "ev-9",
+      skill: "I can get everyday ideas from AI.",
+      mission: "Try it today: ask an AI for three easy dinner ideas.",
       title: "Dinner ideas in ten seconds",
       teach:
         "AI is handy for small things too. Try: \u201cGive me three easy dinner ideas with chicken and rice.\u201d",
@@ -428,6 +459,7 @@ const PACKS = {
     },
     {
       id: "ev-10",
+      skill: "I am ready for my first real AI conversation.",
       title: "Your first real conversation",
       teach:
         "You know enough now to try AI for real — and you don't have to do it alone. At office hours, we'll open an AI together and you'll ask your first question.",
@@ -449,6 +481,7 @@ const PACKS = {
   work: [
     {
       id: "wk-1",
+      skill: "I can build my resume with AI's help.",
       title: "AI can help with your resume",
       teach:
         "A resume is a short list of what you can do. You bring the true facts, and AI helps you say them clearly and proudly.",
@@ -468,6 +501,7 @@ const PACKS = {
     },
     {
       id: "wk-2",
+      skill: "I can practice interviews with AI.",
       title: "Practicing for an interview",
       teach:
         "You can practice a job interview with AI. Ask it: “Ask me three common interview questions for a kitchen job.”",
@@ -487,6 +521,7 @@ const PACKS = {
     },
     {
       id: "wk-3",
+      skill: "I can practice \u201ctell me about yourself.\u201d",
       title: "Practice: tell me about yourself",
       teach:
         "Almost every interview starts with \u201ctell me about yourself.\u201d You can practice with AI: \u201cHelp me practice answering that for a cleaning job.\u201d",
@@ -506,6 +541,7 @@ const PACKS = {
     },
     {
       id: "wk-4",
+      skill: "I can write a short letter for a job.",
       title: "A letter that opens doors",
       teach:
         "A short letter with a job application shows you care. Tell AI the true facts: \u201cHelp me write three sentences about why I'd be good at this kitchen job.\u201d",
@@ -525,6 +561,7 @@ const PACKS = {
     },
     {
       id: "wk-5",
+      skill: "I can get lease words explained in plain words.",
       title: "Understanding a lease",
       teach:
         "Leases are full of heavy words. You can ask AI: \u201cWhat does this sentence from my lease mean, in plain words?\u201d",
@@ -544,6 +581,7 @@ const PACKS = {
     },
     {
       id: "wk-6",
+      skill: "I can write a clear note to a school.",
       title: "Writing to a school",
       teach:
         "A note to a teacher works best short and clear. Try: \u201cHelp me write a short, polite note asking how my child is doing in math.\u201d",
@@ -563,6 +601,7 @@ const PACKS = {
     },
     {
       id: "wk-7",
+      skill: "I can get form questions explained.",
       title: "Forms without fear",
       teach:
         "Forms ask confusing things like \u201cmarital status\u201d or \u201creferences.\u201d You can ask AI what any form question means before you answer it.",
@@ -582,6 +621,8 @@ const PACKS = {
     },
     {
       id: "wk-8",
+      skill: "I know real jobs never charge me.",
+      share: "Fun idea: tell someone you know: real jobs pay you, never the other way around.",
       title: "Jobs that ask for money",
       alert: true,
       teach:
@@ -602,6 +643,8 @@ const PACKS = {
     },
     {
       id: "wk-9",
+      skill: "I can learn anything step by step with AI.",
+      mission: "This week, try it: ask AI to explain something new, step by step.",
       title: "Learning anything, step by step",
       teach:
         "AI can teach at your speed. Try: \u201cExplain how to use email, step by step, like I'm brand new.\u201d",
@@ -621,6 +664,7 @@ const PACKS = {
     },
     {
       id: "wk-10",
+      skill: "I am ready for my first real AI conversation.",
       title: "Your first real conversation",
       teach:
         "You know enough now to try AI for real — and you don't have to do it alone. At office hours, we'll open an AI together and you'll ask your first question.",

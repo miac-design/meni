@@ -649,3 +649,39 @@ input[type="number"]:focus-visible {
   width: 40px;
   height: 52px;
 }
+
+/* ---------- Watering day, skills, prompt cards ---------- */
+
+.eyebrow svg {
+  width: 20px;
+  height: 20px;
+  vertical-align: -3px;
+  margin-right: 2px;
+}
+
+.prompt-card {
+  background: var(--orange-soft);
+  box-shadow: none;
+  font-weight: 600;
+}
+
+.bloom-skill {
+  display: block;
+  font-size: calc(0.95rem * var(--scale));
+  color: var(--navy-soft);
+  font-weight: 600;
+  margin-top: 2px;
+}
+
+.sparkle { opacity: 0.9; }
+
+@media (prefers-reduced-motion: no-preference) {
+  .sparkle {
+    animation: sparkle-pulse 1.6s ease-in-out infinite;
+  }
+}
+
+@keyframes sparkle-pulse {
+  0%, 100% { opacity: 0.25; }
+  50% { opacity: 1; }
+}

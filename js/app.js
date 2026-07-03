@@ -35,6 +35,17 @@ const STRINGS = {
   favTitle: "Which flower do you like best?",
   favHint: "Your garden will grow extra flowers of your favorite kind.",
   favSkip: "Surprise me with all of them",
+  wateringEyebrow: "Watering day",
+  wateringTitle: (flower) => `Let's water the ${flower.toLowerCase()} flower!`,
+  wateringSub: "Remember this one?",
+  watered: "Watered! Your flower is sparkling.",
+  wateredToday: "Your garden is watered for today. Come back tomorrow for a new lesson!",
+  waterBtn: "Water today's flower",
+  newSkill: (skill) => `New skill: ${skill}`,
+  skillsBtn: "See what I can do",
+  skillsTitle: "What I can do now",
+  skillsCount: (n) => (n === 1 ? "1 skill and growing." : `${n} skills and growing.`),
+  skillsBack: "Back to my garden",
   trustLine: "Meni is a free learning companion from Austin AI Hub. Everything stays on this phone.",
   setupLink: "Facilitator setup",
 };
@@ -64,6 +75,7 @@ function defaultState() {
     lastVisit: null, // 'YYYY-MM-DD'
     saved: [], // [{ title, question }]
     chime: true, // soft chime when a flower grows
+    watered: [], // watering-day reviews: [{ id, date }] — spaced repetition
     favAsked: false, // has the favorite-color question been offered?
     favColor: null, // index into GARDEN.flowers, or null for the full mix
   };
@@ -126,6 +138,26 @@ function nextLesson() {
 function completedToday() {
   const t = todayStr();
   return state.completed.some((c) => c.date === t);
+}
+
+function wateredToday() {
+  const t = todayStr();
+  return state.watered.some((w) => w.date === t);
+}
+
+/* Spaced repetition: once 3 flowers exist, every 4th day revisits an
+   old lesson instead of starting a new one — framed as watering. */
+function isWateringDay() {
+  return (
+    state.completed.length >= 3 &&
+    (state.completed.length + state.watered.length) % 4 === 3
+  );
+}
+
+function wateringLesson() {
+  const idx = state.watered.length % state.completed.length;
+  const id = state.completed[idx].id;
+  return { lesson: sequence().find((l) => l.id === id) || null, idx };
 }
 
 function completeLesson(id) {
@@ -251,6 +283,22 @@ const ICONS = {
   /* triangle-alert */
   warn: LUCIDE(
     `<path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 20h16a2 2 0 0 0 1.73-3Z"/><path d="M12 9v4"/><path d="M12 17h.01"/>`
+  ),
+  /* lightbulb */
+  bulb: LUCIDE(
+    `<path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/>`
+  ),
+  /* users */
+  users: LUCIDE(
+    `<path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>`
+  ),
+  /* droplets */
+  drop: LUCIDE(
+    `<path d="M12 22a7 7 0 0 0 7-7c0-2-1-3.9-3-5.5s-3.5-4-4-6.5c-.5 2.5-2 4.9-4 6.5C6 11.1 5 13 5 15a7 7 0 0 0 7 7z"/>`
+  ),
+  /* sparkles */
+  spark: LUCIDE(
+    `<path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3L12 3Z"/>`
   ),
 };
 
@@ -491,6 +539,11 @@ function renderLessonDone(lesson, answerIdx) {
   stopSpeaking();
   const response = lesson.answers[answerIdx].response;
   const avatar = answerIdx === 0 ? MENI.waving("delighted") : MENI.classic("curious");
+  const promptCard = lesson.mission
+    ? `<div class="card card-row prompt-card">${ICONS.bulb}<span>${esc(lesson.mission)}</span></div>`
+    : lesson.share
+      ? `<div class="card card-row prompt-card">${ICONS.users}<span>${esc(lesson.share)}</span></div>`
+      : "";
 
   app().innerHTML = `
     ${header()}
@@ -500,7 +553,8 @@ function renderLessonDone(lesson, answerIdx) {
         <div class="meni-avatar meni-holder">${avatar}</div>
         <div class="bubble teach-text" role="status">${esc(response)}</div>
       </div>
-      ${bloomFigure()}
+      ${bloomFigure(lesson)}
+      ${promptCard}
       ${readButton()}
       <div class="btn-stack">
         <button type="button" class="btn-secondary" id="save-question">${STRINGS.saveForMia}</button>
@@ -523,12 +577,127 @@ function renderLessonDone(lesson, answerIdx) {
   document.getElementById("see-garden").addEventListener("click", renderGarden);
 }
 
+/* ---------------- Watering day: revisit an old lesson (spaced repetition) ---------------- */
+
+function renderWateringAsk() {
+  stopSpeaking();
+  const { lesson, idx } = wateringLesson();
+  if (!lesson) {
+    renderGarden();
+    return;
+  }
+  const flowerName = FLOWER_NAMES[GARDEN.flowers.indexOf(flowerFor(idx))] || "";
+
+  const answerButtons = lesson.answers
+    .map(
+      (a, i) => `
+      <button type="button" class="${i === 0 ? "btn-primary" : "btn-secondary"}" data-answer="${i}">
+        ${esc(a.label)}
+      </button>`
+    )
+    .join("");
+
+  app().innerHTML = `
+    ${header()}
+    <main>
+      <p class="eyebrow">${ICONS.drop} ${STRINGS.wateringEyebrow}</p>
+      <h1>${STRINGS.wateringTitle(flowerName)}</h1>
+      <p>${STRINGS.wateringSub}</p>
+      ${readButton()}
+      <p class="question-text" style="margin-top:16px">${esc(lesson.question)}</p>
+      <div class="btn-stack" id="answers">${answerButtons}</div>
+    </main>`;
+
+  wireHeader("lesson");
+  wireRead(
+    `${STRINGS.wateringSub} ${lesson.question} Your choices are: ${lesson.answers.map((a) => a.label).join(", or ")}.`,
+    lesson.audio && lesson.audio.ask
+  );
+
+  app().querySelectorAll("#answers button").forEach((btn) =>
+    btn.addEventListener("click", () => {
+      state.watered.push({ id: lesson.id, date: todayStr() });
+      saveState();
+      playChime();
+      renderWateringDone(lesson, Number(btn.dataset.answer), idx);
+    })
+  );
+}
+
+function renderWateringDone(lesson, answerIdx, idx) {
+  stopSpeaking();
+  const response = lesson.answers[answerIdx].response;
+  const avatar = answerIdx === 0 ? MENI.waving("delighted") : MENI.classic("curious");
+  const f = flowerFor(idx);
+
+  app().innerHTML = `
+    ${header()}
+    <main>
+      <div class="meni-says">
+        <div class="meni-avatar meni-holder">${avatar}</div>
+        <div class="bubble teach-text" role="status">${esc(response)}</div>
+      </div>
+      <div class="bloom-row">
+        <svg viewBox="0 0 90 112" aria-hidden="true" focusable="false">
+          <g transform="translate(45 0)">
+            <path d="M0 106 Q3 76 0 48" fill="none" stroke="${GARDEN.stem}" stroke-width="5" stroke-linecap="round"/>
+            ${flowerHead(f, 44)}
+            <g class="sparkle" fill="none" stroke="#F5C462" stroke-width="2.4" stroke-linecap="round">
+              <path d="M-26 30 l0 10 M-31 35 l10 0"/>
+              <path d="M27 20 l0 8 M23 24 l8 0"/>
+              <path d="M22 62 l0 7 M18.5 65.5 l7 0"/>
+            </g>
+          </g>
+        </svg>
+        <span class="bloom-caption">${STRINGS.watered}</span>
+      </div>
+      ${readButton()}
+      <div class="btn-stack">
+        <button type="button" class="btn-primary" id="see-garden">${STRINGS.seeGarden}</button>
+      </div>
+    </main>`;
+
+  wireHeader("lesson");
+  wireRead(response, lesson.audio && lesson.audio.done);
+  document.getElementById("see-garden").addEventListener("click", renderGarden);
+}
+
+/* ---------------- My skills: pride list, never scores ---------------- */
+
+function renderSkills() {
+  stopSpeaking();
+  const skills = [];
+  state.completed.forEach((c) => {
+    const l = sequence().find((x) => x.id === c.id);
+    if (l && l.skill && !skills.includes(l.skill)) skills.push(l.skill);
+  });
+
+  app().innerHTML = `
+    ${header()}
+    <main>
+      <h1>${STRINGS.skillsTitle}</h1>
+      <p class="lessons-learned"><span class="big">${skills.length}</span><span class="rest">${STRINGS.skillsCount(skills.length).replace(/^\d+ /, "")}</span></p>
+      <div class="card saved-questions">
+        <ul>${skills.map((sk) => `<li>${esc(sk)}</li>`).join("")}</ul>
+      </div>
+      <div class="btn-stack">
+        <button type="button" class="btn-primary" id="back-garden">${STRINGS.skillsBack}</button>
+      </div>
+    </main>`;
+
+  wireHeader("garden");
+  document.getElementById("back-garden").addEventListener("click", renderGarden);
+}
+
 /* The just-earned flower sprouts and opens on the response screen,
    then appears planted in the garden. */
-function bloomFigure() {
+function bloomFigure(lesson) {
   const count = state.completed.length;
   if (!count) return "";
   const f = flowerFor(count - 1);
+  const skillLine = lesson && lesson.skill
+    ? `<span class="bloom-skill">${esc(STRINGS.newSkill(lesson.skill))}</span>`
+    : "";
   return `
     <div class="bloom-row">
       <svg viewBox="0 0 90 112" aria-hidden="true" focusable="false">
@@ -540,7 +709,7 @@ function bloomFigure() {
           <g class="bloom-head">${flowerHead(f, 44)}</g>
         </g>
       </svg>
-      <span class="bloom-caption">${STRINGS.newFlower}</span>
+      <span><span class="bloom-caption">${STRINGS.newFlower}</span>${skillLine}</span>
     </div>`;
 }
 
@@ -752,13 +921,15 @@ function renderGarden() {
   stopSpeaking();
   const count = state.completed.length;
   const next = nextLesson();
-  const canLearnToday = next && !completedToday();
+  const canActToday = next && !completedToday() && !wateredToday();
+  const watering = isWateringDay();
 
   /* Welcome-back logic: warm, never a count of missed days. */
   let message = STRINGS.gardenGrowing;
   if (!next) message = STRINGS.allDone;
   else if (state.wasAway) message = STRINGS.welcomeBack;
   else if (completedToday()) message = STRINGS.doneToday;
+  else if (wateredToday()) message = STRINGS.wateredToday;
 
   const officeCard = state.officeHoursDate
     ? `<div class="card card-row">
@@ -789,15 +960,24 @@ function renderGarden() {
       </div>
       ${officeCard}
       ${savedList}
-      ${canLearnToday ? `
+      ${canActToday ? `
         <div class="btn-stack">
-          <button type="button" class="btn-primary" id="start-lesson">${STRINGS.startLesson}</button>
+          <button type="button" class="btn-primary" id="start-lesson">${watering ? STRINGS.waterBtn : STRINGS.startLesson}</button>
+        </div>` : ""}
+      ${count >= 3 ? `
+        <div class="btn-stack">
+          <button type="button" class="btn-secondary" id="skills-btn">${ICONS.spark}${STRINGS.skillsBtn}</button>
         </div>` : ""}
     </main>`;
 
   wireHeader("garden");
   const start = document.getElementById("start-lesson");
-  if (start) start.addEventListener("click", () => renderLessonTeach(next));
+  if (start)
+    start.addEventListener("click", () =>
+      watering ? renderWateringAsk() : renderLessonTeach(next)
+    );
+  const skillsBtn = document.getElementById("skills-btn");
+  if (skillsBtn) skillsBtn.addEventListener("click", renderSkills);
 }
 
 /* ---------------- Facilitator setup (hidden route: #setup) ---------------- */
@@ -936,8 +1116,9 @@ function renderHome() {
     return;
   }
   const next = nextLesson();
-  if (next && !completedToday()) renderLessonTeach(next);
-  else renderGarden();
+  if (!next || completedToday() || wateredToday()) renderGarden();
+  else if (isWateringDay()) renderWateringAsk();
+  else renderLessonTeach(next);
 }
 
 function boot() {
