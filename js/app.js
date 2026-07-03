@@ -5,50 +5,118 @@
 
 "use strict";
 
-/* ---------------- UI strings (kept together: translation-ready) ---------------- */
+/* ---------------- UI strings (English and Spanish) ----------------
+   Spanish is Latin American, usted form throughout — the respectful
+   address for older adults. Lesson text lives in js/lessons.es.js. */
 
-const STRINGS = {
-  appName: "Meni",
-  hello: "Hi, I'm Meni.",
-  sizeSample: "Can you read this comfortably?",
-  sizeConfirm: "This size is good",
-  sizeLabel: "Text size",
-  day: "Day",
-  next: "Next",
-  readToMe: "Read it to me",
-  stopReading: "Stop reading",
-  saveForMia: "Save this question for Meni",
-  savedForMia: "Saved! Bring it to Meni's office hours.",
-  seeGarden: "See my garden",
-  skipAhead: "I already know this",
-  yourGarden: "Your garden",
-  lessonsLearnedWord: (n) => (n === 1 ? "lesson learned" : "lessons learned"),
-  welcomeBack: "Welcome back! Your garden waited for you.",
-  doneToday: "That's your lesson for today. Come back tomorrow for a new one!",
-  gardenGrowing: "Your garden is growing, one lesson at a time.",
-  allDone: "You've finished every lesson for now. See you at office hours!",
-  startLesson: "Start today's lesson",
-  officeHours: (date) => `Bring a question to Meni's office hours, ${date}.`,
-  savedQuestionsTitle: "Your questions for office hours",
-  scamAlert: "Take care: this lesson is about scams",
-  newFlower: "A new flower for your garden!",
-  favTitle: "Which flower do you like best?",
-  favHint: "Your garden will grow extra flowers of your favorite kind.",
-  favSkip: "Surprise me with all of them",
-  wateringEyebrow: "Watering day",
-  wateringTitle: (flower) => `Let's water the ${flower.toLowerCase()} flower!`,
-  wateringSub: "Remember this one?",
-  watered: "Watered! Your flower is sparkling.",
-  wateredToday: "Your garden is watered for today. Come back tomorrow for a new lesson!",
-  waterBtn: "Water today's flower",
-  newSkill: (skill) => `New skill: ${skill}`,
-  skillsBtn: "See what I can do",
-  skillsTitle: "What I can do now",
-  skillsCount: (n) => (n === 1 ? "1 skill and growing." : `${n} skills and growing.`),
-  skillsBack: "Back to my garden",
-  trustLine: "Meni is a free learning companion from Austin AI Hub. Everything stays on this phone.",
-  setupLink: "Facilitator setup",
+const I18N = {
+  en: {
+    appName: "Meni",
+    hello: "Hi, I'm Meni.",
+    sizeSample: "Can you read this comfortably?",
+    sizeConfirm: "This size is good",
+    sizeLabel: "Text size",
+    sizeNames: ["Regular", "Large", "Largest"],
+    day: "Day",
+    next: "Next",
+    readToMe: "Read it to me",
+    stopReading: "Stop reading",
+    readChoices: (labels) => `Your choices are: ${labels.join(", or ")}.`,
+    saveForMia: "Save this question for Meni",
+    savedForMia: "Saved! Bring it to Meni's office hours.",
+    seeGarden: "See my garden",
+    skipAhead: "I already know this",
+    yourGarden: "Your garden",
+    lessonsLearnedWord: (n) => (n === 1 ? "lesson learned" : "lessons learned"),
+    welcomeBack: "Welcome back! Your garden waited for you.",
+    doneToday: "That's your lesson for today. Come back tomorrow for a new one!",
+    gardenGrowing: "Your garden is growing, one lesson at a time.",
+    allDone: "You've finished every lesson for now. See you at office hours!",
+    startLesson: "Start today's lesson",
+    officeHours: (date) => `Bring a question to Meni's office hours, ${date}.`,
+    savedQuestionsTitle: "Your questions for office hours",
+    scamAlert: "Take care: this lesson is about scams",
+    newFlower: "A new flower for your garden!",
+    favTitle: "Which flower do you like best?",
+    favHint: "Your garden will grow extra flowers of your favorite kind.",
+    favSkip: "Surprise me with all of them",
+    flowerNames: ["Pink", "Purple", "Yellow", "Orange", "Blue", "White"],
+    wateringEyebrow: "Watering day",
+    wateringTitle: (flower) => `Let's water the ${flower.toLowerCase()} flower!`,
+    wateringSub: "Remember this one?",
+    watered: "Watered! Your flower is sparkling.",
+    wateredToday: "Your garden is watered for today. Come back tomorrow for a new lesson!",
+    waterBtn: "Water today's flower",
+    newSkill: (skill) => `New skill: ${skill}`,
+    skillsBtn: "See what I can do",
+    skillsTitle: "What I can do now",
+    skillsCount: (n) => (n === 1 ? "1 skill and growing." : `${n} skills and growing.`),
+    skillsBack: "Back to my garden",
+    greetings: ["Good morning!", "Good afternoon!", "Good evening!"],
+    gardenAria: (n, sprout) =>
+      `A garden with ${n} flowers, one for each lesson learned${sprout ? ", and a new sprout for tomorrow" : ""}`,
+    trustLine: "Meni is a free learning companion from Austin AI Hub. Everything stays on this phone.",
+    setupLink: "Facilitator setup",
+  },
+  es: {
+    appName: "Meni",
+    hello: "¡Hola! Soy Meni.",
+    sizeSample: "¿Puede leer esto con comodidad?",
+    sizeConfirm: "Este tamaño está bien",
+    sizeLabel: "Tamaño de letra",
+    sizeNames: ["Normal", "Grande", "Muy grande"],
+    day: "Día",
+    next: "Siguiente",
+    readToMe: "Escuchar",
+    stopReading: "Detener la voz",
+    readChoices: (labels) => `Sus opciones son: ${labels.join(", o ")}.`,
+    saveForMia: "Guardar esta pregunta para Meni",
+    savedForMia: "¡Guardada! Llévela a las horas de consulta de Meni.",
+    seeGarden: "Ver mi jardín",
+    skipAhead: "Esto ya lo sé",
+    yourGarden: "Su jardín",
+    lessonsLearnedWord: (n) => (n === 1 ? "lección aprendida" : "lecciones aprendidas"),
+    welcomeBack: "¡Qué alegría verle! Su jardín le estaba esperando.",
+    doneToday: "Esa fue su lección de hoy. ¡Vuelva mañana por una nueva!",
+    gardenGrowing: "Su jardín está creciendo, una lección a la vez.",
+    allDone: "Terminó todas las lecciones por ahora. ¡Nos vemos en las horas de consulta!",
+    startLesson: "Empezar la lección de hoy",
+    officeHours: (date) => `Traiga una pregunta a las horas de consulta de Meni, ${date}.`,
+    savedQuestionsTitle: "Sus preguntas para las horas de consulta",
+    scamAlert: "Cuidado: esta lección es sobre estafas",
+    newFlower: "¡Una flor nueva para su jardín!",
+    favTitle: "¿Cuál flor le gusta más?",
+    favHint: "Su jardín tendrá flores extra de su favorita.",
+    favSkip: "Sorpréndame con todas",
+    flowerNames: ["Rosada", "Morada", "Amarilla", "Anaranjada", "Azul", "Blanca"],
+    wateringEyebrow: "Día de riego",
+    wateringTitle: (flower) => `¡Vamos a regar la flor ${flower.toLowerCase()}!`,
+    wateringSub: "¿Recuerda esta?",
+    watered: "¡Regada! Su flor está brillando.",
+    wateredToday: "Su jardín ya se regó hoy. ¡Vuelva mañana por una lección nueva!",
+    waterBtn: "Regar la flor de hoy",
+    newSkill: (skill) => `Nueva habilidad: ${skill}`,
+    skillsBtn: "Ver lo que ya sé hacer",
+    skillsTitle: "Lo que ya sé hacer",
+    skillsCount: (n) =>
+      (n === 1 ? "1 habilidad, y sigue creciendo." : `${n} habilidades, y siguen creciendo.`),
+    skillsBack: "Volver a mi jardín",
+    greetings: ["¡Buenos días!", "¡Buenas tardes!", "¡Buenas noches!"],
+    gardenAria: (n, sprout) =>
+      `Un jardín con ${n} flores, una por cada lección aprendida${sprout ? ", y un brotecito para mañana" : ""}`,
+    trustLine: "Meni es un compañero de aprendizaje gratuito de Austin AI Hub. Todo se queda en este teléfono.",
+    setupLink: "Configuración para facilitadores",
+  },
 };
+
+/* The active dictionary. Language is the learner's very first choice;
+   the bilingual language screen itself needs no active language. */
+let STRINGS = I18N.en;
+
+function applyLanguage() {
+  STRINGS = I18N[state.lang] || I18N.en;
+  document.documentElement.lang = state.lang || "en";
+}
 
 const SCALES = { A: 1, AA: 1.2, AAA: 1.45 };
 
@@ -68,6 +136,7 @@ function loadState() {
 
 function defaultState() {
   return {
+    lang: null, // 'en' | 'es' — the very first choice on a fresh phone
     textScale: null, // 'A' | 'AA' | 'AAA'
     pack: "everyday",
     officeHoursDate: null, // 'YYYY-MM-DD'
@@ -108,7 +177,7 @@ function daysBetween(a, b) {
 
 function friendlyDate(iso) {
   const [y, m, d] = iso.split("-").map(Number);
-  return new Date(y, m - 1, d).toLocaleDateString(undefined, {
+  return new Date(y, m - 1, d).toLocaleDateString(state.lang === "es" ? "es" : undefined, {
     month: "long",
     day: "numeric",
   });
@@ -116,15 +185,24 @@ function friendlyDate(iso) {
 
 function greeting() {
   const h = new Date().getHours();
-  if (h < 12) return "Good morning!";
-  if (h < 17) return "Good afternoon!";
-  return "Good evening!";
+  if (h < 12) return STRINGS.greetings[0];
+  if (h < 17) return STRINGS.greetings[1];
+  return STRINGS.greetings[2];
 }
 
 /* ---------------- Lesson progress ---------------- */
 
 function sequence() {
-  return lessonSequence(state.pack);
+  return lessonSequence(state.pack).map(localizeLesson);
+}
+
+/* Overlay the Spanish text (js/lessons.es.js) onto a lesson. Structure —
+   id, alert, audio — always comes from the English source; a lesson the
+   translation misses falls back to English rather than disappearing. */
+function localizeLesson(lesson) {
+  if (state.lang !== "es") return lesson;
+  const es = typeof LESSONS_ES !== "undefined" && LESSONS_ES[lesson.id];
+  return es ? Object.assign({}, lesson, es) : lesson;
 }
 
 function isCompleted(id) {
@@ -204,7 +282,7 @@ function startSpeakingUI() {
 function speakSynth(text) {
   if (!("speechSynthesis" in window)) return;
   const u = new SpeechSynthesisUtterance(text);
-  u.lang = "en-US";
+  u.lang = state.lang === "es" ? "es-US" : "en-US";
   u.rate = 0.95;
   u.onend = () => stopSpeaking();
   u.onerror = () => stopSpeaking();
@@ -351,6 +429,36 @@ function alertBanner(lesson) {
     : "";
 }
 
+/* ---------------- Screen 0: language (the very first choice) ---------------- */
+
+/* Fully bilingual by design: no words on this screen assume a language.
+   Two big equal buttons — this is a choice, not a hierarchy. */
+function renderLangChooser() {
+  stopSpeaking();
+  app().innerHTML = `
+    <main>
+      <div class="hello-stage"><div class="disc">${MENI.waving("delighted")}</div></div>
+      <h1 class="center">${I18N.en.hello}<br>${I18N.es.hello}</h1>
+      <div class="btn-stack">
+        <button type="button" class="btn-primary" data-lang="en" lang="en">English</button>
+        <button type="button" class="btn-primary" data-lang="es" lang="es">Español</button>
+      </div>
+      <p class="footnote center" lang="en">${I18N.en.trustLine}</p>
+      <p class="footnote center" lang="es">${I18N.es.trustLine}</p>
+      <p class="footnote center"><button type="button" class="btn-quiet btn-small" id="setup-link" style="margin:0 auto">${I18N.en.setupLink}</button></p>
+    </main>`;
+
+  app().querySelectorAll("[data-lang]").forEach((btn) =>
+    btn.addEventListener("click", () => {
+      state.lang = btn.dataset.lang;
+      saveState();
+      applyLanguage();
+      renderSizeChooser();
+    })
+  );
+  document.getElementById("setup-link").addEventListener("click", renderSetup);
+}
+
 /* ---------------- Screen 1: size chooser ---------------- */
 
 function renderSizeChooser(opts = {}) {
@@ -362,21 +470,16 @@ function renderSizeChooser(opts = {}) {
   app().innerHTML = `
     ${firstRun ? "" : header()}
     <main>
-      ${firstRun ? `
-        <div class="hello-stage"><div class="disc">${MENI.waving("delighted")}</div></div>
-        <h1 class="center">${STRINGS.hello}</h1>` : ""}
       <div class="card teach-text center" id="size-sample">${STRINGS.sizeSample}</div>
       <div class="size-row" role="group" aria-label="${STRINGS.sizeLabel}">
-        <button type="button" class="size-a" data-size="A">A<span class="size-label">Regular</span></button>
-        <button type="button" class="size-aa" data-size="AA">AA<span class="size-label">Large</span></button>
-        <button type="button" class="size-aaa" data-size="AAA">AAA<span class="size-label">Largest</span></button>
+        <button type="button" class="size-a" data-size="A">A<span class="size-label">${STRINGS.sizeNames[0]}</span></button>
+        <button type="button" class="size-aa" data-size="AA">AA<span class="size-label">${STRINGS.sizeNames[1]}</span></button>
+        <button type="button" class="size-aaa" data-size="AAA">AAA<span class="size-label">${STRINGS.sizeNames[2]}</span></button>
       </div>
       <div class="btn-stack">
         <button type="button" class="btn-primary" id="size-confirm">${STRINGS.sizeConfirm}</button>
       </div>
-      ${firstRun ? `
-        <p class="footnote center">${STRINGS.trustLine}</p>
-        <p class="footnote center"><button type="button" class="btn-quiet btn-small" id="setup-link" style="margin:0 auto">${STRINGS.setupLink}</button></p>` : ""}
+      ${firstRun ? `<p class="footnote center">${STRINGS.trustLine}</p>` : ""}
     </main>`;
 
   let chosen = current;
@@ -401,14 +504,10 @@ function renderSizeChooser(opts = {}) {
     else renderHome();
   });
 
-  const setupLink = document.getElementById("setup-link");
-  if (setupLink) setupLink.addEventListener("click", renderSetup);
   if (!firstRun) wireHeader(opts.returnTo);
 }
 
 /* ---------------- Screen 1b: favorite flower (first run, one tap) ---------------- */
-
-const FLOWER_NAMES = ["Pink", "Purple", "Yellow", "Orange", "Blue", "White"];
 
 function flowerSwatch(i) {
   return `<svg viewBox="0 0 44 56" aria-hidden="true" focusable="false">
@@ -431,7 +530,7 @@ function renderColorPick() {
           .map(
             (f, i) => `
           <button type="button" class="color-pick" data-fav="${i}">
-            ${flowerSwatch(i)}<span>${FLOWER_NAMES[i]}</span>
+            ${flowerSwatch(i)}<span>${STRINGS.flowerNames[i]}</span>
           </button>`
           )
           .join("")}
@@ -518,7 +617,7 @@ function renderLessonAsk(lesson) {
 
   wireHeader("lesson");
   wireRead(
-    `${lesson.question} Your choices are: ${lesson.answers.map((a) => a.label).join(", or ")}.`,
+    `${lesson.question} ${STRINGS.readChoices(lesson.answers.map((a) => a.label))}`,
     lesson.audio && lesson.audio.ask
   );
 
@@ -586,7 +685,7 @@ function renderWateringAsk() {
     renderGarden();
     return;
   }
-  const flowerName = FLOWER_NAMES[GARDEN.flowers.indexOf(flowerFor(idx))] || "";
+  const flowerName = STRINGS.flowerNames[GARDEN.flowers.indexOf(flowerFor(idx))] || "";
 
   const answerButtons = lesson.answers
     .map(
@@ -610,7 +709,7 @@ function renderWateringAsk() {
 
   wireHeader("lesson");
   wireRead(
-    `${STRINGS.wateringSub} ${lesson.question} Your choices are: ${lesson.answers.map((a) => a.label).join(", or ")}.`,
+    `${STRINGS.wateringSub} ${lesson.question} ${STRINGS.readChoices(lesson.answers.map((a) => a.label))}`,
     lesson.audio && lesson.audio.ask
   );
 
@@ -817,7 +916,7 @@ function gardenSVG(count) {
   /* After 5 lessons, Meni moves into the garden for good. */
   const resident = count >= 5 ? MENI.group("classic", "smile", 0.27, 12, 176) : "";
 
-  return `<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A garden with ${count} flowers, one for each lesson learned${showSprout ? ", and a new sprout for tomorrow" : ""}">
+  return `<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="${STRINGS.gardenAria(count, showSprout)}">
     <defs>
       <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
         <stop offset="0" stop-color="${sky[0]}"/>
@@ -995,6 +1094,14 @@ function renderSetup() {
       <h1>Facilitator setup</h1>
       <p>These choices are for the person setting up this phone. The learner never sees this screen or any labels from it.</p>
       <div class="setup-field">
+        <label id="lang-label">Language on this phone</label>
+        <div class="btn-stack" role="group" aria-labelledby="lang-label" style="margin-top:0">
+          <button type="button" class="btn-secondary" data-lang="en" lang="en">English</button>
+          <button type="button" class="btn-secondary" data-lang="es" lang="es">Español</button>
+        </div>
+        <p class="footnote" style="margin-top:8px">Every screen and all 32 lessons switch instantly. The learner also picks this on the very first screen.</p>
+      </div>
+      <div class="setup-field">
         <label id="pack-label">Example pack for later lessons</label>
         <div class="btn-stack" role="group" aria-labelledby="pack-label" style="margin-top:0">
           ${packs
@@ -1031,6 +1138,22 @@ function renderSetup() {
     </main>`;
 
   wireHeader();
+
+  const langButtons = app().querySelectorAll("[data-lang]");
+  function markLang() {
+    langButtons.forEach((b) =>
+      b.classList.toggle("selected", b.dataset.lang === (state.lang || "en"))
+    );
+  }
+  markLang();
+  langButtons.forEach((b) =>
+    b.addEventListener("click", () => {
+      state.lang = b.dataset.lang;
+      saveState();
+      applyLanguage();
+      markLang();
+    })
+  );
 
   const packButtons = app().querySelectorAll("[data-pack]");
   function markPack() {
@@ -1098,14 +1221,19 @@ function renderSetup() {
     }
     localStorage.removeItem(STORE_KEY);
     state = defaultState();
+    applyLanguage();
     applyScale("A");
-    renderSizeChooser();
+    renderLangChooser();
   });
 }
 
 /* ---------------- Routing ---------------- */
 
 function renderHome() {
+  if (!state.lang) {
+    renderLangChooser();
+    return;
+  }
   if (!state.textScale) {
     renderSizeChooser();
     return;
@@ -1122,6 +1250,11 @@ function renderHome() {
 }
 
 function boot() {
+  /* Phones set up before the language choice existed keep English —
+     no surprise screens for learners already mid-journey. */
+  if (!state.lang && state.textScale) state.lang = "en";
+  applyLanguage();
+
   /* Was the learner away? Decide before stamping today's visit.
      "Away" means at least one full missed day — never counted, never shown. */
   const t = todayStr();

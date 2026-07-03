@@ -3,7 +3,9 @@
 Meni is a daily micro-learning PWA that teaches AI skills, one small lesson a
 day, built seniors-first for Austin AI Hub's programs. One idea per screen,
 one tap to answer, a garden that only grows and never resets, and a standing
-bridge to monthly office hours.
+bridge to monthly office hours. The whole app — every screen and all 32
+lessons — works in English and Spanish; language is the learner's very
+first choice.
 
 This is the **v0 prototype**: a fully static app with no build step, no
 dependencies, no accounts, no servers, and no analytics. All progress lives in
@@ -29,6 +31,8 @@ Open the app with `#setup` at the end of the URL (for example
 `https://your-host/meni/#setup`), or tap the small "Facilitator setup" link on
 the very first screen. There you can:
 
+- switch the phone's language (English or Español — the learner also picks
+  this on the very first screen),
 - pick the example pack for later lessons ("Everyday life" or "Work and rights" —
   the learner never sees these labels),
 - set the next office hours date (shown on the garden screen),
@@ -43,6 +47,7 @@ index.html            app shell (three screens rendered by js/app.js)
 css/styles.css        design tokens: mint #F3F8EE, sage #E4F0DB, navy #1B2036, orange #E8872B
 js/meni.js            Meni the bear — three inline SVG poses
 js/lessons.js         lesson content as plain data (core course + packs)
+js/lessons.es.js      Spanish lesson text (usted form), keyed by lesson id
 js/app.js             screens, one-lesson-per-day gating, garden, audio, storage
 sw.js                 service worker: cache-first, offline after first load
 manifest.webmanifest  PWA manifest
@@ -80,12 +85,12 @@ Edit `js/lessons.js`. Each lesson is:
 ```
 
 Each track is a 22-day journey (12 core lessons + 10 pack lessons).
+When you add or change a lesson, mirror it in `js/lessons.es.js` (same id,
+Spanish text, usted form) — a missing translation falls back to English.
 Bump `CACHE` in `sw.js` whenever content or code changes so installed phones
 pick up the new version.
 
 ## Roadmap (post-pilot, per the project spec)
 
 - Vercel hosting + Supabase-managed lesson content (progress stays on-device).
-- Recorded human audio replacing synthesized speech.
-- Spanish. All copy is centralized in `STRINGS` (js/app.js) and
-  `js/lessons.js` to keep translation straightforward.
+- Recorded human audio replacing synthesized speech (English and Spanish).
