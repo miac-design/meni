@@ -52,6 +52,9 @@ const I18N = {
     skillsTitle: "What I can do now",
     skillsCount: (n) => (n === 1 ? "1 skill and growing." : `${n} skills and growing.`),
     skillsBack: "Back to my garden",
+    skillsHint: "Tap any skill to read its lesson again.",
+    reviewEyebrow: "A lesson you've learned",
+    backToSkills: "Back to my skills",
     greetings: ["Good morning!", "Good afternoon!", "Good evening!"],
     gardenAria: (n, sprout) =>
       `A garden with ${n} flowers, one for each lesson learned${sprout ? ", and a new sprout for tomorrow" : ""}`,
@@ -101,6 +104,9 @@ const I18N = {
     skillsCount: (n) =>
       (n === 1 ? "1 habilidad, y sigue creciendo." : `${n} habilidades, y siguen creciendo.`),
     skillsBack: "Volver a mi jardín",
+    skillsHint: "Toque cualquier habilidad para leer su lección otra vez.",
+    reviewEyebrow: "Una lección ya aprendida",
+    backToSkills: "Volver a mis habilidades",
     greetings: ["¡Buenos días!", "¡Buenas tardes!", "¡Buenas noches!"],
     gardenAria: (n, sprout) =>
       `Un jardín con ${n} flores, una por cada lección aprendida${sprout ? ", y un brotecito para mañana" : ""}`,
@@ -761,14 +767,19 @@ function renderWateringDone(lesson, answerIdx, idx) {
   document.getElementById("see-garden").addEventListener("click", renderGarden);
 }
 
-/* ---------------- My skills: pride list, never scores ---------------- */
+/* ---------------- My skills: pride list, never scores ----------------
+   Every skill is tappable and reopens its lesson to read again — the
+   learner who wants to re-check the gift-card rule mid-phone-call can
+   always find it. */
 
 function renderSkills() {
   stopSpeaking();
   const skills = [];
   state.completed.forEach((c) => {
     const l = sequence().find((x) => x.id === c.id);
-    if (l && l.skill && !skills.includes(l.skill)) skills.push(l.skill);
+    if (l && l.skill && !skills.some((s) => s.skill === l.skill)) {
+      skills.push({ skill: l.skill, id: l.id });
+    }
   });
 
   app().innerHTML = `
@@ -776,8 +787,16 @@ function renderSkills() {
     <main>
       <h1>${STRINGS.skillsTitle}</h1>
       <p class="lessons-learned"><span class="big">${skills.length}</span><span class="rest">${STRINGS.skillsCount(skills.length).replace(/^\d+ /, "")}</span></p>
+      <p>${STRINGS.skillsHint}</p>
       <div class="card saved-questions">
-        <ul>${skills.map((sk) => `<li>${esc(sk)}</li>`).join("")}</ul>
+        <ul class="skill-list">${skills
+          .map(
+            (s) => `
+          <li><button type="button" data-review="${s.id}">
+            <span>${esc(s.skill)}</span><span class="skill-go" aria-hidden="true">›</span>
+          </button></li>`
+          )
+          .join("")}</ul>
       </div>
       <div class="btn-stack">
         <button type="button" class="btn-primary" id="back-garden">${STRINGS.skillsBack}</button>
@@ -786,6 +805,35 @@ function renderSkills() {
 
   wireHeader("garden");
   document.getElementById("back-garden").addEventListener("click", renderGarden);
+  app().querySelectorAll("[data-review]").forEach((btn) =>
+    btn.addEventListener("click", () => {
+      const lesson = sequence().find((l) => l.id === btn.dataset.review);
+      if (lesson) renderReview(lesson);
+    })
+  );
+}
+
+/* Re-reading a finished lesson: the idea only, read-only, no question
+   to answer again — nothing here can be gotten wrong. */
+function renderReview(lesson) {
+  stopSpeaking();
+  app().innerHTML = `
+    ${header()}
+    <main>
+      ${alertBanner(lesson)}
+      <p class="eyebrow">${STRINGS.reviewEyebrow}</p>
+      <h1>${esc(lesson.title)}</h1>
+      ${readButton()}
+      <div class="card"><p class="teach-text" style="margin:0">${esc(lesson.teach)}</p></div>
+      ${lesson.skill ? `<div class="card card-row prompt-card">${ICONS.spark}<span>${esc(lesson.skill)}</span></div>` : ""}
+      <div class="btn-stack">
+        <button type="button" class="btn-primary" id="back-skills">${STRINGS.backToSkills}</button>
+      </div>
+    </main>`;
+
+  wireHeader("garden");
+  wireRead(`${lesson.title}. ${lesson.teach}`, lesson.audio && lesson.audio.teach);
+  document.getElementById("back-skills").addEventListener("click", renderSkills);
 }
 
 /* The just-earned flower sprouts and opens on the response screen,

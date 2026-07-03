@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Meni garden backup card · Tarjeta de respaldo del jardín</title>
+  <style>
+    /* The paper backup: at every office hours, the facilitator fills in
+       one line. If a phone is ever lost, broken, or replaced, the garden
+       regrows from this card via Facilitator setup → "Replant a garden".
+       Two identical cards per page — cut along the dotted line. */
+    * { box-sizing: border-box; margin: 0; }
+    @page { margin: 12mm; }
+    body {
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+      background: #F3F8EE;
+      color: #1B2036;
+      font-size: 16px;
+      line-height: 1.45;
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    @media print { body { background: #FFFFFF; padding: 0; } }
+    .card {
+      background: #FFFFFF;
+      border: 2.5px solid #1B2036;
+      border-radius: 18px;
+      padding: 18px 20px;
+      margin-bottom: 26px;
+      page-break-inside: avoid;
+    }
+    .cut {
+      border: none;
+      border-top: 2px dashed #7A93A8;
+      margin: 0 0 26px;
+    }
+    header { display: flex; align-items: center; gap: 12px; margin-bottom: 4px; }
+    header svg { width: 46px; height: 46px; flex: none; }
+    h1 { font-size: 21px; line-height: 1.2; }
+    h1 small { display: block; font-size: 15px; font-weight: 600; color: #3A405C; }
+    .why {
+      font-size: 14px;
+      color: #3A405C;
+      margin: 6px 0 12px;
+    }
+    table { width: 100%; border-collapse: collapse; }
+    td {
+      padding: 9px 6px;
+      border-bottom: 1.5px solid #DCE6D4;
+      vertical-align: bottom;
+    }
+    tr:last-child td { border-bottom: none; }
+    .label { width: 46%; font-weight: 700; }
+    .label small { display: block; font-weight: 600; color: #3A405C; font-size: 13px; }
+    .fill { border-bottom: 2px solid #1B2036; min-width: 60px; display: inline-block; }
+    .boxes span {
+      display: inline-block;
+      border: 2px solid #1B2036;
+      border-radius: 8px;
+      padding: 3px 10px;
+      margin: 2px 6px 2px 0;
+      font-weight: 700;
+    }
+    .rows td { font-size: 15px; }
+    .rows .date { width: 30%; }
+    footer {
+      margin-top: 10px;
+      font-size: 13px;
+      color: #3A405C;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <header>
+      <span class="mark"></span>
+      <h1>My Meni garden — backup card
+        <small>Mi jardín de Meni — tarjeta de respaldo</small>
+      </h1>
+    </header>
+    <p class="why">A garden lives on one phone. This card is its seed packet:
+      if the phone is ever lost or replaced, the garden regrows from the last
+      line below. · <em>El jardín vive en un solo teléfono. Esta tarjeta es su
+      sobre de semillas: si el teléfono se pierde o se cambia, el jardín
+      renace con la última línea de abajo.</em></p>
+    <table>
+      <tr>
+        <td class="label">Name <small>Nombre</small></td>
+        <td><span class="fill" style="width: 90%">&nbsp;</span></td>
+      </tr>
+      <tr>
+        <td class="label">Language <small>Idioma</small></td>
+        <td class="boxes"><span>English</span><span>Español</span></td>
+      </tr>
+      <tr>
+        <td class="label">Example pack <small>Paquete de ejemplos</small></td>
+        <td class="boxes"><span>Everyday</span><span>Work</span></td>
+      </tr>
+      <tr>
+        <td class="label">Text size <small>Tamaño de letra</small></td>
+        <td class="boxes"><span>A</span><span>AA</span><span>AAA</span></td>
+      </tr>
+      <tr>
+        <td class="label">Favorite flower <small>Flor favorita</small></td>
+        <td><span class="fill" style="width: 90%">&nbsp;</span></td>
+      </tr>
+    </table>
+    <p style="font-weight:700; margin:14px 0 4px">Lessons finished — update at each office hours
+      <small style="display:block; font-weight:600; color:#3A405C">Lecciones terminadas — actualice en cada horas de consulta</small></p>
+    <table class="rows">
+      <tr><td class="date">Date / Fecha</td><td>Lessons / Lecciones</td>
+          <td class="date">Date / Fecha</td><td>Lessons / Lecciones</td></tr>
+      <tr><td><span class="fill" style="width:95%">&nbsp;</span></td><td><span class="fill" style="width:95%">&nbsp;</span></td>
+          <td><span class="fill" style="width:95%">&nbsp;</span></td><td><span class="fill" style="width:95%">&nbsp;</span></td></tr>
+      <tr><td><span class="fill" style="width:95%">&nbsp;</span></td><td><span class="fill" style="width:95%">&nbsp;</span></td>
+          <td><span class="fill" style="width:95%">&nbsp;</span></td><td><span class="fill" style="width:95%">&nbsp;</span></td></tr>
+      <tr><td><span class="fill" style="width:95%">&nbsp;</span></td><td><span class="fill" style="width:95%">&nbsp;</span></td>
+          <td><span class="fill" style="width:95%">&nbsp;</span></td><td><span class="fill" style="width:95%">&nbsp;</span></td></tr>
+    </table>
+    <footer>To replant: open the app, tap <strong>Facilitator setup</strong>
+      (or add <strong>#setup</strong> to the address), choose the language and
+      pack above, and enter the latest lessons number under
+      <strong>“Replant a garden.”</strong> · <em>Para replantar: abra la
+      aplicación, toque <strong>Configuración para facilitadores</strong>,
+      elija el idioma y el paquete de arriba, y escriba el último número de
+      lecciones en <strong>«Replant a garden»</strong>.</em> · Austin AI Hub</footer>
+  </div>
+
+  <hr class="cut">
+
+  <div class="card" id="card2"></div>
+
+  <script>
+    /* Second identical card, then the Meni mark on both. */
+    var first = document.querySelector(".card");
+    document.getElementById("card2").outerHTML = first.outerHTML.replace('id="card2"', "");
+    var MARK =
+      '<svg viewBox="0 0 120 120"><circle cx="31" cy="34" r="14" fill="#DC7717"/><circle cx="89" cy="34" r="14" fill="#DC7717"/><circle cx="31" cy="34" r="7" fill="#F6C08A"/><circle cx="89" cy="34" r="7" fill="#F6C08A"/><ellipse cx="58" cy="22" rx="3.4" ry="6" fill="#D6452B" transform="rotate(-16 58 22)"/><ellipse cx="64" cy="21.5" rx="3" ry="5.4" fill="#D6452B" transform="rotate(14 64 21.5)"/><ellipse cx="60" cy="64" rx="41" ry="39" fill="#E8872B"/><ellipse cx="60" cy="77" rx="16.5" ry="12" fill="#F6C08A"/><circle cx="33" cy="73" r="5.8" fill="#F49B6A" opacity="0.5"/><circle cx="87" cy="73" r="5.8" fill="#F49B6A" opacity="0.5"/><ellipse cx="44.5" cy="60" rx="7.6" ry="8.6" fill="#1B2036"/><ellipse cx="75.5" cy="60" rx="7.6" ry="8.6" fill="#1B2036"/><circle cx="47" cy="57" r="2.9" fill="#FFFFFF"/><circle cx="78" cy="57" r="2.9" fill="#FFFFFF"/><path d="M55 72.5 Q60 70 65 72.5 Q65 77 60 78 Q55 77 55 72.5 Z" fill="#D6452B"/><path d="M60 77 v3 M53.5 81 Q60 85.5 66.5 81" fill="none" stroke="#6B3E14" stroke-width="2.2" stroke-linecap="round"/></svg>';
+    document.querySelectorAll(".mark").forEach(function (el) { el.innerHTML = MARK; });
+  </script>
+</body>
+</html>

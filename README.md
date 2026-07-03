@@ -25,6 +25,14 @@ Then open `http://localhost:8080`. To install on a phone, open the deployed
 URL in the phone's browser and use "Add to Home Screen" — the facilitator does
 this together with the learner. After the first load, the app works offline.
 
+## Deploy
+
+A GitHub Pages workflow ships with the repo (`.github/workflows/pages.yml`).
+One-time setup: repo **Settings → Pages → Source: GitHub Actions**. After
+that, every push to `main` deploys automatically; you can also deploy any
+branch on demand from the **Actions** tab (Run workflow). No build step —
+the repo is the site.
+
 ## Facilitator setup
 
 Open the app with `#setup` at the end of the URL (for example
@@ -39,6 +47,12 @@ the very first screen. There you can:
 - replant a garden (set how many lessons the learner already finished —
   for replaced or new phones),
 - erase all progress on the phone (two taps, for re-gifting a device).
+
+Printables for office hours live in `print/`: the garden guide
+(`garden-guide.html`, `garden-guide.es.html`) and the backup card
+(`replant-card.html`, bilingual) — the facilitator updates a learner's
+lessons count on paper at each office hours, so a lost or broken phone
+never means a lost garden.
 
 ## Structure
 
@@ -65,6 +79,8 @@ tools/make-icons.mjs  regenerates the icons: node tools/make-icons.mjs
   whole app; the in-app A / AA / AAA chooser multiplies on top of it.
 - The garden never resets and missed days are never counted or mentioned.
 - Audio ("Read it to me") is on every lesson via the Web Speech API.
+- Every earned skill on "What I can do now" is tappable and reopens its
+  lesson read-only — learning is always findable again, never locked away.
 
 ## Adding lessons
 

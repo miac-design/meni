@@ -1,11 +1,12 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>My Meni garden guide</title>
+  <title>La guía de mi jardín de Meni</title>
   <style>
-    /* Big-print handout: print it, hand it over in person at office hours. */
+    /* Folleto en letra grande: imprímalo y entréguelo en persona en las
+       horas de consulta. Versión en español de garden-guide.html. */
     * { box-sizing: border-box; margin: 0; }
     @page { margin: 14mm; }
     body {
@@ -52,36 +53,36 @@
 <body>
   <header>
     <span id="meni-mark"></span>
-    <h1>My Meni garden guide</h1>
+    <h1>La guía de mi jardín de Meni</h1>
   </header>
-  <p class="lede">Every lesson you finish grows one flower. Your garden never
-  loses a flower — it only grows. The little sprout is tomorrow's lesson,
-  already on its way.</p>
+  <p class="lede">Cada lección que usted termina hace crecer una flor. Su
+  jardín nunca pierde una flor — solo crece. El brotecito es la lección de
+  mañana, que ya viene en camino.</p>
 
-  <h2>The flowers</h2>
+  <h2>Las flores</h2>
   <div class="grid" id="flowers"></div>
 
-  <h2>Friends who move in</h2>
+  <h2>Los amigos que llegan a vivir</h2>
   <div class="grid visitors" id="visitors"></div>
 
   <footer>
-    After 5 lessons, Meni himself moves into your garden and stays.
-    Bring your questions to Meni's office hours — tap
-    <strong>“Save this question for Meni”</strong> in the app and it will be
-    waiting on your garden page. &nbsp;·&nbsp; Austin AI Hub
+    Después de 5 lecciones, Meni mismo se muda a su jardín y se queda.
+    Traiga sus preguntas a las horas de consulta de Meni — toque
+    <strong>«Guardar esta pregunta para Meni»</strong> en la aplicación y
+    ahí estará, esperando en la página de su jardín. &nbsp;·&nbsp; Austin AI Hub
   </footer>
 
   <script>
-    /* Self-contained copies of the app's drawings (see js/meni.js and
-       js/app.js) so this sheet prints with no other files needed. */
+    /* Copias autónomas de los dibujos de la aplicación (vea js/meni.js y
+       js/app.js) para que esta hoja se imprima sin ningún otro archivo. */
     var STEM = "#6C945C";
     var FLOWERS = [
-      { c: "#F2A6B8", shape: "daisy", center: "#FFFFFF", name: "Pink daisy" },
-      { c: "#C9ABE3", shape: "five", center: "#FFFFFF", name: "Purple star" },
-      { c: "#F7D486", shape: "daisy", center: "#FFFFFF", name: "Yellow daisy" },
-      { c: "#F49B6A", shape: "tulip", name: "Orange tulip" },
-      { c: "#A9CDE3", shape: "five", center: "#FFFFFF", name: "Blue star" },
-      { c: "#FFFFFF", shape: "daisy", center: "#F5C462", name: "White daisy" },
+      { c: "#F2A6B8", shape: "daisy", center: "#FFFFFF", name: "Margarita rosada" },
+      { c: "#C9ABE3", shape: "five", center: "#FFFFFF", name: "Estrella morada" },
+      { c: "#F7D486", shape: "daisy", center: "#FFFFFF", name: "Margarita amarilla" },
+      { c: "#F49B6A", shape: "tulip", name: "Tulipán anaranjado" },
+      { c: "#A9CDE3", shape: "five", center: "#FFFFFF", name: "Estrella azul" },
+      { c: "#FFFFFF", shape: "daisy", center: "#F5C462", name: "Margarita blanca" },
     ];
 
     function flowerHead(f, topY) {
@@ -114,17 +115,17 @@
     document.getElementById("flowers").innerHTML = FLOWERS.map(flowerCell).join("");
 
     var VISITORS = [
-      { at: "5 lessons", name: "Butterfly", svg: '<svg viewBox="0 0 44 44"><g transform="translate(22 22)"><ellipse cx="-6.5" cy="-3" rx="6.5" ry="5" fill="#F2A6B8"/><ellipse cx="-5.5" cy="4" rx="5" ry="3.8" fill="#C9ABE3"/><ellipse cx="6.5" cy="-3" rx="6.5" ry="5" fill="#F2A6B8"/><ellipse cx="5.5" cy="4" rx="5" ry="3.8" fill="#C9ABE3"/><ellipse rx="2.2" ry="7" fill="#6B3E14"/><path d="M-1.5 -6 Q-4 -11 -6 -11 M1.5 -6 Q4 -11 6 -11" fill="none" stroke="#6B3E14" stroke-width="1.4" stroke-linecap="round"/></g></svg>' },
-      { at: "10 lessons", name: "Birds", svg: '<svg viewBox="0 0 44 44"><path d="M8 20 Q15 12 22 20 M22 20 Q29 12 36 20" fill="none" stroke="#7A93A8" stroke-width="2.6" stroke-linecap="round"/><path d="M14 30 Q19 24 24 30 M24 30 Q29 24 34 30" fill="none" stroke="#7A93A8" stroke-width="2" stroke-linecap="round"/></svg>' },
-      { at: "15 lessons", name: "Bee", svg: '<svg viewBox="0 0 44 44"><g transform="translate(22 24)"><ellipse cx="-1" cy="-6" rx="5" ry="3.2" fill="#DDE8EE"/><ellipse rx="7.5" ry="5.2" fill="#F5C462"/><path d="M-2.5 -5 V5 M2.5 -5 V5" stroke="#6B3E14" stroke-width="2"/><circle cx="6" cy="-1" r="1.2" fill="#1B2036"/></g></svg>' },
-      { at: "20 lessons", name: "Birdbath", svg: '<svg viewBox="0 0 44 44"><g transform="translate(22 4)"><ellipse cx="0" cy="36" rx="12" ry="3.4" fill="#8FA6B8"/><path d="M-3.4 36 h6.8 v-14 h-6.8 z" fill="#9FB4C4"/><ellipse cx="0" cy="20" rx="14" ry="5" fill="#9FB4C4"/><ellipse cx="0" cy="18.8" rx="10" ry="3.4" fill="#A9CDE3"/><g transform="translate(9 12)"><circle r="4.2" fill="#E8872B"/><circle cx="2.5" cy="-1.2" r="0.8" fill="#1B2036"/><path d="M4.2 0 l3.4 1.2 -3.4 1.2 z" fill="#F5C462"/></g></g></svg>' },
+      { at: "5 lecciones", name: "La mariposa", svg: '<svg viewBox="0 0 44 44"><g transform="translate(22 22)"><ellipse cx="-6.5" cy="-3" rx="6.5" ry="5" fill="#F2A6B8"/><ellipse cx="-5.5" cy="4" rx="5" ry="3.8" fill="#C9ABE3"/><ellipse cx="6.5" cy="-3" rx="6.5" ry="5" fill="#F2A6B8"/><ellipse cx="5.5" cy="4" rx="5" ry="3.8" fill="#C9ABE3"/><ellipse rx="2.2" ry="7" fill="#6B3E14"/><path d="M-1.5 -6 Q-4 -11 -6 -11 M1.5 -6 Q4 -11 6 -11" fill="none" stroke="#6B3E14" stroke-width="1.4" stroke-linecap="round"/></g></svg>' },
+      { at: "10 lecciones", name: "Los pájaros", svg: '<svg viewBox="0 0 44 44"><path d="M8 20 Q15 12 22 20 M22 20 Q29 12 36 20" fill="none" stroke="#7A93A8" stroke-width="2.6" stroke-linecap="round"/><path d="M14 30 Q19 24 24 30 M24 30 Q29 24 34 30" fill="none" stroke="#7A93A8" stroke-width="2" stroke-linecap="round"/></svg>' },
+      { at: "15 lecciones", name: "La abeja", svg: '<svg viewBox="0 0 44 44"><g transform="translate(22 24)"><ellipse cx="-1" cy="-6" rx="5" ry="3.2" fill="#DDE8EE"/><ellipse rx="7.5" ry="5.2" fill="#F5C462"/><path d="M-2.5 -5 V5 M2.5 -5 V5" stroke="#6B3E14" stroke-width="2"/><circle cx="6" cy="-1" r="1.2" fill="#1B2036"/></g></svg>' },
+      { at: "20 lecciones", name: "La fuente", svg: '<svg viewBox="0 0 44 44"><g transform="translate(22 4)"><ellipse cx="0" cy="36" rx="12" ry="3.4" fill="#8FA6B8"/><path d="M-3.4 36 h6.8 v-14 h-6.8 z" fill="#9FB4C4"/><ellipse cx="0" cy="20" rx="14" ry="5" fill="#9FB4C4"/><ellipse cx="0" cy="18.8" rx="10" ry="3.4" fill="#A9CDE3"/><g transform="translate(9 12)"><circle r="4.2" fill="#E8872B"/><circle cx="2.5" cy="-1.2" r="0.8" fill="#1B2036"/><path d="M4.2 0 l3.4 1.2 -3.4 1.2 z" fill="#F5C462"/></g></g></svg>' },
     ];
 
     document.getElementById("visitors").innerHTML = VISITORS.map(function (v) {
-      return '<div class="cell">' + v.svg + '<strong>' + v.name + '</strong>arrives at ' + v.at + '</div>';
+      return '<div class="cell">' + v.svg + '<strong>' + v.name + '</strong>llega a las ' + v.at + '</div>';
     }).join("");
 
-    /* Meni mark, matching js/meni.js */
+    /* La carita de Meni, igual que en js/meni.js */
     document.getElementById("meni-mark").innerHTML =
       '<svg viewBox="0 0 120 120"><circle cx="31" cy="34" r="14" fill="#DC7717"/><circle cx="89" cy="34" r="14" fill="#DC7717"/><circle cx="31" cy="34" r="7" fill="#F6C08A"/><circle cx="89" cy="34" r="7" fill="#F6C08A"/><ellipse cx="58" cy="22" rx="3.4" ry="6" fill="#D6452B" transform="rotate(-16 58 22)"/><ellipse cx="64" cy="21.5" rx="3" ry="5.4" fill="#D6452B" transform="rotate(14 64 21.5)"/><ellipse cx="60" cy="64" rx="41" ry="39" fill="#E8872B"/><ellipse cx="60" cy="77" rx="16.5" ry="12" fill="#F6C08A"/><circle cx="33" cy="73" r="5.8" fill="#F49B6A" opacity="0.5"/><circle cx="87" cy="73" r="5.8" fill="#F49B6A" opacity="0.5"/><ellipse cx="44.5" cy="60" rx="7.6" ry="8.6" fill="#1B2036"/><ellipse cx="75.5" cy="60" rx="7.6" ry="8.6" fill="#1B2036"/><circle cx="47" cy="57" r="2.9" fill="#FFFFFF"/><circle cx="78" cy="57" r="2.9" fill="#FFFFFF"/><path d="M55 72.5 Q60 70 65 72.5 Q65 77 60 78 Q55 77 55 72.5 Z" fill="#D6452B"/><path d="M60 77 v3 M53.5 81 Q60 85.5 66.5 81" fill="none" stroke="#6B3E14" stroke-width="2.2" stroke-linecap="round"/></svg>';
   </script>
