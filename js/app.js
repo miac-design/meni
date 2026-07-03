@@ -569,7 +569,7 @@ function renderLessonTeach(lesson) {
     <main>
       ${stepDots(1)}
       ${alertBanner(lesson)}
-      <p class="eyebrow">${STRINGS.day} ${dayNumber}</p>
+      <p class="eyebrow">${STRINGS.day} ${dayNumber}${lesson.unit ? ` · ${esc(lesson.unit)}` : ""}</p>
       <h1>${esc(lesson.title)}</h1>
       ${readButton()}
       <div class="card"><p class="teach-text" style="margin:0">${esc(lesson.teach)}</p></div>
@@ -876,7 +876,10 @@ function gardenSVG(count) {
   let flowers = "";
   for (let i = 0; i < total; i++) {
     const isSprout = showSprout && i === total - 1;
-    const x = 34 + slots[i % slots.length] * 36.5 + Math.floor(i / slots.length) * 18;
+    /* Later rows weave half a step between earlier stems instead of
+       marching rightward — the canvas is finite, so a three-month
+       garden grows denser, never wider. */
+    const x = 34 + slots[i % slots.length] * 36.5 + (Math.floor(i / slots.length) % 2) * 18;
     const baseY = groundY + ((i * 7) % 10);
     const h = isSprout ? 22 : 42 + ((i * 19) % 26);
     const topY = baseY - h;
@@ -1099,7 +1102,7 @@ function renderSetup() {
           <button type="button" class="btn-secondary" data-lang="en" lang="en">English</button>
           <button type="button" class="btn-secondary" data-lang="es" lang="es">Español</button>
         </div>
-        <p class="footnote" style="margin-top:8px">Every screen and all 32 lessons switch instantly. The learner also picks this on the very first screen.</p>
+        <p class="footnote" style="margin-top:8px">Every screen and every lesson switch instantly. The learner also picks this on the very first screen.</p>
       </div>
       <div class="setup-field">
         <label id="pack-label">Example pack for later lessons</label>

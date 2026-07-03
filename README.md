@@ -3,7 +3,7 @@
 Meni is a daily micro-learning PWA that teaches AI skills, one small lesson a
 day, built seniors-first for Austin AI Hub's programs. One idea per screen,
 one tap to answer, a garden that only grows and never resets, and a standing
-bridge to monthly office hours. The whole app — every screen and all 32
+bridge to monthly office hours. The whole app — every screen and all 70
 lessons — works in English and Spanish; language is the learner's very
 first choice.
 
@@ -84,7 +84,10 @@ Edit `js/lessons.js`. Each lesson is:
 }
 ```
 
-Each track is a 22-day journey (12 core lessons + 10 pack lessons).
+Each track is 70 lessons: 12 core + 10 pack + 48 shared mini-course
+lessons (eight themed units of six — `EXTENDED_LESSONS`). With watering
+days, that covers roughly three months of daily visits. Mini-course
+lessons carry a short `unit` label shown next to the day number.
 When you add or change a lesson, mirror it in `js/lessons.es.js` (same id,
 Spanish text, usted form) — a missing translation falls back to English.
 Bump `CACHE` in `sw.js` whenever content or code changes so installed phones
