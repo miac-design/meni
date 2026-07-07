@@ -34,7 +34,8 @@ const CORE_LESSONS = [
       },
       {
         label: "Not sure",
-        response: "That's okay! Tomorrow we'll look at it together.",
+        response:
+          "That's okay! If you have ever searched the internet or asked a phone for directions, AI was quietly helping.",
       },
     ],
   },
@@ -92,9 +93,9 @@ const CORE_LESSONS = [
           "Exactly. AI is a helper, not a doctor. Checking with a person you trust is always smart.",
       },
       {
-        label: "Believe it right away",
+        label: "Ask the AI itself if it is sure",
         response:
-          "It's tempting — AI sounds so sure of itself! But it can be wrong, so checking with your doctor first keeps you safe.",
+          "A fair idea — but AI will often say yes and sound even more sure, even when it's wrong. The real check is a person who knows medicine, like your doctor or pharmacist.",
       },
     ],
   },
@@ -162,7 +163,7 @@ const CORE_LESSONS = [
     share: "Fun idea: ask someone you know if they knew this rule. Now you can teach it!",
     title: "Keep your private things private",
     teach:
-      "AI only knows what you type to it. Keep passwords, bank numbers, and your Social Security number to yourself — no honest helper ever needs them.",
+      "What you type into an AI app may be saved by the company that made it. So keep passwords, bank numbers, and Social Security numbers out — and whole private papers too, like ID cards or legal letters. No honest helper ever needs them.",
     question: "Should you tell AI your bank password?",
     answers: [
       {
@@ -283,9 +284,9 @@ const PACKS = {
             "Perfect. Stopping and calling the person yourself beats any scam. You just protected yourself.",
         },
         {
-          label: "Send the gift cards quickly",
+          label: "Text back and ask what happened first",
           response:
-            "That rush is the trick — the message is built to scare you. Stop, take a breath, and call your family member at the number you know.",
+            "Careful — replying tells the scammer a real person is reading, and AI helps them answer any question smoothly. The safe move is to call your family member yourself, at the number you already know.",
         },
       ],
     },
@@ -338,7 +339,7 @@ const PACKS = {
       title: "A voice that sounds like family",
       alert: true,
       teach:
-        "AI can copy a person's voice from a short recording. If a call sounds like family asking for money, hang up and call them back at the number you know.",
+        "AI can copy a person's voice from a short recording — and now even their face on a video call. If a call sounds or looks like family asking for money, hang up and call them back at the number you know.",
       question:
         "The voice on the phone sounds just like your grandson asking for money. What do you do?",
       answers: [
@@ -454,6 +455,50 @@ const PACKS = {
           label: "Take whatever it gives",
           response:
             "That works! And whenever you want, you can add \u201cnothing spicy\u201d or \u201csomething quick\u201d — it adjusts instantly.",
+        },
+      ],
+    },
+    {
+      id: "ev-11",
+      skill: "I know what to do if a scam gets through.",
+      alert: true,
+      share: "Fun idea: tell someone you know: if a scam ever works, it's not your fault — telling someone fast is the strong move.",
+      title: "If a scam ever gets through",
+      teach:
+        "Scams fool smart people every single day — being tricked is never your fault. If it happens, telling someone fast is the strong move: call your bank first, then report it free at 1-877-908-3360, the AARP fraud helpline.",
+      question: "A scam got someone's money. What is true?",
+      answers: [
+        {
+          label: "It's not their fault — and telling someone fast helps",
+          response:
+            "Exactly. Scammers are professionals with AI tools — falling for one is not a weakness. Fast reporting can stop them, and sometimes even brings money back.",
+        },
+        {
+          label: "They should keep it a secret",
+          response:
+            "Secrets are the scammer's best friend — shame keeps people quiet. Telling your bank and the helpline fast is brave, and it protects the next person too.",
+        },
+      ],
+    },
+    {
+      id: "ev-12",
+      skill: "I know the online-sweetheart rule.",
+      alert: true,
+      title: "A new friend who asks for money",
+      teach:
+        "AI now writes loving messages by the thousands, so an online friendship or romance can feel completely real. The rule is simple: someone you have never met in person who asks for money — even once, even for an emergency — is a scam.",
+      question:
+        "An online friend of two months suddenly needs money for an emergency. What is the rule?",
+      answers: [
+        {
+          label: "Never met in person + asks for money = scam",
+          response:
+            "Exactly. Wanting company is human — the scam only works because the friendship feels real. Real love never starts with a money request.",
+        },
+        {
+          label: "Help them — they sound so sincere",
+          response:
+            "They always sound sincere — AI writes the sweet words for them. Before sending anything, talk it over with a person you trust. That costs nothing and protects you.",
         },
       ],
     },
@@ -659,6 +704,28 @@ const PACKS = {
           label: "Nothing — I stop",
           response:
             "You'd be missing your best student trick: just say \u201cslower, please.\u201d AI happily starts over, every single time.",
+        },
+      ],
+    },
+    {
+      id: "wk-11",
+      skill: "I know what to do if a scam gets through.",
+      alert: true,
+      share: "Fun idea: tell someone you know: if a scam ever works, it's not your fault — telling someone fast is the strong move.",
+      title: "If a scam ever gets through",
+      teach:
+        "Scams fool smart people every single day — being tricked is never your fault. If it happens, telling someone fast is the strong move: call your bank first, then tell a person you trust — and you can report it free at reportfraud.ftc.gov.",
+      question: "A scam got someone's money. What is true?",
+      answers: [
+        {
+          label: "It's not their fault — and telling someone fast helps",
+          response:
+            "Exactly. Scammers are professionals with AI tools — falling for one is not a weakness. Fast reporting can stop them, and sometimes even brings money back.",
+        },
+        {
+          label: "They should keep it a secret",
+          response:
+            "Secrets are the scammer's best friend — shame keeps people quiet. Telling your bank and a person you trust fast is brave, and it protects the next person too.",
         },
       ],
     },

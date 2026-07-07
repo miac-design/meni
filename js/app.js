@@ -14,7 +14,7 @@
 const I18N = {
   en: {
     appName: "Meni",
-    hello: "Hi, I'm Meni.",
+    hello: "Hi, I’m Meni.",
     sizeSample: "Can you read this comfortably?",
     sizeConfirm: "This size is good",
     sizeLabel: "Text size",
@@ -24,17 +24,17 @@ const I18N = {
     readToMe: "Read it to me",
     stopReading: "Stop reading",
     saveForMia: "Save this question for Meni",
-    savedForMia: "Saved! Bring it to Meni's office hours.",
+    savedForMia: "Saved! Bring it to Meni’s office hours.",
     seeGarden: "See my garden",
     skipAhead: "I already know this",
     yourGarden: "Your garden",
     lessonsLearnedWord: (n) => (n === 1 ? "lesson learned" : "lessons learned"),
     welcomeBack: "Welcome back! Your garden waited for you.",
-    doneToday: "That's your lesson for today. Come back tomorrow for a new one!",
+    doneToday: "That’s your lesson for today. Come back tomorrow for a new one!",
     gardenGrowing: "Your garden is growing, one lesson at a time.",
-    allDone: "You've finished every lesson for now. See you at office hours!",
-    startLesson: "Start today's lesson",
-    officeHours: (date) => `Bring a question to Meni's office hours, ${date}.`,
+    allDone: "You’ve finished every lesson for now. See you at office hours!",
+    startLesson: "Start today’s lesson",
+    officeHours: (date) => `Bring a question to Meni’s office hours, ${date}.`,
     savedQuestionsTitle: "Your questions for office hours",
     scamAlert: "Take care: this lesson is about scams",
     newFlower: "A new flower for your garden!",
@@ -43,16 +43,18 @@ const I18N = {
     favSkip: "Surprise me with all of them",
     flowerNames: ["Pink", "Purple", "Yellow", "Orange", "Blue", "White"],
     wateringEyebrow: "Watering day",
-    wateringTitle: (flower) => `Let's water the ${flower.toLowerCase()} flower!`,
+    wateringTitle: (flower) => `Let’s water the ${flower.toLowerCase()} flower!`,
     wateringSub: "Remember this one?",
     watered: "Watered! Your flower is sparkling.",
     wateredToday: "Your garden is watered for today. Come back tomorrow for a new lesson!",
-    waterBtn: "Water today's flower",
+    waterBtn: "Water today’s flower",
     newSkill: (skill) => `New skill: ${skill}`,
     skillsBtn: "See what I can do",
     skillsTitle: "What I can do now",
     skillsCount: (n) => (n === 1 ? "1 skill and growing." : `${n} skills and growing.`),
     skillsBack: "Back to my garden",
+    choicesAre: "Your choices are:",
+    orWord: ", or",
     morning: "Good morning!",
     afternoon: "Good afternoon!",
     evening: "Good evening!",
@@ -75,7 +77,7 @@ const I18N = {
     readToMe: "Léemelo",
     stopReading: "Dejar de leer",
     saveForMia: "Guardar esta pregunta para Meni",
-    savedForMia: "¡Guardada! Llévela a las horas de consulta de Meni.",
+    savedForMia: "¡Guardada! Llévela a las horas con Meni.",
     seeGarden: "Ver mi jardín",
     skipAhead: "Esto ya lo sé",
     yourGarden: "Su jardín",
@@ -83,10 +85,10 @@ const I18N = {
     welcomeBack: "¡Qué gusto verle! Su jardín le estaba esperando.",
     doneToday: "Esa fue su lección de hoy. ¡Vuelva mañana para una nueva!",
     gardenGrowing: "Su jardín crece, una lección a la vez.",
-    allDone: "Ha terminado todas las lecciones por ahora. ¡Nos vemos en las horas de consulta!",
+    allDone: "Ha terminado todas las lecciones por ahora. ¡Nos vemos en las horas con Meni!",
     startLesson: "Empezar la lección de hoy",
-    officeHours: (date) => `Traiga una pregunta a las horas de consulta de Meni, el ${date}.`,
-    savedQuestionsTitle: "Sus preguntas para las horas de consulta",
+    officeHours: (date) => `Traiga una pregunta a las horas con Meni, el ${date}.`,
+    savedQuestionsTitle: "Sus preguntas para las horas con Meni",
     scamAlert: "Cuidado: esta lección trata de estafas",
     newFlower: "¡Una flor nueva para su jardín!",
     favTitle: "¿Cuál flor le gusta más?",
@@ -104,6 +106,8 @@ const I18N = {
     skillsTitle: "Lo que ya sé hacer",
     skillsCount: (n) => (n === 1 ? "1 habilidad, y siguen creciendo." : `${n} habilidades, y siguen creciendo.`),
     skillsBack: "Volver a mi jardín",
+    choicesAre: "Sus opciones son:",
+    orWord: ", o",
     morning: "¡Buenos días!",
     afternoon: "¡Buenas tardes!",
     evening: "¡Buenas noches!",
@@ -167,7 +171,7 @@ function saveState() {
 
 let state = loadState();
 
-/* ---------------- Dates (always the phone's local date) ---------------- */
+/* ---------------- Dates (always the phone’s local date) ---------------- */
 
 function todayStr() {
   const d = new Date();
@@ -243,6 +247,34 @@ function completeLesson(id) {
   }
 }
 
+/* Answers appear in a per-lesson-per-day order and identical styling, so
+   the right answer is never "the highlighted top button" — that would
+   turn every question into button recognition instead of remembering.
+   Deterministic within a day: reopening the screen keeps the order. */
+function orderedAnswers(lesson) {
+  const seed = (lesson.id + todayStr())
+    .split("")
+    .reduce((a, c) => a + c.charCodeAt(0), 0);
+  const idxs = seed % 2 === 0 ? [0, 1] : [1, 0];
+  return idxs.map((i) => ({ label: lesson.answers[i].label, i }));
+}
+
+function answersMarkup(lesson) {
+  return orderedAnswers(lesson)
+    .map(
+      (a) => `
+      <button type="button" class="btn-choice" data-answer="${a.i}">
+        ${esc(a.label)}
+      </button>`
+    )
+    .join("");
+}
+
+function answersSpeech(lesson) {
+  const labels = orderedAnswers(lesson).map((a) => a.label);
+  return `${STRINGS.choicesAre} ${labels.join(`${STRINGS.orWord} `)}.`;
+}
+
 /* ---------------- Text size ---------------- */
 
 function applyScale(name) {
@@ -254,7 +286,7 @@ function applyScale(name) {
    1. A real human recording, if one exists for this lesson and language
       (see audio/README and tools/record-audio.html — the manifest in
       js/audio-manifest.js lists what has been recorded).
-   2. The phone's own voice — but never the robotic default. We score
+   2. The phone’s own voice — but never the robotic default. We score
       every installed voice and pick the most natural one (phones ship
       "enhanced"/"natural" voices that the default API call ignores),
       and the facilitator can pick a specific voice in setup. */
@@ -268,7 +300,7 @@ function clipUrl(lessonId, part) {
   return AUDIO_FILES[`${state.lang}/${lessonId}.${part}`] || null;
 }
 
-/* Rank the phone's installed voices for a language: prefer the natural/
+/* Rank the phone’s installed voices for a language: prefer the natural/
    enhanced ones phones hide behind the robotic default, prefer on-device
    voices (work offline), and shun known low-quality engines. */
 function voiceScore(v, lang) {
@@ -322,14 +354,20 @@ function stopSpeaking() {
   speaking = false;
   setTalking(false);
   const btn = document.getElementById("read-btn");
-  if (btn) btn.querySelector(".read-label").textContent = STRINGS.readToMe;
+  if (btn) {
+    btn.querySelector(".read-label").textContent = STRINGS.readToMe;
+    btn.setAttribute("aria-pressed", "false");
+  }
 }
 
 function startSpeakingUI() {
   speaking = true;
   setTalking(true);
   const btn = document.getElementById("read-btn");
-  if (btn) btn.querySelector(".read-label").textContent = STRINGS.stopReading;
+  if (btn) {
+    btn.querySelector(".read-label").textContent = STRINGS.stopReading;
+    btn.setAttribute("aria-pressed", "true");
+  }
 }
 
 function speakSynth(text, voiceOverride) {
@@ -487,22 +525,30 @@ function wireHeader(returnTo) {
   if (btn) btn.addEventListener("click", () => renderSizeChooser({ returnTo }));
 }
 
+/* Wayfinding in the app's own metaphor: seed → sprout → flower. */
 function stepDots(step) {
+  const marks = [
+    `<svg viewBox="0 0 16 16" width="16" height="16"><ellipse cx="8" cy="9" rx="4" ry="5" fill="#6B3E14"/></svg>`,
+    `<svg viewBox="0 0 16 16" width="16" height="16"><path d="M8 15 V8" stroke="#6C945C" stroke-width="2.4" stroke-linecap="round" fill="none"/><ellipse cx="4.5" cy="6.5" rx="4" ry="2.4" fill="#6C945C" transform="rotate(-35 4.5 6.5)"/><ellipse cx="11.5" cy="6.5" rx="4" ry="2.4" fill="#6C945C" transform="rotate(35 11.5 6.5)"/></svg>`,
+    `<svg viewBox="0 0 16 16" width="16" height="16"><path d="M8 15 V9" stroke="#6C945C" stroke-width="2.2" stroke-linecap="round" fill="none"/><g transform="translate(8 6)"><circle cx="0" cy="-3.4" r="2.6" fill="#E8872B"/><circle cx="3.2" cy="1" r="2.6" fill="#E8872B"/><circle cx="-3.2" cy="1" r="2.6" fill="#E8872B"/><circle cx="2" cy="3.4" r="2.6" fill="#E8872B"/><circle cx="-2" cy="3.4" r="2.6" fill="#E8872B"/><circle r="2.2" fill="#FFFDF6"/></g></svg>`,
+  ];
   return `<div class="step-dots" aria-hidden="true">
-    ${[1, 2, 3].map((i) => `<span class="${i <= step ? "on" : ""}"></span>`).join("")}
+    ${marks.map((m, i) => `<span class="${i + 1 <= step ? "on" : ""}">${m}</span>`).join("")}
   </div>`;
 }
 
 function readButton() {
-  return `<button type="button" class="btn-secondary" id="read-btn">
+  /* No speech engine and no recordings: render no dead button, ever. */
+  const hasClips = typeof AUDIO_FILES !== "undefined" && Object.keys(AUDIO_FILES).length > 0;
+  if (!("speechSynthesis" in window) && !hasClips) return "";
+  return `<button type="button" class="btn-secondary read-chip" id="read-btn" aria-pressed="false">
     ${ICONS.speaker}<span class="read-label">${STRINGS.readToMe}</span>
   </button>`;
 }
 
 function wireRead(text, audioUrl) {
-  document
-    .getElementById("read-btn")
-    .addEventListener("click", () => toggleSpeak(text, audioUrl));
+  const btn = document.getElementById("read-btn");
+  if (btn) btn.addEventListener("click", () => toggleSpeak(text, audioUrl));
 }
 
 function alertBanner(lesson) {
@@ -520,7 +566,7 @@ function renderLanguagePick() {
   app().innerHTML = `
     <main>
       <div class="hello-stage"><div class="disc">${MENI.waving("delighted")}</div></div>
-      <h1 class="center"><span lang="en">Hi, I'm Meni.</span><br><span lang="es">¡Hola! Soy Meni.</span></h1>
+      <h1 class="center"><span lang="en">Hi, I’m Meni.</span><br><span lang="es">¡Hola! Soy Meni.</span></h1>
       <div class="btn-stack">
         <button type="button" class="btn-primary" data-lang="en" lang="en">English</button>
         <button type="button" class="btn-primary" data-lang="es" lang="es">Español</button>
@@ -571,7 +617,11 @@ function renderSizeChooser(opts = {}) {
   let chosen = current;
   const buttons = app().querySelectorAll(".size-row button");
   function mark() {
-    buttons.forEach((b) => b.classList.toggle("selected", b.dataset.size === chosen));
+    buttons.forEach((b) => {
+      const on = b.dataset.size === chosen;
+      b.classList.toggle("selected", on);
+      b.setAttribute("aria-pressed", String(on));
+    });
   }
   mark();
   buttons.forEach((b) =>
@@ -683,18 +733,9 @@ function renderLessonTeach(lesson) {
   focusScreen();
 }
 
-/* Step 2 of 3: one question, two big buttons. */
+/* Step 2 of 3: one question, two equal buttons. */
 function renderLessonAsk(lesson) {
   stopSpeaking();
-
-  const answerButtons = lesson.answers
-    .map(
-      (a, i) => `
-      <button type="button" class="${i === 0 ? "btn-primary" : "btn-secondary"}" data-answer="${i}">
-        ${esc(a.label)}
-      </button>`
-    )
-    .join("");
 
   app().innerHTML = `
     ${header()}
@@ -702,15 +743,12 @@ function renderLessonAsk(lesson) {
       ${stepDots(2)}
       ${alertBanner(lesson)}
       ${readButton()}
-      <p class="question-text" style="margin-top:16px">${esc(lesson.question)}</p>
-      <div class="btn-stack" id="answers">${answerButtons}</div>
+      <h1 class="question-text" style="margin-top:16px">${esc(lesson.question)}</h1>
+      <div class="btn-stack" id="answers">${answersMarkup(lesson)}</div>
     </main>`;
 
   wireHeader("lesson");
-  wireRead(
-    `${lesson.question} Your choices are: ${lesson.answers.map((a) => a.label).join(", or ")}.`,
-    clipUrl(lesson.id, "ask")
-  );
+  wireRead(`${lesson.question} ${answersSpeech(lesson)}`, clipUrl(lesson.id, "ask"));
 
   app().querySelectorAll("#answers button").forEach((btn) =>
     btn.addEventListener("click", () => {
@@ -742,7 +780,7 @@ function renderLessonDone(lesson, answerIdx) {
       ${stepDots(3)}
       <div class="meni-says">
         <div class="meni-avatar meni-holder">${avatar}</div>
-        <div class="bubble teach-text" role="status">${esc(response)}</div>
+        <div class="bubble teach-text">${esc(response)}</div>
       </div>
       ${bloomFigure(lesson)}
       ${promptCard}
@@ -756,13 +794,18 @@ function renderLessonDone(lesson, answerIdx) {
   wireHeader("lesson");
   wireRead(response, clipUrl(lesson.id, "done"));
 
+  /* aria-disabled (not disabled) keeps focus on the button, so the
+     confirmation text swap is actually announced. */
   document.getElementById("save-question").addEventListener("click", (e) => {
+    const btn = e.currentTarget;
+    if (btn.getAttribute("aria-disabled") === "true") return;
     if (!state.saved.some((q) => q.title === lesson.title)) {
       state.saved.push({ title: lesson.title, question: lesson.question });
       saveState();
     }
-    e.currentTarget.textContent = STRINGS.savedForMia;
-    e.currentTarget.disabled = true;
+    btn.textContent = STRINGS.savedForMia;
+    btn.setAttribute("aria-disabled", "true");
+    btn.classList.add("is-done");
   });
 
   document.getElementById("see-garden").addEventListener("click", renderGarden);
@@ -780,15 +823,6 @@ function renderWateringAsk() {
   }
   const flowerName = STRINGS.flowerNames[GARDEN.flowers.indexOf(flowerFor(idx))] || "";
 
-  const answerButtons = lesson.answers
-    .map(
-      (a, i) => `
-      <button type="button" class="${i === 0 ? "btn-primary" : "btn-secondary"}" data-answer="${i}">
-        ${esc(a.label)}
-      </button>`
-    )
-    .join("");
-
   app().innerHTML = `
     ${header()}
     <main>
@@ -797,12 +831,12 @@ function renderWateringAsk() {
       <p>${STRINGS.wateringSub}</p>
       ${readButton()}
       <p class="question-text" style="margin-top:16px">${esc(lesson.question)}</p>
-      <div class="btn-stack" id="answers">${answerButtons}</div>
+      <div class="btn-stack" id="answers">${answersMarkup(lesson)}</div>
     </main>`;
 
   wireHeader("lesson");
   wireRead(
-    `${STRINGS.wateringSub} ${lesson.question} Your choices are: ${lesson.answers.map((a) => a.label).join(", or ")}.`,
+    `${STRINGS.wateringSub} ${lesson.question} ${answersSpeech(lesson)}`,
     clipUrl(lesson.id, "ask")
   );
 
@@ -828,7 +862,7 @@ function renderWateringDone(lesson, answerIdx, idx) {
     <main>
       <div class="meni-says">
         <div class="meni-avatar meni-holder">${avatar}</div>
-        <div class="bubble teach-text" role="status">${esc(response)}</div>
+        <div class="bubble teach-text">${esc(response)}</div>
       </div>
       <div class="bloom-row">
         <svg viewBox="0 0 90 112" aria-hidden="true" focusable="false">
@@ -842,7 +876,7 @@ function renderWateringDone(lesson, answerIdx, idx) {
             </g>
           </g>
         </svg>
-        <span class="bloom-caption">${STRINGS.watered}</span>
+        <h1 class="bloom-caption">${STRINGS.watered}</h1>
       </div>
       ${readButton()}
       <div class="btn-stack">
@@ -904,7 +938,7 @@ function bloomFigure(lesson) {
           <g class="bloom-head">${flowerHead(f, 44)}</g>
         </g>
       </svg>
-      <span><span class="bloom-caption">${STRINGS.newFlower}</span>${skillLine}</span>
+      <div><h1 class="bloom-caption">${STRINGS.newFlower}</h1>${skillLine}</div>
     </div>`;
 }
 
@@ -916,8 +950,8 @@ function bloomFigure(lesson) {
 const GARDEN = {
   sky: ["#E7F4E1", "#F8FBF3"],
   sun: "#F5C462",
-  hillA: "#A5C892",
-  hillB: "#7CA36C",
+  hillA: "#AFC98B",
+  hillB: "#7E9E60",
   stem: "#6C945C",
   flowers: [
     { c: "#F2A6B8", shape: "daisy", center: "#FFFFFF" }, // blush
@@ -963,41 +997,56 @@ function gardenSVG(count) {
   const groundY = 186;
 
   /* Fixed planting slots: each flower keeps its spot forever as the
-     garden grows, and neighbors never crowd each other. */
+     garden grows, and neighbors never crowd each other. Jitter and
+     per-flower scale break the grid so the bed reads hand-planted. */
   const slots = [0, 4, 8, 2, 6, 1, 5, 3, 7];
+  const jitter = [0, -7, 5, -4, 8, -6, 3, -9, 6];
 
-  /* Completed lessons bloom; the next lesson is already sprouting. */
+  /* Completed lessons bloom; the next lesson is already sprouting.
+     Every third flower grows on the back hill (smaller, higher) so the
+     garden has depth — the front hill band overlaps the planes. */
   const showSprout = Boolean(nextLesson());
   const total = count + (showSprout ? 1 : 0);
-  let flowers = "";
+  let backFlowers = "";
+  let frontFlowers = "";
   for (let i = 0; i < total; i++) {
     const isSprout = showSprout && i === total - 1;
-    const x = 34 + slots[i % slots.length] * 36.5 + Math.floor(i / slots.length) * 18;
+    const x = 34 + slots[i % 9] * 36.5 + jitter[i % 9] + Math.floor(i / 9) * 18;
+    const isBack = !isSprout && i % 3 === 2;
+    const fs = isBack ? 0.72 : 0.85 + ((i * 13) % 5) * 0.07;
     const baseY = groundY + ((i * 7) % 10);
     const h = isSprout ? 22 : 42 + ((i * 19) % 26);
     const topY = baseY - h;
-    const stem = `<path d="M0 ${baseY} Q3 ${baseY - h / 2} 0 ${topY + 5}" fill="none" stroke="${GARDEN.stem}" stroke-width="4.5" stroke-linecap="round"/>`;
+    const sw = 3.5 + ((i * 7) % 3);
+    const stem = `<path d="M0 ${baseY} Q3 ${baseY - h / 2} 0 ${topY + 5}" fill="none" stroke="${GARDEN.stem}" stroke-width="${sw}" stroke-linecap="round"/>`;
     const leaf = `<ellipse cx="-8" cy="${baseY - h / 2.4}" rx="8" ry="4" fill="${GARDEN.stem}" transform="rotate(-32 -8 ${baseY - h / 2.4})"/>`;
 
     /* The position lives on an inner group: the CSS sway animation
-       replaces the outer group's transform, so it must carry none. */
+       replaces the outer group's transform, so it must carry none.
+       The translate keeps each flower's base on its ground line after
+       scaling (base maps to baseY + lift). */
+    const lift = isBack ? -10 : 0;
+    const ty = (baseY * (1 - fs) + lift).toFixed(1);
+    let fig;
     if (isSprout) {
-      flowers += `<g class="sway"><g transform="translate(${x} 0)">${stem}
+      fig = `${stem}
         <ellipse cx="-7" cy="${topY + 3}" rx="8" ry="4.5" fill="${GARDEN.stem}" transform="rotate(-35 -7 ${topY + 3})"/>
-        <ellipse cx="7" cy="${topY + 3}" rx="8" ry="4.5" fill="${GARDEN.stem}" transform="rotate(35 7 ${topY + 3})"/>
-      </g></g>`;
+        <ellipse cx="7" cy="${topY + 3}" rx="8" ry="4.5" fill="${GARDEN.stem}" transform="rotate(35 7 ${topY + 3})"/>`;
     } else {
-      flowers += `<g class="sway"><g transform="translate(${x} 0)">${stem}${leaf}${flowerHead(flowerFor(i), topY)}</g></g>`;
+      fig = `${stem}${leaf}${flowerHead(flowerFor(i), topY)}`;
     }
+    const g = `<g class="sway"><g transform="translate(${x} ${ty}) scale(${fs.toFixed(2)})">${fig}</g></g>`;
+    if (isBack) backFlowers += g;
+    else frontFlowers += g;
   }
 
-  let rays = "";
-  for (let r = 0; r < 8; r++) {
-    const ang = (Math.PI * 2 * r) / 8 + 0.39;
-    rays += `<line x1="${(300 + 30 * Math.cos(ang)).toFixed(1)}" y1="${(52 + 30 * Math.sin(ang)).toFixed(1)}" x2="${(300 + 40 * Math.cos(ang)).toFixed(1)}" y2="${(52 + 40 * Math.sin(ang)).toFixed(1)}" stroke="${GARDEN.sun}" stroke-width="4.5" stroke-linecap="round"/>`;
-  }
+  /* Grass tufts along both hill crests: ground texture, hand-placed. */
+  const tuft = (x, y, s = 1) =>
+    `<path d="M${x} ${y} q${1.5 * s} ${-7 * s} ${3 * s} ${-8 * s} M${x + 4 * s} ${y} q0 ${-6 * s} ${2 * s} ${-9 * s} M${x - 3 * s} ${y} q${-1 * s} ${-5 * s} ${-3 * s} ${-6 * s}" stroke="#5F8A50" stroke-width="2" stroke-linecap="round" fill="none"/>`;
+  const backGrass = [52, 148, 262, 330].map((x, k) => tuft(x, 191 + (k % 2) * 4, 0.9)).join("");
+  const frontGrass = [24, 108, 196, 292, 344].map((x, k) => tuft(x, 219 + (k % 2) * 5)).join("");
 
-  /* Evening (7pm-6am on the phone's clock): dusk sky, moon and stars. */
+  /* Evening (7pm-6am on the phone’s clock): dusk sky, moon and stars. */
   const hour = new Date().getHours();
   const night = hour >= 19 || hour < 6;
   const sky = night ? ["#DEE4F1", "#EFF3EA"] : GARDEN.sky;
@@ -1007,7 +1056,7 @@ function gardenSVG(count) {
        <circle cx="252" cy="36" r="1.8" fill="#F5C462"/><circle cx="272" cy="66" r="1.4" fill="#F5C462"/><circle cx="332" cy="76" r="1.6" fill="#F5C462"/>`
     : `<circle cx="300" cy="52" r="46" fill="url(#glow)"/>
        <circle cx="300" cy="52" r="21" fill="${GARDEN.sun}"/>
-       <g class="sun-rays">${rays}</g>`;
+       <circle cx="300" cy="52" r="27" fill="none" stroke="${GARDEN.sun}" stroke-width="3" opacity="0.5" stroke-dasharray="1 9" stroke-linecap="round"/>`;
 
   /* After 5 lessons, Meni moves into the garden for good. */
   const resident = count >= 5 ? MENI.group("classic", "smile", 0.27, 12, 176) : "";
@@ -1026,16 +1075,19 @@ function gardenSVG(count) {
     <rect width="360" height="240" fill="url(#sky)"/>
     ${skyLight}
     <path d="M0 196 Q90 178 180 190 Q270 200 360 186 L360 240 L0 240 Z" fill="${GARDEN.hillA}"/>
+    ${backGrass}
+    ${backFlowers}
     <path d="M0 214 Q120 202 220 212 Q300 219 360 210 L360 240 L0 240 Z" fill="${GARDEN.hillB}"/>
-    ${flowers}
+    ${frontGrass}
+    ${frontFlowers}
     ${seasonSVG()}
     ${resident}
     ${visitorsSVG(count)}
   </svg>`;
 }
 
-/* Season touches (decorative only, from the phone's date) and the
-   evening sky (from the phone's clock). The garden lives in real time. */
+/* Season touches (decorative only, from the phone’s date) and the
+   evening sky (from the phone’s clock). The garden lives in real time. */
 function seasonSVG() {
   const m = new Date().getMonth(); // 0-11
   if (m === 11 || m <= 1) {
@@ -1151,7 +1203,7 @@ function renderGarden() {
       <div class="garden-hero">${gardenSVG(count)}</div>
       <div class="meni-says">
         <div class="meni-avatar">${MENI.classic("smile")}</div>
-        <div class="bubble" role="status">${greeting()} ${message}</div>
+        <div class="bubble">${greeting()} ${message}</div>
       </div>
       ${officeCard}
       ${savedList}
@@ -1187,11 +1239,11 @@ function renderSetup() {
 
   app().innerHTML = `
     ${header()}
-    <main>
+    <main lang="en">
       <h1>Facilitator setup</h1>
       <p>These choices are for the person setting up this phone. The learner never sees this screen or any labels from it.</p>
       <div class="setup-field">
-        <label id="lang-label">Learner's language</label>
+        <label id="lang-label">Learner’s language</label>
         <div class="btn-stack" role="group" aria-labelledby="lang-label" style="margin-top:0">
           <button type="button" class="btn-secondary" data-setlang="en" lang="en">English</button>
           <button type="button" class="btn-secondary" data-setlang="es" lang="es">Español</button>
@@ -1215,10 +1267,10 @@ function renderSetup() {
       <div class="setup-field">
         <label for="replant">Replant a garden (lessons already learned)</label>
         <input type="number" id="replant" inputmode="numeric" min="0" max="${sequence().length}" value="${state.completed.length}">
-        <p class="footnote" style="margin-top:8px">For a new or replaced phone: enter how many lessons the learner had finished. The garden regrows instantly, and today's lesson stays available.</p>
+        <p class="footnote" style="margin-top:8px">For a new or replaced phone: enter how many lessons the learner had finished. The garden regrows instantly, and today’s lesson stays available.</p>
       </div>
       <div class="setup-field">
-        <label id="voice-label">Read-aloud voice (this phone's best voices for the learner's language)</label>
+        <label id="voice-label">Read-aloud voice (this phone’s best voices for the learner's language)</label>
         <div class="btn-stack" role="group" aria-labelledby="voice-label" style="margin-top:0" id="voice-list"></div>
         <p class="footnote" style="margin-top:8px">Tap a voice to hear it and choose it. Recorded human audio, when added, always plays instead (see the project's audio guide).</p>
       </div>
@@ -1242,9 +1294,11 @@ function renderSetup() {
 
   const langButtons = app().querySelectorAll("[data-setlang]");
   function markLang() {
-    langButtons.forEach((b) =>
-      b.classList.toggle("selected", b.dataset.setlang === (state.lang || "en"))
-    );
+    langButtons.forEach((b) => {
+      const on = b.dataset.setlang === (state.lang || "en");
+      b.classList.toggle("selected", on);
+      b.setAttribute("aria-pressed", String(on));
+    });
   }
   markLang();
   langButtons.forEach((b) =>
@@ -1258,7 +1312,11 @@ function renderSetup() {
 
   const packButtons = app().querySelectorAll("[data-pack]");
   function markPack() {
-    packButtons.forEach((b) => b.classList.toggle("selected", b.dataset.pack === state.pack));
+    packButtons.forEach((b) => {
+      const on = b.dataset.pack === state.pack;
+      b.classList.toggle("selected", on);
+      b.setAttribute("aria-pressed", String(on));
+    });
   }
   markPack();
   packButtons.forEach((b) =>
@@ -1289,7 +1347,7 @@ function renderSetup() {
     list.innerHTML = options
       .map(
         (v) =>
-          `<button type="button" class="btn-secondary${v.name === chosen ? " selected" : ""}" data-voice="${esc(v.name)}">${esc(v.name.replace(/\s*\(.*\)\s*$/, ""))}</button>`
+          `<button type="button" class="btn-secondary${v.name === chosen ? " selected" : ""}" aria-pressed="${v.name === chosen}" data-voice="${esc(v.name)}">${esc(v.name.replace(/\s*\(.*\)\s*$/, ""))}</button>`
       )
       .join("");
     list.querySelectorAll("[data-voice]").forEach((b) =>
@@ -1311,9 +1369,11 @@ function renderSetup() {
 
   const chimeButtons = app().querySelectorAll("[data-chime]");
   function markChime() {
-    chimeButtons.forEach((b) =>
-      b.classList.toggle("selected", (b.dataset.chime === "on") === state.chime)
-    );
+    chimeButtons.forEach((b) => {
+      const on = (b.dataset.chime === "on") === state.chime;
+      b.classList.toggle("selected", on);
+      b.setAttribute("aria-pressed", String(on));
+    });
   }
   markChime();
   chimeButtons.forEach((b) =>
@@ -1326,7 +1386,7 @@ function renderSetup() {
   );
 
   /* Replant: rebuild progress as the first N lessons, dated long ago so
-     today's lesson is still available. The garden never shrinks by
+     today’s lesson is still available. The garden never shrinks by
      accident — this is a deliberate facilitator action. */
   document.getElementById("replant").addEventListener("change", (e) => {
     const n = Math.max(0, Math.min(sequence().length, Number(e.target.value) || 0));
@@ -1345,16 +1405,30 @@ function renderSetup() {
     renderHome();
   });
 
-  /* Two-step erase, inline (no popups anywhere in the app). */
+  /* Two-step erase, inline (no popups anywhere in the app). The armed
+     state disarms after a few seconds so a stray tap minutes later can
+     never erase a garden. */
   const resetBtn = document.getElementById("reset-btn");
   let armed = false;
+  let disarmTimer = null;
+  function disarm() {
+    armed = false;
+    clearTimeout(disarmTimer);
+    resetBtn.textContent = "Start over (erase all progress on this phone)";
+    resetBtn.className = "btn-quiet";
+  }
+  resetBtn.addEventListener("blur", () => {
+    if (armed) disarm();
+  });
   resetBtn.addEventListener("click", () => {
     if (!armed) {
       armed = true;
       resetBtn.textContent = "Tap again to erase everything";
       resetBtn.className = "btn-secondary";
+      disarmTimer = setTimeout(disarm, 6000);
       return;
     }
+    clearTimeout(disarmTimer);
     localStorage.removeItem(STORE_KEY);
     state = defaultState();
     setLang("en");
@@ -1388,7 +1462,7 @@ function renderHome() {
 }
 
 function boot() {
-  /* Was the learner away? Decide before stamping today's visit.
+  /* Was the learner away? Decide before stamping today’s visit.
      "Away" means at least one full missed day — never counted, never shown. */
   const t = todayStr();
   state.wasAway = Boolean(state.lastVisit && daysBetween(state.lastVisit, t) >= 2);

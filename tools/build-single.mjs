@@ -16,10 +16,10 @@ const b64 = (p) => readFileSync(join(root, p)).toString("base64");
 
 let html = read("index.html");
 
-/* Font -> data URI inside the CSS, CSS -> inline <style>. */
+/* Fonts -> data URIs inside the CSS, CSS -> inline <style>. */
 const css = read("css/styles.css").replace(
-  'url("../fonts/nunito-latin.woff2")',
-  `url("data:font/woff2;base64,${b64("fonts/nunito-latin.woff2")}")`
+  /url\("\.\.\/fonts\/([^"]+\.woff2)"\)/g,
+  (_, f) => `url("data:font/woff2;base64,${b64(`fonts/${f}`)}")`
 );
 html = html
   .replace(/\s*<link rel="preload"[^>]*>/, "")

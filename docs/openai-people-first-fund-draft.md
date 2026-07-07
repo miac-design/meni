@@ -45,9 +45,11 @@ trauma-informed needs:
   never replaces them.
 
 Status: working product, 32 lessons across a seniors track and a
-work-and-rights track, piloting with office-hours participants in July
-2026. Co-designed with participants: name, colors, and mascot are being
-preference-tested with the actual community before decisions are final.
+work-and-rights track — fully bilingual (English and Spanish, chosen by
+the learner with one tap) — piloting with office-hours participants in
+July 2026. Co-designed with participants: name, colors, and mascot are
+being preference-tested with the actual community before decisions are
+final.
 
 ## Why this fits the Fund's AI-literacy focus
 
@@ -60,8 +62,9 @@ own, plus a monthly human who knows their name.
 
 - [$X] Expand the pilot from [N] to [N] participants across Austin
   senior centers and community partners
-- [$X] Recorded human audio for every lesson (low-literacy access),
-  Spanish translation (Austin demographics)
+- [$X] Recorded human audio for every lesson in both languages
+  (low-literacy access) — the recording pipeline is already built;
+  the grant funds voice talent and studio time
 - [$X] Facilitator training so partner organizations can run the
   install ritual and office-hours model without us
 - [$X] Program coordinator hours; participant advisors compensated

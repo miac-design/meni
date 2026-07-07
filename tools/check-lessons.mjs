@@ -74,10 +74,17 @@ checkParity("core", en.CORE_LESSONS, es.CORE_LESSONS_ES);
 checkParity("everyday", en.PACKS.everyday, es.PACKS_ES.everyday);
 checkParity("work", en.PACKS.work, es.PACKS_ES.work);
 
-/* Every journey must be 22 days: 12 core + 10 pack. */
+/* Journey lengths: 12 core + 12 everyday / 11 work. */
 if (en.CORE_LESSONS.length !== 12) problems.push(`core en: expected 12 lessons, got ${en.CORE_LESSONS.length}`);
+const PACK_LEN = { everyday: 12, work: 11 };
 for (const p of ["everyday", "work"]) {
-  if (en.PACKS[p].length !== 10) problems.push(`${p} en: expected 10 lessons, got ${en.PACKS[p].length}`);
+  if (en.PACKS[p].length !== PACK_LEN[p]) problems.push(`${p} en: expected ${PACK_LEN[p]} lessons, got ${en.PACKS[p].length}`);
+}
+
+/* The finale (first-real-conversation bridge) must stay the last day. */
+for (const [packName, finale] of [["everyday", "ev-10"], ["work", "wk-10"]]) {
+  const last = en.PACKS[packName][en.PACKS[packName].length - 1];
+  if (last.id !== finale) problems.push(`${packName}: finale ${finale} must be the last lesson, got ${last.id}`);
 }
 
 if (problems.length) {

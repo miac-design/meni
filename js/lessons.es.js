@@ -22,7 +22,8 @@ const CORE_LESSONS_ES = [
       },
       {
         label: "No lo sé",
-        response: "¡No pasa nada! Mañana lo vemos juntos.",
+        response:
+          "¡No pasa nada! Si alguna vez ha buscado algo en internet o le ha pedido direcciones a un teléfono, la IA le estaba ayudando calladita.",
       },
     ],
   },
@@ -80,9 +81,9 @@ const CORE_LESSONS_ES = [
           "Exactamente. La IA es una ayudante, no un médico. Consultar con una persona de confianza siempre es lo más sabio.",
       },
       {
-        label: "Creerle de inmediato",
+        label: "Preguntarle a la misma IA si está segura",
         response:
-          "Es tentador — ¡la IA suena tan segura de sí misma! Pero puede equivocarse, así que consultar primero con su médico le mantiene a salvo.",
+          "Parece buena idea — pero la IA suele decir que sí, y con más seguridad todavía, aun cuando se equivoca. La verdadera verificación es una persona que sabe de medicina, como su médico o farmacéutico.",
       },
     ],
   },
@@ -150,7 +151,7 @@ const CORE_LESSONS_ES = [
     share: "Buena idea: pregúntele a alguien si conocía esta regla. ¡Ahora usted puede enseñarla!",
     title: "Lo privado se queda privado",
     teach:
-      "La IA solo sabe lo que usted le escribe. Guarde para usted sus contraseñas, números de banco y número de Seguro Social — ningún ayudante honesto los necesita.",
+      "Lo que usted escribe en una aplicación de IA puede quedar guardado en la empresa que la hizo. Por eso, no ponga contraseñas, números de banco ni el Seguro Social — ni papeles privados completos, como identificaciones o cartas legales. Ningún ayudante honesto los necesita.",
     question: "¿Debe decirle a la IA la contraseña de su banco?",
     answers: [
       {
@@ -203,7 +204,7 @@ const CORE_LESSONS_ES = [
       {
         label: "Dejar de usar la IA",
         response:
-          "¡No hace falta! El botoncito del micrófono le deja hablar en vez de escribir. Podemos buscarlo juntos en las horas de consulta.",
+          "¡No hace falta! El botoncito del micrófono le deja hablar en vez de escribir. Podemos buscarlo juntos en las horas con Meni.",
       },
     ],
   },
@@ -243,7 +244,7 @@ const CORE_LESSONS_ES = [
       {
         label: "Prefiero repasar primero",
         response:
-          "Muy buena idea. Traiga cualquier pregunta a las horas de consulta y repasamos juntos — para eso son.",
+          "Muy buena idea. Traiga cualquier pregunta a las horas con Meni y repasamos juntos — para eso son.",
       },
     ],
   },
@@ -257,9 +258,9 @@ const PACKS_ES = {
       title: "Cómo reconocer un mensaje de estafa",
       alert: true,
       teach:
-        "Los estafadores usan la IA para escribir mensajes que parecen muy reales. Una estafa casi siempre le mete prisa — los bancos de verdad y la familia de verdad no le apuran para pedir dinero o códigos.",
+        "Los estafadores usan la IA para escribir mensajes que parecen muy reales. Una estafa casi siempre le mete prisa — los bancos de verdad y la familia de verdad no le meten prisa para que mande dinero o códigos.",
       question:
-        "Un texto dice: «Abuela, estoy en problemas, ¡manda tarjetas de regalo ya!» ¿Qué hace usted?",
+        "Un mensaje de texto dice: «Abuela, estoy en problemas, ¡manda tarjetas de regalo ya!» ¿Qué hace usted?",
       answers: [
         {
           label: "Me detengo y llamo a mi familiar a su número de siempre",
@@ -267,9 +268,9 @@ const PACKS_ES = {
             "Perfecto. Detenerse y llamar directamente a la persona vence cualquier estafa. Acaba de protegerse.",
         },
         {
-          label: "Mando las tarjetas de regalo rápido",
+          label: "Contesto el mensaje para preguntar qué pasó",
           response:
-            "Esa prisa es el truco — el mensaje está hecho para asustar. Deténgase, respire y llame a su familiar al número que usted conoce.",
+            "Cuidado — contestar le avisa al estafador que hay una persona real leyendo, y la IA le ayuda a responder cualquier pregunta sin tropiezos. Lo seguro es llamar usted a su familiar, al número que ya conoce.",
         },
       ],
     },
@@ -287,9 +288,9 @@ const PACKS_ES = {
             "¡Sí! La IA le ayuda a organizarse, y su médico le da el consejo médico. Un gran equipo.",
         },
         {
-          label: "Para tomar el lugar del médico",
+          label: "Para reemplazar al médico",
           response:
-            "No — ninguna IA puede tomar el lugar de su médico. Pero es maravillosa para ayudarle a preparar sus preguntas.",
+            "No exactamente — ninguna IA puede reemplazar a su médico. Pero es maravillosa para ayudarle a preparar sus preguntas.",
         },
       ],
     },
@@ -322,7 +323,7 @@ const PACKS_ES = {
       title: "Una voz que suena como su familia",
       alert: true,
       teach:
-        "La IA puede copiar la voz de una persona con una grabación corta. Si una llamada suena como un familiar pidiendo dinero, cuelgue y llámele usted al número que conoce.",
+        "La IA puede copiar la voz de una persona con una grabación corta — y ahora hasta su cara en una videollamada. Si una llamada suena o se ve como un familiar pidiendo dinero, cuelgue y llámele usted al número que conoce.",
       question:
         "La voz del teléfono suena igual a su nieto pidiendo dinero. ¿Qué hace usted?",
       answers: [
@@ -369,12 +370,12 @@ const PACKS_ES = {
         {
           label: "Pedirle a la IA que la explique con sencillez",
           response:
-            "¡Sí! Y para las decisiones grandes, lleve la carta también a las horas de consulta — dos ayudantes son mejor que uno.",
+            "¡Sí! Y para las decisiones grandes, lleve la carta también a las horas con Meni — dos ayudantes son mejor que uno.",
         },
         {
           label: "Guardarla en un cajón",
           response:
-            "¡Muy tentador! Pero la IA puede quitarle el susto en un minuto. Y siempre puede llevarla a las horas de consulta.",
+            "¡Muy tentador! Pero la IA puede quitarle el susto en un minuto. Y siempre puede llevarla a las horas con Meni.",
         },
       ],
     },
@@ -442,11 +443,55 @@ const PACKS_ES = {
       ],
     },
     {
+      id: "ev-11",
+      skill: "Sé qué hacer si una estafa llega a lograrse.",
+      alert: true,
+      share: "Buena idea: dígale a alguien: si una estafa llega a funcionar, no es su culpa — contarlo rápido es lo más fuerte.",
+      title: "Si una estafa llega a lograrse",
+      teach:
+        "Las estafas engañan a gente inteligente todos los días — caer en una nunca es su culpa. Si llega a pasar, contarlo rápido es lo más fuerte: llame primero a su banco y repórtelo gratis al 1-877-908-3360, la línea de fraude de AARP (atienden en español).",
+      question: "Una estafa le quitó el dinero a alguien. ¿Qué es cierto?",
+      answers: [
+        {
+          label: "No es su culpa — y contarlo rápido ayuda",
+          response:
+            "Exactamente. Los estafadores son profesionales con herramientas de IA — caer en una no es debilidad. Reportar rápido puede detenerlos, y a veces hasta recupera el dinero.",
+        },
+        {
+          label: "Debería guardar el secreto",
+          response:
+            "El secreto es el mejor amigo del estafador — la vergüenza deja callada a la gente. Contárselo rápido a su banco y a la línea de ayuda es de valientes, y protege también a la siguiente persona.",
+        },
+      ],
+    },
+    {
+      id: "ev-12",
+      skill: "Conozco la regla del amigo de internet.",
+      alert: true,
+      title: "Un nuevo amigo que pide dinero",
+      teach:
+        "La IA ya escribe miles de mensajes cariñosos, así que una amistad o un romance por internet puede sentirse totalmente real. La regla es sencilla: alguien que usted nunca ha visto en persona y que le pide dinero — aunque sea una vez, aunque sea una emergencia — es una estafa.",
+      question:
+        "Un amigo de internet de hace dos meses de pronto necesita dinero para una emergencia. ¿Cuál es la regla?",
+      answers: [
+        {
+          label: "Nunca lo he visto en persona y pide dinero: es estafa",
+          response:
+            "Exactamente. Querer compañía es humano — la estafa funciona justo porque el cariño se siente real. El amor de verdad nunca empieza pidiendo dinero.",
+        },
+        {
+          label: "Lo ayudo — suena muy sincero",
+          response:
+            "Siempre suenan sinceros — la IA les escribe las palabras dulces. Antes de mandar nada, coméntelo con una persona de confianza. Eso no cuesta nada y le protege.",
+        },
+      ],
+    },
+    {
       id: "ev-10",
       skill: "Ya puedo tener mi primera conversación real con la IA.",
       title: "Su primera conversación de verdad",
       teach:
-        "Ya sabe lo suficiente para probar la IA de verdad — y no tiene que hacerlo sin compañía. En las horas de consulta abriremos una IA juntos y usted hará su primera pregunta.",
+        "Ya sabe lo suficiente para probar la IA de verdad — y no tiene que hacerlo sin compañía. En las horas con Meni abriremos una IA juntos y usted hará su primera pregunta.",
       question: "¿Qué pregunta le gustaría probar primero?",
       answers: [
         {
@@ -489,12 +534,12 @@ const PACKS_ES = {
       title: "Practicar para una entrevista",
       teach:
         "Puede practicar una entrevista de trabajo con la IA. Pídale: «Hazme tres preguntas comunes de entrevista para un trabajo de cocina».",
-      question: "¿Le gustaría probar una pregunta de práctica en las horas de consulta?",
+      question: "¿Le gustaría probar una pregunta de práctica en las horas con Meni?",
       answers: [
         {
           label: "Sí, me gustaría",
           response:
-            "¡Maravilloso! Toque «Guardar esta pregunta» aquí abajo y la practican juntos en las horas de consulta.",
+            "¡Maravilloso! Toque «Guardar esta pregunta» aquí abajo y la practicamos juntos en las horas con Meni.",
         },
         {
           label: "Quizás después",
@@ -549,7 +594,7 @@ const PACKS_ES = {
       title: "Entender un contrato de renta",
       teach:
         "Los contratos de renta están llenos de palabras pesadas. Puede preguntarle a la IA: «¿Qué significa esta frase de mi contrato, en palabras sencillas?»",
-      question: "Para un problema grande de vivienda, ¿cuál es la jugada más fuerte?",
+      question: "Para un problema grande de vivienda, ¿cuál es el paso más fuerte?",
       answers: [
         {
           label: "Entenderlo con la IA y luego buscar ayuda de verdad",
@@ -559,7 +604,7 @@ const PACKS_ES = {
         {
           label: "No hacer nada",
           response:
-            "Se entiende — las palabras pesadas cansan. Pero una explicación en palabras sencillas puede hacer posible el siguiente paso. Las horas de consulta también ayudan.",
+            "Se entiende — las palabras pesadas cansan. Pero una explicación en palabras sencillas puede hacer posible el siguiente paso. Las horas con Meni también ayudan.",
         },
       ],
     },
@@ -594,12 +639,12 @@ const PACKS_ES = {
         {
           label: "Preguntarle a la IA qué significa, en palabras sencillas",
           response:
-            "Exactamente. Primero entender, después contestar. Y los espacios en blanco pueden esperar a las horas de consulta.",
+            "Exactamente. Primero entender, después contestar. Y los espacios en blanco pueden esperar a las horas con Meni.",
         },
         {
           label: "Adivinar y esperar suerte",
           response:
-            "¡Todos lo hemos hecho! Pero un rápido «¿qué significa esto?» toma diez segundos — y en las horas de consulta pueden terminar cualquier formulario juntos.",
+            "¡Todos lo hemos hecho! Pero un rápido «¿qué significa esto?» toma diez segundos — y en las horas con Meni pueden terminar cualquier formulario juntos.",
         },
       ],
     },
@@ -621,7 +666,7 @@ const PACKS_ES = {
         {
           label: "Un trato justo",
           response:
-            "¡Está hecho para sonar justo! Pero los empleadores de verdad nunca cobran por empezar. Dinero en la dirección equivocada siempre significa estafa.",
+            "¡Está hecho para sonar justo! Pero los empleadores de verdad nunca cobran por empezar. Cuando el dinero va al revés, siempre es estafa.",
         },
       ],
     },
@@ -647,11 +692,33 @@ const PACKS_ES = {
       ],
     },
     {
+      id: "wk-11",
+      skill: "Sé qué hacer si una estafa llega a lograrse.",
+      alert: true,
+      share: "Buena idea: dígale a alguien: si una estafa llega a funcionar, no es su culpa — contarlo rápido es lo más fuerte.",
+      title: "Si una estafa llega a lograrse",
+      teach:
+        "Las estafas engañan a gente inteligente todos los días — caer en una nunca es su culpa. Si llega a pasar, contarlo rápido es lo más fuerte: llame primero a su banco y cuénteselo a una persona de confianza — y puede reportarlo gratis en reportfraud.ftc.gov (disponible en español).",
+      question: "Una estafa le quitó el dinero a alguien. ¿Qué es cierto?",
+      answers: [
+        {
+          label: "No es su culpa — y contarlo rápido ayuda",
+          response:
+            "Exactamente. Los estafadores son profesionales con herramientas de IA — caer en una no es debilidad. Reportar rápido puede detenerlos, y a veces hasta recupera el dinero.",
+        },
+        {
+          label: "Debería guardar el secreto",
+          response:
+            "El secreto es el mejor amigo del estafador — la vergüenza deja callada a la gente. Contárselo rápido a su banco y a una persona de confianza es de valientes, y protege también a la siguiente persona.",
+        },
+      ],
+    },
+    {
       id: "wk-10",
       skill: "Ya puedo tener mi primera conversación real con la IA.",
       title: "Su primera conversación de verdad",
       teach:
-        "Ya sabe lo suficiente para probar la IA de verdad — y no tiene que hacerlo sin compañía. En las horas de consulta abriremos una IA juntos y usted hará su primera pregunta.",
+        "Ya sabe lo suficiente para probar la IA de verdad — y no tiene que hacerlo sin compañía. En las horas con Meni abriremos una IA juntos y usted hará su primera pregunta.",
       question: "¿Qué pregunta le gustaría probar primero?",
       answers: [
         {
