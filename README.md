@@ -64,8 +64,10 @@ tools/check-lessons.mjs  content checks incl. English/Spanish parity: node tools
 - Text sizes are `rem`-based so the phone's system font setting scales the
   whole app; the in-app A / AA / AAA chooser multiplies on top of it.
 - The garden never resets and missed days are never counted or mentioned.
-- Audio ("Read it to me") is on every lesson via the Web Speech API, in the
-  learner's language.
+- Audio ("Read it to me") is on every lesson, best voice first: a real
+  human recording when one exists (see below), otherwise the most natural
+  voice installed on the phone — scored and chosen in code, never the
+  robotic default. The facilitator can audition and pick a voice in setup.
 - After every screen change, focus moves to the new heading so screen
   readers announce where the learner is (screens are re-rendered in place).
 
@@ -102,8 +104,20 @@ first screen (before any other words appear); the facilitator can switch
 it later in setup without losing any progress. UI strings live in `I18N`
 (js/app.js); lessons live in `js/lessons.js` / `js/lessons.es.js`.
 
+## Recording a human voice
+
+The app is built to speak with a real human voice — recordings always
+beat synthesis when present:
+
+1. Open `tools/record-audio.html` in a browser (serve the project folder).
+2. Pick a language and record each line (record → listen → download).
+3. Drop the downloaded files into `audio/en/` and `audio/es/`.
+4. Run `node tools/build-audio-manifest.mjs`, bump `CACHE` in `sw.js`.
+
+Any lesson without a recording falls back to the phone's best voice, so
+you can record gradually — start with the 12 core lessons.
+
 ## Roadmap (post-pilot, per the project spec)
 
 - Supabase-managed lesson content (progress stays on-device).
-- Recorded human audio replacing synthesized speech (English and Spanish).
 - Spanish print guide (print/garden-guide.html is English-only today).

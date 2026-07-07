@@ -150,6 +150,7 @@ function defaultState() {
     lastVisit: null, // 'YYYY-MM-DD'
     saved: [], // [{ title, question }]
     chime: true, // soft chime when a flower grows
+    voice: { en: null, es: null }, // preferred read-aloud voice name per language
     watered: [], // watering-day reviews: [{ id, date }] — spaced repetition
     favAsked: false, // has the favorite-color question been offered?
     favColor: null, // index into GARDEN.flowers, or null for the full mix
@@ -248,10 +249,65 @@ function applyScale(name) {
   document.documentElement.style.setProperty("--scale", SCALES[name] || 1);
 }
 
-/* ---------------- Audio: "Read it to me" (Web Speech API) ---------------- */
+/* ---------------- Audio: "Read it to me" ----------------
+   Two tiers, best first:
+   1. A real human recording, if one exists for this lesson and language
+      (see audio/README and tools/record-audio.html — the manifest in
+      js/audio-manifest.js lists what has been recorded).
+   2. The phone's own voice — but never the robotic default. We score
+      every installed voice and pick the most natural one (phones ship
+      "enhanced"/"natural" voices that the default API call ignores),
+      and the facilitator can pick a specific voice in setup. */
 
 let speaking = false;
 let audioEl = null;
+
+/* A human recording beats any synthesis. Files live in audio/<lang>/. */
+function clipUrl(lessonId, part) {
+  if (typeof AUDIO_FILES === "undefined") return null;
+  return AUDIO_FILES[`${state.lang}/${lessonId}.${part}`] || null;
+}
+
+/* Rank the phone's installed voices for a language: prefer the natural/
+   enhanced ones phones hide behind the robotic default, prefer on-device
+   voices (work offline), and shun known low-quality engines. */
+function voiceScore(v, lang) {
+  const name = (v.name || "").toLowerCase();
+  let s = 0;
+  if (!v.lang || v.lang.slice(0, 2).toLowerCase() !== lang) return -1;
+  for (const good of ["natural", "neural", "premium", "enhanced", "siri"]) {
+    if (name.includes(good)) s += 10;
+  }
+  if (name.includes("espeak") || name.includes("compact")) s -= 10;
+  if (v.localService) s += 2;
+  if (v.lang.toLowerCase() === STRINGS.speechLang.toLowerCase()) s += 1;
+  return s;
+}
+
+function voicesFor(lang) {
+  if (!("speechSynthesis" in window)) return [];
+  return window.speechSynthesis
+    .getVoices()
+    .filter((v) => voiceScore(v, lang) >= 0)
+    .sort((a, b) => voiceScore(b, lang) - voiceScore(a, lang));
+}
+
+function pickVoice() {
+  const options = voicesFor(state.lang || "en");
+  if (!options.length) return null;
+  const saved = state.voice && state.voice[state.lang];
+  if (saved) {
+    const match = options.find((v) => v.name === saved);
+    if (match) return match;
+  }
+  return options[0];
+}
+
+/* Voice lists load lazily on some phones; warm them up early. */
+if ("speechSynthesis" in window) {
+  window.speechSynthesis.getVoices();
+  window.speechSynthesis.addEventListener?.("voiceschanged", () => {});
+}
 
 function setTalking(on) {
   document.querySelectorAll(".meni-holder").forEach((el) => el.classList.toggle("talking", on));
@@ -276,20 +332,26 @@ function startSpeakingUI() {
   if (btn) btn.querySelector(".read-label").textContent = STRINGS.stopReading;
 }
 
-function speakSynth(text) {
+function speakSynth(text, voiceOverride) {
   if (!("speechSynthesis" in window)) return;
   const u = new SpeechSynthesisUtterance(text);
-  u.lang = STRINGS.speechLang;
-  u.rate = 0.95;
+  const voice = voiceOverride || pickVoice();
+  if (voice) {
+    u.voice = voice;
+    u.lang = voice.lang;
+  } else {
+    u.lang = STRINGS.speechLang;
+  }
+  u.rate = 0.92; // unhurried, senior-paced
+  u.pitch = 1;
   u.onend = () => stopSpeaking();
   u.onerror = () => stopSpeaking();
   startSpeakingUI();
   window.speechSynthesis.speak(u);
 }
 
-/* Lessons may carry recorded human audio (lesson.audio = { teach, ask,
-   done } file paths — a v1 upgrade). When a recording exists we play it;
-   otherwise the built-in voice reads the text. */
+/* When a human recording exists we play it; otherwise the best
+   installed voice reads the text. */
 function toggleSpeak(text, audioUrl) {
   if (speaking) {
     stopSpeaking();
@@ -608,7 +670,7 @@ function renderLessonTeach(lesson) {
     </main>`;
 
   wireHeader("lesson");
-  wireRead(`${lesson.title}. ${lesson.teach}`, lesson.audio && lesson.audio.teach);
+  wireRead(`${lesson.title}. ${lesson.teach}`, clipUrl(lesson.id, "teach"));
   document.getElementById("next-btn").addEventListener("click", () => renderLessonAsk(lesson));
 
   /* Skip-ahead path: never feels like a test. The flower still grows. */
@@ -647,7 +709,7 @@ function renderLessonAsk(lesson) {
   wireHeader("lesson");
   wireRead(
     `${lesson.question} Your choices are: ${lesson.answers.map((a) => a.label).join(", or ")}.`,
-    lesson.audio && lesson.audio.ask
+    clipUrl(lesson.id, "ask")
   );
 
   app().querySelectorAll("#answers button").forEach((btn) =>
@@ -692,7 +754,7 @@ function renderLessonDone(lesson, answerIdx) {
     </main>`;
 
   wireHeader("lesson");
-  wireRead(response, lesson.audio && lesson.audio.done);
+  wireRead(response, clipUrl(lesson.id, "done"));
 
   document.getElementById("save-question").addEventListener("click", (e) => {
     if (!state.saved.some((q) => q.title === lesson.title)) {
@@ -741,7 +803,7 @@ function renderWateringAsk() {
   wireHeader("lesson");
   wireRead(
     `${STRINGS.wateringSub} ${lesson.question} Your choices are: ${lesson.answers.map((a) => a.label).join(", or ")}.`,
-    lesson.audio && lesson.audio.ask
+    clipUrl(lesson.id, "ask")
   );
 
   app().querySelectorAll("#answers button").forEach((btn) =>
@@ -789,7 +851,7 @@ function renderWateringDone(lesson, answerIdx, idx) {
     </main>`;
 
   wireHeader("lesson");
-  wireRead(response, lesson.audio && lesson.audio.done);
+  wireRead(response, clipUrl(lesson.id, "done"));
   document.getElementById("see-garden").addEventListener("click", renderGarden);
   focusScreen();
 }
@@ -1156,6 +1218,11 @@ function renderSetup() {
         <p class="footnote" style="margin-top:8px">For a new or replaced phone: enter how many lessons the learner had finished. The garden regrows instantly, and today's lesson stays available.</p>
       </div>
       <div class="setup-field">
+        <label id="voice-label">Read-aloud voice (this phone's best voices for the learner's language)</label>
+        <div class="btn-stack" role="group" aria-labelledby="voice-label" style="margin-top:0" id="voice-list"></div>
+        <p class="footnote" style="margin-top:8px">Tap a voice to hear it and choose it. Recorded human audio, when added, always plays instead (see the project's audio guide).</p>
+      </div>
+      <div class="setup-field">
         <label id="chime-label">Soft chime when a flower grows</label>
         <div class="btn-stack" role="group" aria-labelledby="chime-label" style="margin-top:0">
           <button type="button" class="btn-secondary" data-chime="on">Chime on</button>
@@ -1185,6 +1252,7 @@ function renderSetup() {
       setLang(b.dataset.setlang);
       saveState();
       markLang();
+      renderVoiceList(); // voices differ per language
     })
   );
 
@@ -1205,6 +1273,41 @@ function renderSetup() {
     state.officeHoursDate = e.target.value || null;
     saveState();
   });
+
+  /* Voice chooser: the top-ranked voices for the learner's language.
+     Tapping previews AND selects — hearing it is the only way to judge. */
+  function renderVoiceList() {
+    const list = document.getElementById("voice-list");
+    if (!list) return;
+    const lang = state.lang || "en";
+    const options = voicesFor(lang).slice(0, 6);
+    if (!options.length) {
+      list.innerHTML = `<p class="footnote" style="margin:0">No voices found on this phone yet — try again after the page finishes loading.</p>`;
+      return;
+    }
+    const chosen = (state.voice && state.voice[lang]) || options[0].name;
+    list.innerHTML = options
+      .map(
+        (v) =>
+          `<button type="button" class="btn-secondary${v.name === chosen ? " selected" : ""}" data-voice="${esc(v.name)}">${esc(v.name.replace(/\s*\(.*\)\s*$/, ""))}</button>`
+      )
+      .join("");
+    list.querySelectorAll("[data-voice]").forEach((b) =>
+      b.addEventListener("click", () => {
+        if (!state.voice) state.voice = { en: null, es: null };
+        state.voice[lang] = b.dataset.voice;
+        saveState();
+        stopSpeaking();
+        const v = voicesFor(lang).find((x) => x.name === b.dataset.voice);
+        speakSynth(lang === "es" ? I18N.es.hello + " " + I18N.es.gardenGrowing : I18N.en.hello + " " + I18N.en.gardenGrowing, v);
+        renderVoiceList();
+      })
+    );
+  }
+  renderVoiceList();
+  if ("speechSynthesis" in window) {
+    window.speechSynthesis.addEventListener?.("voiceschanged", renderVoiceList, { once: true });
+  }
 
   const chimeButtons = app().querySelectorAll("[data-chime]");
   function markChime() {

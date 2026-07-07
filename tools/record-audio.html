@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Meni recording booth</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; }
+    body {
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+      background: #F3F8EE; color: #1B2036; line-height: 1.55;
+      max-width: 720px; margin: 0 auto; padding: 24px 20px 80px; font-size: 17px;
+    }
+    h1 { font-size: 26px; margin-bottom: 6px; }
+    .sub { color: #3A405C; margin-bottom: 18px; }
+    .controls { display: flex; gap: 10px; margin: 14px 0 22px; flex-wrap: wrap; }
+    select, button {
+      font: inherit; padding: 10px 16px; border-radius: 12px;
+      border: 2px solid #1B2036; background: #FFF; color: #1B2036; cursor: pointer;
+    }
+    button.primary { background: #1B2036; color: #F3F8EE; font-weight: 700; }
+    button.rec { background: #D6452B; color: #FFF; border-color: #D6452B; font-weight: 700; }
+    button:disabled { opacity: 0.45; cursor: default; }
+    .clip {
+      background: #FFF; border-radius: 14px; padding: 16px 18px; margin-bottom: 12px;
+      box-shadow: 0 2px 8px rgba(74,94,60,0.10);
+    }
+    .clip.done { outline: 3px solid #7CA36C; }
+    .key { font-family: ui-monospace, Menlo, Consolas, monospace; font-size: 13px; color: #3A405C; }
+    .text { font-size: 18px; margin: 8px 0 12px; }
+    .row { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+    .hint { background: #E4F0DB; border-radius: 12px; padding: 12px 16px; margin-bottom: 18px; font-size: 15px; }
+    progress { width: 100%; height: 10px; margin-bottom: 16px; }
+  </style>
+</head>
+<body>
+  <h1>Meni recording booth</h1>
+  <p class="sub">Record every lesson in your own voice. Warm, unhurried, like reading to a friend.</p>
+  <div class="hint">
+    <b>How it works:</b> pick a language, tap <b>Record</b> on a line, read it, tap <b>Stop</b>,
+    listen back, re-record if you like. Each saved take downloads as a correctly named file.
+    Put all files into <code>audio/en/</code> or <code>audio/es/</code> in the project, run
+    <code>node tools/build-audio-manifest.mjs</code>, bump the cache version in <code>sw.js</code>,
+    and the app speaks with your voice. Quiet room, phone or laptop mic 20&nbsp;cm away.
+  </div>
+  <div class="controls">
+    <select id="lang">
+      <option value="en">English</option>
+      <option value="es">Español</option>
+    </select>
+    <select id="pack">
+      <option value="everyday">Core + Everyday pack</option>
+      <option value="work">Core + Work pack</option>
+    </select>
+  </div>
+  <progress id="prog" max="1" value="0"></progress>
+  <div id="list"></div>
+
+  <script src="../js/lessons.js"></script>
+  <script src="../js/lessons.es.js"></script>
+  <script>
+    "use strict";
+    const listEl = document.getElementById("list");
+    const langEl = document.getElementById("lang");
+    const packEl = document.getElementById("pack");
+    const progEl = document.getElementById("prog");
+    const recorded = new Set(JSON.parse(localStorage.getItem("meni.booth") || "[]"));
+
+    function clips() {
+      const lang = langEl.value;
+      const seq = lessonSequence(packEl.value, lang);
+      const out = [];
+      for (const l of seq) {
+        out.push({ key: `${l.id}.teach`, text: `${l.title}. ${l.teach}` });
+        const choices = l.answers.map((a) => a.label).join(lang === "es" ? ", o " : ", or ");
+        out.push({ key: `${l.id}.ask`, text: `${l.question} ${lang === "es" ? "Sus opciones son:" : "Your choices are:"} ${choices}.` });
+        for (let i = 0; i < l.answers.length; i++) {
+          out.push({ key: `${l.id}.done${i ? "-" + i : ""}`, text: l.answers[i].response, note: i ? "(second answer's reply — optional, app uses .done for the first)" : "" });
+        }
+      }
+      return out;
+    }
+
+    let mediaRecorder = null;
+    let activeKey = null;
+
+    async function record(key, btn, row) {
+      if (mediaRecorder && mediaRecorder.state === "recording") {
+        mediaRecorder.stop();
+        return;
+      }
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      const chunks = [];
+      mediaRecorder = new MediaRecorder(stream);
+      activeKey = key;
+      mediaRecorder.ondataavailable = (e) => chunks.push(e.data);
+      mediaRecorder.onstop = () => {
+        stream.getTracks().forEach((t) => t.stop());
+        const blob = new Blob(chunks, { type: mediaRecorder.mimeType || "audio/webm" });
+        const url = URL.createObjectURL(blob);
+        const audio = row.querySelector("audio");
+        audio.src = url;
+        audio.hidden = false;
+        const dl = row.querySelector(".dl");
+        dl.hidden = false;
+        const ext = (mediaRecorder.mimeType || "audio/webm").includes("mp4") ? "m4a" : "webm";
+        dl.onclick = () => {
+          const a = document.createElement("a");
+          a.href = url;
+          a.download = `${key}.${langEl.value}.${ext}`;
+          a.click();
+          recorded.add(`${langEl.value}/${key}`);
+          localStorage.setItem("meni.booth", JSON.stringify([...recorded]));
+          render();
+        };
+        btn.textContent = "Record again";
+        btn.classList.remove("rec");
+      };
+      mediaRecorder.start();
+      btn.textContent = "Stop";
+      btn.classList.add("rec");
+    }
+
+    function render() {
+      const all = clips();
+      const done = all.filter((c) => recorded.has(`${langEl.value}/${c.key}`)).length;
+      progEl.max = all.length;
+      progEl.value = done;
+      listEl.innerHTML = "";
+      for (const c of all) {
+        const isDone = recorded.has(`${langEl.value}/${c.key}`);
+        const div = document.createElement("div");
+        div.className = "clip" + (isDone ? " done" : "");
+        div.innerHTML = `
+          <div class="key">${c.key}.${langEl.value} ${c.note || ""} ${isDone ? "✓ saved" : ""}</div>
+          <div class="text"></div>
+          <div class="row">
+            <button type="button" class="primary recbtn">Record</button>
+            <button type="button" class="dl" hidden>Download take</button>
+            <audio controls hidden></audio>
+          </div>`;
+        div.querySelector(".text").textContent = c.text;
+        const btn = div.querySelector(".recbtn");
+        btn.addEventListener("click", () => record(c.key, btn, div));
+        listEl.appendChild(div);
+      }
+    }
+
+    langEl.addEventListener("change", render);
+    packEl.addEventListener("change", render);
+    render();
+  </script>
+</body>
+</html>
