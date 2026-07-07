@@ -5,50 +5,124 @@
 
 "use strict";
 
-/* ---------------- UI strings (kept together: translation-ready) ---------------- */
+/* ---------------- UI strings: English and Spanish ----------------
+   Every learner-facing word lives here, in both languages. The learner
+   picks a language with one tap on the very first screen; the
+   facilitator can change it later in setup. The facilitator setup
+   screen itself stays in English (it is never shown to the learner). */
 
-const STRINGS = {
-  appName: "Meni",
-  hello: "Hi, I'm Meni.",
-  sizeSample: "Can you read this comfortably?",
-  sizeConfirm: "This size is good",
-  sizeLabel: "Text size",
-  day: "Day",
-  next: "Next",
-  readToMe: "Read it to me",
-  stopReading: "Stop reading",
-  saveForMia: "Save this question for Meni",
-  savedForMia: "Saved! Bring it to Meni's office hours.",
-  seeGarden: "See my garden",
-  skipAhead: "I already know this",
-  yourGarden: "Your garden",
-  lessonsLearnedWord: (n) => (n === 1 ? "lesson learned" : "lessons learned"),
-  welcomeBack: "Welcome back! Your garden waited for you.",
-  doneToday: "That's your lesson for today. Come back tomorrow for a new one!",
-  gardenGrowing: "Your garden is growing, one lesson at a time.",
-  allDone: "You've finished every lesson for now. See you at office hours!",
-  startLesson: "Start today's lesson",
-  officeHours: (date) => `Bring a question to Meni's office hours, ${date}.`,
-  savedQuestionsTitle: "Your questions for office hours",
-  scamAlert: "Take care: this lesson is about scams",
-  newFlower: "A new flower for your garden!",
-  favTitle: "Which flower do you like best?",
-  favHint: "Your garden will grow extra flowers of your favorite kind.",
-  favSkip: "Surprise me with all of them",
-  wateringEyebrow: "Watering day",
-  wateringTitle: (flower) => `Let's water the ${flower.toLowerCase()} flower!`,
-  wateringSub: "Remember this one?",
-  watered: "Watered! Your flower is sparkling.",
-  wateredToday: "Your garden is watered for today. Come back tomorrow for a new lesson!",
-  waterBtn: "Water today's flower",
-  newSkill: (skill) => `New skill: ${skill}`,
-  skillsBtn: "See what I can do",
-  skillsTitle: "What I can do now",
-  skillsCount: (n) => (n === 1 ? "1 skill and growing." : `${n} skills and growing.`),
-  skillsBack: "Back to my garden",
-  trustLine: "Meni is a free learning companion from Austin AI Hub. Everything stays on this phone.",
-  setupLink: "Facilitator setup",
+const I18N = {
+  en: {
+    appName: "Meni",
+    hello: "Hi, I'm Meni.",
+    sizeSample: "Can you read this comfortably?",
+    sizeConfirm: "This size is good",
+    sizeLabel: "Text size",
+    sizeNames: ["Regular", "Large", "Largest"],
+    day: "Day",
+    next: "Next",
+    readToMe: "Read it to me",
+    stopReading: "Stop reading",
+    saveForMia: "Save this question for Meni",
+    savedForMia: "Saved! Bring it to Meni's office hours.",
+    seeGarden: "See my garden",
+    skipAhead: "I already know this",
+    yourGarden: "Your garden",
+    lessonsLearnedWord: (n) => (n === 1 ? "lesson learned" : "lessons learned"),
+    welcomeBack: "Welcome back! Your garden waited for you.",
+    doneToday: "That's your lesson for today. Come back tomorrow for a new one!",
+    gardenGrowing: "Your garden is growing, one lesson at a time.",
+    allDone: "You've finished every lesson for now. See you at office hours!",
+    startLesson: "Start today's lesson",
+    officeHours: (date) => `Bring a question to Meni's office hours, ${date}.`,
+    savedQuestionsTitle: "Your questions for office hours",
+    scamAlert: "Take care: this lesson is about scams",
+    newFlower: "A new flower for your garden!",
+    favTitle: "Which flower do you like best?",
+    favHint: "Your garden will grow extra flowers of your favorite kind.",
+    favSkip: "Surprise me with all of them",
+    flowerNames: ["Pink", "Purple", "Yellow", "Orange", "Blue", "White"],
+    wateringEyebrow: "Watering day",
+    wateringTitle: (flower) => `Let's water the ${flower.toLowerCase()} flower!`,
+    wateringSub: "Remember this one?",
+    watered: "Watered! Your flower is sparkling.",
+    wateredToday: "Your garden is watered for today. Come back tomorrow for a new lesson!",
+    waterBtn: "Water today's flower",
+    newSkill: (skill) => `New skill: ${skill}`,
+    skillsBtn: "See what I can do",
+    skillsTitle: "What I can do now",
+    skillsCount: (n) => (n === 1 ? "1 skill and growing." : `${n} skills and growing.`),
+    skillsBack: "Back to my garden",
+    morning: "Good morning!",
+    afternoon: "Good afternoon!",
+    evening: "Good evening!",
+    gardenAria: (n, sprout) =>
+      `A garden with ${n} flowers, one for each lesson learned${sprout ? ", and a new sprout for tomorrow" : ""}`,
+    trustLine: "Meni is a free learning companion from Austin AI Hub. Everything stays on this phone.",
+    setupLink: "Facilitator setup",
+    speechLang: "en-US",
+    dateLocale: "en-US",
+  },
+  es: {
+    appName: "Meni",
+    hello: "¡Hola! Soy Meni.",
+    sizeSample: "¿Puede leer esto con comodidad?",
+    sizeConfirm: "Este tamaño está bien",
+    sizeLabel: "Tamaño de letra",
+    sizeNames: ["Normal", "Grande", "Muy grande"],
+    day: "Día",
+    next: "Siguiente",
+    readToMe: "Léemelo",
+    stopReading: "Dejar de leer",
+    saveForMia: "Guardar esta pregunta para Meni",
+    savedForMia: "¡Guardada! Llévela a las horas de consulta de Meni.",
+    seeGarden: "Ver mi jardín",
+    skipAhead: "Esto ya lo sé",
+    yourGarden: "Su jardín",
+    lessonsLearnedWord: (n) => (n === 1 ? "lección aprendida" : "lecciones aprendidas"),
+    welcomeBack: "¡Qué gusto verle! Su jardín le estaba esperando.",
+    doneToday: "Esa fue su lección de hoy. ¡Vuelva mañana para una nueva!",
+    gardenGrowing: "Su jardín crece, una lección a la vez.",
+    allDone: "Ha terminado todas las lecciones por ahora. ¡Nos vemos en las horas de consulta!",
+    startLesson: "Empezar la lección de hoy",
+    officeHours: (date) => `Traiga una pregunta a las horas de consulta de Meni, el ${date}.`,
+    savedQuestionsTitle: "Sus preguntas para las horas de consulta",
+    scamAlert: "Cuidado: esta lección trata de estafas",
+    newFlower: "¡Una flor nueva para su jardín!",
+    favTitle: "¿Cuál flor le gusta más?",
+    favHint: "Su jardín tendrá más flores de su favorita.",
+    favSkip: "Sorpréndame con todas",
+    flowerNames: ["Rosada", "Morada", "Amarilla", "Anaranjada", "Azul", "Blanca"],
+    wateringEyebrow: "Día de riego",
+    wateringTitle: (flower) => `¡Vamos a regar la flor ${flower.toLowerCase()}!`,
+    wateringSub: "¿Se acuerda de esta?",
+    watered: "¡Regada! Su flor está brillando.",
+    wateredToday: "Su jardín ya está regado por hoy. ¡Vuelva mañana para una lección nueva!",
+    waterBtn: "Regar la flor de hoy",
+    newSkill: (skill) => `Nueva habilidad: ${skill}`,
+    skillsBtn: "Ver lo que ya sé hacer",
+    skillsTitle: "Lo que ya sé hacer",
+    skillsCount: (n) => (n === 1 ? "1 habilidad, y siguen creciendo." : `${n} habilidades, y siguen creciendo.`),
+    skillsBack: "Volver a mi jardín",
+    morning: "¡Buenos días!",
+    afternoon: "¡Buenas tardes!",
+    evening: "¡Buenas noches!",
+    gardenAria: (n, sprout) =>
+      `Un jardín con ${n} flores, una por cada lección aprendida${sprout ? ", y un brote nuevo para mañana" : ""}`,
+    trustLine: "Meni es un compañero de aprendizaje gratuito de Austin AI Hub. Todo se queda en este teléfono.",
+    setupLink: "Facilitator setup",
+    speechLang: "es-US",
+    dateLocale: "es",
+  },
 };
+
+let STRINGS = I18N.en;
+
+function setLang(lang) {
+  state.lang = lang === "es" ? "es" : "en";
+  STRINGS = I18N[state.lang];
+  document.documentElement.lang = state.lang;
+}
 
 const SCALES = { A: 1, AA: 1.2, AAA: 1.45 };
 
@@ -68,6 +142,7 @@ function loadState() {
 
 function defaultState() {
   return {
+    lang: null, // 'en' | 'es' — chosen on the very first screen
     textScale: null, // 'A' | 'AA' | 'AAA'
     pack: "everyday",
     officeHoursDate: null, // 'YYYY-MM-DD'
@@ -108,7 +183,7 @@ function daysBetween(a, b) {
 
 function friendlyDate(iso) {
   const [y, m, d] = iso.split("-").map(Number);
-  return new Date(y, m - 1, d).toLocaleDateString(undefined, {
+  return new Date(y, m - 1, d).toLocaleDateString(STRINGS.dateLocale, {
     month: "long",
     day: "numeric",
   });
@@ -116,15 +191,15 @@ function friendlyDate(iso) {
 
 function greeting() {
   const h = new Date().getHours();
-  if (h < 12) return "Good morning!";
-  if (h < 17) return "Good afternoon!";
-  return "Good evening!";
+  if (h < 12) return STRINGS.morning;
+  if (h < 17) return STRINGS.afternoon;
+  return STRINGS.evening;
 }
 
 /* ---------------- Lesson progress ---------------- */
 
 function sequence() {
-  return lessonSequence(state.pack);
+  return lessonSequence(state.pack, state.lang);
 }
 
 function isCompleted(id) {
@@ -204,7 +279,7 @@ function startSpeakingUI() {
 function speakSynth(text) {
   if (!("speechSynthesis" in window)) return;
   const u = new SpeechSynthesisUtterance(text);
-  u.lang = "en-US";
+  u.lang = STRINGS.speechLang;
   u.rate = 0.95;
   u.onend = () => stopSpeaking();
   u.onerror = () => stopSpeaking();
@@ -306,6 +381,29 @@ const ICONS = {
 
 const app = () => document.getElementById("app");
 
+/* Every screen change rebuilds the page, which silently drops keyboard
+   and screen-reader focus back to <body>. After each render (except the
+   very first page load) focus moves to the new screen's heading so the
+   change is announced and Tab starts from the top. */
+let firstScreen = true;
+
+function focusScreen() {
+  if (firstScreen) {
+    firstScreen = false;
+    return;
+  }
+  /* Prefer the heading; a selector list would match <main> first in
+     document order, so ask for each in turn. */
+  const target =
+    app().querySelector("h1") ||
+    app().querySelector(".question-text") ||
+    app().querySelector("main");
+  if (target) {
+    target.setAttribute("tabindex", "-1");
+    target.focus({ preventScroll: false });
+  }
+}
+
 function esc(s) {
   return String(s).replace(/[&<>"']/g, (ch) => ({
     "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;",
@@ -351,6 +449,35 @@ function alertBanner(lesson) {
     : "";
 }
 
+/* ---------------- Screen 0: language, one tap (first run only) ----------------
+   Shown before any other words exist, so it speaks both languages at
+   once. Two equal buttons, nothing else to decide. */
+
+function renderLanguagePick() {
+  stopSpeaking();
+  app().innerHTML = `
+    <main>
+      <div class="hello-stage"><div class="disc">${MENI.waving("delighted")}</div></div>
+      <h1 class="center"><span lang="en">Hi, I'm Meni.</span><br><span lang="es">¡Hola! Soy Meni.</span></h1>
+      <div class="btn-stack">
+        <button type="button" class="btn-primary" data-lang="en" lang="en">English</button>
+        <button type="button" class="btn-primary" data-lang="es" lang="es">Español</button>
+      </div>
+      <p class="footnote center"><span lang="en">${I18N.en.trustLine}</span><br><span lang="es">${I18N.es.trustLine}</span></p>
+      <p class="footnote center"><button type="button" class="btn-quiet btn-small" id="setup-link" style="margin:0 auto">${I18N.en.setupLink}</button></p>
+    </main>`;
+
+  app().querySelectorAll("[data-lang]").forEach((btn) =>
+    btn.addEventListener("click", () => {
+      setLang(btn.dataset.lang);
+      saveState();
+      renderSizeChooser();
+    })
+  );
+  document.getElementById("setup-link").addEventListener("click", renderSetup);
+  focusScreen();
+}
+
 /* ---------------- Screen 1: size chooser ---------------- */
 
 function renderSizeChooser(opts = {}) {
@@ -367,9 +494,9 @@ function renderSizeChooser(opts = {}) {
         <h1 class="center">${STRINGS.hello}</h1>` : ""}
       <div class="card teach-text center" id="size-sample">${STRINGS.sizeSample}</div>
       <div class="size-row" role="group" aria-label="${STRINGS.sizeLabel}">
-        <button type="button" class="size-a" data-size="A">A<span class="size-label">Regular</span></button>
-        <button type="button" class="size-aa" data-size="AA">AA<span class="size-label">Large</span></button>
-        <button type="button" class="size-aaa" data-size="AAA">AAA<span class="size-label">Largest</span></button>
+        <button type="button" class="size-a" data-size="A">A<span class="size-label">${STRINGS.sizeNames[0]}</span></button>
+        <button type="button" class="size-aa" data-size="AA">AA<span class="size-label">${STRINGS.sizeNames[1]}</span></button>
+        <button type="button" class="size-aaa" data-size="AAA">AAA<span class="size-label">${STRINGS.sizeNames[2]}</span></button>
       </div>
       <div class="btn-stack">
         <button type="button" class="btn-primary" id="size-confirm">${STRINGS.sizeConfirm}</button>
@@ -404,11 +531,10 @@ function renderSizeChooser(opts = {}) {
   const setupLink = document.getElementById("setup-link");
   if (setupLink) setupLink.addEventListener("click", renderSetup);
   if (!firstRun) wireHeader(opts.returnTo);
+  focusScreen();
 }
 
 /* ---------------- Screen 1b: favorite flower (first run, one tap) ---------------- */
-
-const FLOWER_NAMES = ["Pink", "Purple", "Yellow", "Orange", "Blue", "White"];
 
 function flowerSwatch(i) {
   return `<svg viewBox="0 0 44 56" aria-hidden="true" focusable="false">
@@ -431,7 +557,7 @@ function renderColorPick() {
           .map(
             (f, i) => `
           <button type="button" class="color-pick" data-fav="${i}">
-            ${flowerSwatch(i)}<span>${FLOWER_NAMES[i]}</span>
+            ${flowerSwatch(i)}<span>${STRINGS.flowerNames[i]}</span>
           </button>`
           )
           .join("")}
@@ -456,6 +582,7 @@ function renderColorPick() {
     saveState();
     renderHome();
   });
+  focusScreen();
 }
 
 /* ---------------- Screen 2: the daily lesson, three small steps ---------------- */
@@ -491,6 +618,7 @@ function renderLessonTeach(lesson) {
     if (next) renderLessonTeach(next);
     else renderGarden();
   });
+  focusScreen();
 }
 
 /* Step 2 of 3: one question, two big buttons. */
@@ -529,6 +657,7 @@ function renderLessonAsk(lesson) {
       renderLessonDone(lesson, Number(btn.dataset.answer));
     })
   );
+  focusScreen();
 }
 
 /* Step 3 of 3: Meni answers, warmly. No scores, no X marks, ever.
@@ -575,6 +704,7 @@ function renderLessonDone(lesson, answerIdx) {
   });
 
   document.getElementById("see-garden").addEventListener("click", renderGarden);
+  focusScreen();
 }
 
 /* ---------------- Watering day: revisit an old lesson (spaced repetition) ---------------- */
@@ -586,7 +716,7 @@ function renderWateringAsk() {
     renderGarden();
     return;
   }
-  const flowerName = FLOWER_NAMES[GARDEN.flowers.indexOf(flowerFor(idx))] || "";
+  const flowerName = STRINGS.flowerNames[GARDEN.flowers.indexOf(flowerFor(idx))] || "";
 
   const answerButtons = lesson.answers
     .map(
@@ -622,6 +752,7 @@ function renderWateringAsk() {
       renderWateringDone(lesson, Number(btn.dataset.answer), idx);
     })
   );
+  focusScreen();
 }
 
 function renderWateringDone(lesson, answerIdx, idx) {
@@ -660,6 +791,7 @@ function renderWateringDone(lesson, answerIdx, idx) {
   wireHeader("lesson");
   wireRead(response, lesson.audio && lesson.audio.done);
   document.getElementById("see-garden").addEventListener("click", renderGarden);
+  focusScreen();
 }
 
 /* ---------------- My skills: pride list, never scores ---------------- */
@@ -687,6 +819,7 @@ function renderSkills() {
 
   wireHeader("garden");
   document.getElementById("back-garden").addEventListener("click", renderGarden);
+  focusScreen();
 }
 
 /* The just-earned flower sprouts and opens on the response screen,
@@ -817,7 +950,7 @@ function gardenSVG(count) {
   /* After 5 lessons, Meni moves into the garden for good. */
   const resident = count >= 5 ? MENI.group("classic", "smile", 0.27, 12, 176) : "";
 
-  return `<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A garden with ${count} flowers, one for each lesson learned${showSprout ? ", and a new sprout for tomorrow" : ""}">
+  return `<svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="${STRINGS.gardenAria(count, showSprout)}">
     <defs>
       <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
         <stop offset="0" stop-color="${sky[0]}"/>
@@ -978,6 +1111,7 @@ function renderGarden() {
     );
   const skillsBtn = document.getElementById("skills-btn");
   if (skillsBtn) skillsBtn.addEventListener("click", renderSkills);
+  focusScreen();
 }
 
 /* ---------------- Facilitator setup (hidden route: #setup) ---------------- */
@@ -994,6 +1128,13 @@ function renderSetup() {
     <main>
       <h1>Facilitator setup</h1>
       <p>These choices are for the person setting up this phone. The learner never sees this screen or any labels from it.</p>
+      <div class="setup-field">
+        <label id="lang-label">Learner's language</label>
+        <div class="btn-stack" role="group" aria-labelledby="lang-label" style="margin-top:0">
+          <button type="button" class="btn-secondary" data-setlang="en" lang="en">English</button>
+          <button type="button" class="btn-secondary" data-setlang="es" lang="es">Español</button>
+        </div>
+      </div>
       <div class="setup-field">
         <label id="pack-label">Example pack for later lessons</label>
         <div class="btn-stack" role="group" aria-labelledby="pack-label" style="margin-top:0">
@@ -1031,6 +1172,21 @@ function renderSetup() {
     </main>`;
 
   wireHeader();
+
+  const langButtons = app().querySelectorAll("[data-setlang]");
+  function markLang() {
+    langButtons.forEach((b) =>
+      b.classList.toggle("selected", b.dataset.setlang === (state.lang || "en"))
+    );
+  }
+  markLang();
+  langButtons.forEach((b) =>
+    b.addEventListener("click", () => {
+      setLang(b.dataset.setlang);
+      saveState();
+      markLang();
+    })
+  );
 
   const packButtons = app().querySelectorAll("[data-pack]");
   function markPack() {
@@ -1098,14 +1254,21 @@ function renderSetup() {
     }
     localStorage.removeItem(STORE_KEY);
     state = defaultState();
+    setLang("en");
+    state.lang = null; // the next learner picks their own language
     applyScale("A");
-    renderSizeChooser();
+    renderLanguagePick();
   });
+  focusScreen();
 }
 
 /* ---------------- Routing ---------------- */
 
 function renderHome() {
+  if (!state.lang) {
+    renderLanguagePick();
+    return;
+  }
   if (!state.textScale) {
     renderSizeChooser();
     return;
@@ -1128,6 +1291,10 @@ function boot() {
   state.wasAway = Boolean(state.lastVisit && daysBetween(state.lastVisit, t) >= 2);
   state.lastVisit = t;
   saveState();
+
+  /* Load strings for the saved language; phones set up before the
+     language choice existed keep English until they pick otherwise. */
+  if (state.lang) setLang(state.lang);
 
   if (state.textScale) applyScale(state.textScale);
 

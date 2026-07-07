@@ -685,8 +685,12 @@ const PACKS = {
   ],
 };
 
-/* The lesson sequence: core course first (everyone), then the chosen pack. */
-function lessonSequence(packName) {
-  const pack = PACKS[packName] || [];
-  return CORE_LESSONS.concat(pack);
+/* The lesson sequence: core course first (everyone), then the chosen pack.
+   Spanish lessons (js/lessons.es.js) share the same ids, so progress
+   carries over if the language is changed mid-journey. */
+function lessonSequence(packName, lang) {
+  const es = lang === "es" && typeof CORE_LESSONS_ES !== "undefined";
+  const core = es ? CORE_LESSONS_ES : CORE_LESSONS;
+  const packs = es ? PACKS_ES : PACKS;
+  return core.concat(packs[packName] || []);
 }

@@ -492,6 +492,10 @@ input[type="number"]:focus-visible {
 
 .center { text-align: center; }
 
+/* Focus moved by script after a screen change (screen-reader wayfinding):
+   no visible ring — keyboard users still get rings on real controls. */
+[tabindex="-1"]:focus { outline: none; }
+
 .footnote {
   font-size: calc(0.92rem * var(--scale));
   color: var(--navy-soft);
