@@ -23,6 +23,20 @@ Before filling it in, download SXSW EDU's official PanelPicker Guide PDF
 from sxswedu.com/panelpicker (it confirms the current cycle's exact
 field limits and track names — verify the title limit is 50, not 60).
 
+## THE PASTE SHEET — every field in form order
+
+1. **Event:** SXSW EDU · **Format:** Case Study · **Track:** Equity &
+   Belonging (closest name on the form)
+2. **Title:** `AI Literacy for the People Tech Forgot`
+3. **Description:** the block in Field 3 below (590 chars — stat
+   verified against AARP's 2026 Tech Trends survey: GenAI use among
+   adults 50+ rose 18%→30% in a year).
+4. **Takeaways 1–3:** the three blocks in Field 4 below.
+5. **Speaker 1 (organizer):** bio + diversity answer in Field 5 below —
+   personalize the [bracketed] parts only.
+6. **Video / links:** unlisted YouTube link (script in Field 6);
+   demo URL; austinaihub.org.
+
 ## Why this entry can win (from the research)
 
 - Acceptance runs ~12–13% (178 of 1,400+ proposals in the 2026 cycle),
@@ -104,12 +118,27 @@ Every speaker entry must answer how they contribute to the session's
 diversity (gender, ethnicity, geography, expertise, lived experience).
 
 - **Organizer + speaker: Mia C, PhD — Founder, Austin AI Hub.**
-  Bio angle: runs free community AI workshops and monthly AI office
-  hours in Austin; built the program this case study reports on.
-  Diversity answer draft: woman founder of a community nonprofit;
-  [immigrant background — include if you wish]; practitioner
-  perspective from outside K-12 and higher ed, the sector SXSW EDU
-  hears from least.
+
+  **Paste-ready bio (edit the brackets, keep it under ~100 words):**
+  > Mia C, PhD, is the founder of Austin AI Hub, a nonprofit that
+  > teaches practical AI skills to the people the tech industry has
+  > left behind: senior citizens with no technology background and
+  > underserved communities in Austin, Texas. She runs free community
+  > AI workshops and monthly AI "office hours," and led the co-design
+  > of a bilingual, trauma-informed daily AI-literacy program built
+  > around the strictest accessibility constraints her community
+  > faces. [One sentence: your PhD field / prior career.] [Optional:
+  > one personal sentence about why this population is hers.]
+
+  **Paste-ready diversity answer:**
+  > I am a woman founder of a small community nonprofit — a
+  > practitioner voice from outside K-12, higher ed, and edtech
+  > vendors, the sectors education conferences hear from most. My
+  > perspective comes from teaching AI on donated phones at senior
+  > centers and with survivor-serving organizations, in English and
+  > Spanish, in Austin — the conference's own host community.
+  > [Optional: add ethnicity/immigrant background if you want it
+  > considered.]
 - **Co-presenter (strongest version): a senior program participant**
   who demos her own garden live on stage. Diversity answer draft:
   a 70+ learner speaking for herself — lived experience of the exact
@@ -188,10 +217,13 @@ Plan:
 
 ## Timeline to submission
 
-- [ ] **This week:** confirm the AARP/FTC stats used in the description;
-      consent conversation with the co-presenter candidate; create the
-      SXSW ID; download the official PanelPicker Guide PDF and verify
-      the title limit (50 vs 60) and current track names.
+- [x] **Stat verified (July 8):** AARP 2026 Tech Trends survey — GenAI
+      use among adults 50+ rose from 18% (2024) to 30% (2025);
+      "nearly doubled in a year" is accurate as written.
+- [ ] **This week:** consent conversation with the co-presenter
+      candidate; create the SXSW ID; download the official PanelPicker
+      Guide PDF and verify the title limit (50 vs 60) and current
+      track names.
 - [ ] **By July 18:** record the 60-second video; deploy the public
       demo URL; screenshots exported.
 - [ ] **July 22:** fill all six steps, save each, submit. Do not wait
