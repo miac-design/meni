@@ -17,8 +17,19 @@ second entry goes in a co-speaker's account).
 | SXSW 2027 | March 15–21, 2027, Austin |
 
 Free, at panelpicker.sxsw.com → choose SXSW (not EDU). ~6 steps,
-save-as-you-go. SXSW staff run **virtual office hours through July** —
+save-as-you-go — and **proposals CANNOT be edited after you click
+"Enter My Proposal."** Finalize everything in this kit first, then
+submit once. SXSW staff run **virtual office hours through July** —
 book one and pressure-test this entry with them before submitting.
+
+Confirmed rules (official FAQ): **one proposal per event per account —
+one main SXSW + one SXSW EDU is explicitly allowed**, so this entry and
+the Meni EDU entry can both go in under your account. The form also
+asks for an audience level: pick **Advanced** (SXSW's own programming
+chief notes everyone defaults to Intermediate; advanced depth stands
+out) and requires **at least one supporting resource link** (the ITU
+case page). Title limit is 60 characters on current official guides
+(older docs said 50 — ours is 53, safe either way).
 
 ## Why HAVEN can win here (research-verified)
 

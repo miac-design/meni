@@ -17,11 +17,14 @@ PanelPicker pages, their published proposal-tips articles, and the actual
 | SXSW EDU 2027 | March 13–16, 2027, Austin |
 
 Submission is free, at panelpicker.sxsw.com (create a free SXSW ID,
-choose "SXSW EDU"). One entry per account — the choices below are
-one-shot. The form is six steps and does NOT autosave; save each step.
-Before filling it in, download SXSW EDU's official PanelPicker Guide PDF
-from sxswedu.com/panelpicker (it confirms the current cycle's exact
-field limits and track names — verify the title limit is 50, not 60).
+choose "SXSW EDU"). One entry per EDU account — and officially you may
+ALSO submit one entry to main SXSW (see the HAVEN kit,
+docs/sxsw-2027-haven-submission.md). The form is six steps, does NOT
+autosave, and **cannot be edited after final submission** — finalize
+everything here first, then enter it once. It requires at least one
+supporting resource link (use the live demo URL) and an audience-level
+choice. Title limit: official guides now say 60 characters (older
+materials said 50) — our title is 38, safe either way.
 
 ## THE PASTE SHEET — every field in form order
 
