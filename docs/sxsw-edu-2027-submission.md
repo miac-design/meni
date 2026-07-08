@@ -139,13 +139,36 @@ diversity (gender, ethnicity, geography, expertise, lived experience).
   > Spanish, in Austin — the conference's own host community.
   > [Optional: add ethnicity/immigrant background if you want it
   > considered.]
-- **Co-presenter (strongest version): a senior program participant**
-  who demos her own garden live on stage. Diversity answer draft:
-  a 70+ learner speaking for herself — lived experience of the exact
-  population the session is about; end-user voice on stage.
-  **Consent path first:** private ask → show her the stage format →
-  written consent → rehearsal at office hours; she can withdraw any
-  time, and the session works solo if she does.
+- **Speaker 2 (confirmed): Hamed Alikhani — Senior AI Engineer.**
+
+  **Paste-ready bio (edit brackets):**
+  > Hamed Alikhani is a senior AI engineer [at ORG / with N years
+  > building production AI systems] who volunteers with Austin AI Hub.
+  > He brings the technical half of the case study: what it takes to
+  > engineer AI experiences that work offline, on donated phones, for
+  > learners the industry never designs for.
+
+  **Paste-ready diversity answer:**
+  > I contribute the engineering-practitioner perspective — how
+  > accessibility and trauma-informed constraints translate into real
+  > technical decisions — from inside industry rather than academia.
+  > [Add ethnicity/immigrant background/other dimensions if desired.]
+
+  Positioning tip: on stage, frame Mia = the learning/community story,
+  Hamed = "what the engineering had to unlearn." Avoid two people
+  making the same points.
+
+- **Speaker 3 (still the strongest addition): a senior program
+  participant** who demos her own garden live. The research is clear
+  that end-user voice on stage is a winning, repeatedly-featured
+  pattern — a 70+ learner speaking for herself adds what no
+  professional can. Case Study allows up to 3 speakers, so Hamed does
+  not close this door. **Consent path:** private ask → show her the
+  stage format → written consent → rehearsal at office hours; she can
+  withdraw any time. If no learner joins, edit the description's last
+  sentence ("A senior learner co-presents…") accordingly.
+  Note: with 3+ speakers, SXSW expects demonstrated diversity across
+  the lineup — answer each speaker's diversity question distinctly.
 - **Trafficking-survivor side — do NOT put a survivor on stage.**
   If a third speaker is wanted, invite a staff member from a
   survivor-serving partner org to speak to that work. Asking a survivor
