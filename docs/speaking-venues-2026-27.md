@@ -15,20 +15,34 @@ triangulated from multiple sources).
    travel. The fastest way to get a polished version of the talk on
    record — and a recording to attach to every other application below.
 2. **ASA "On Aging" 2027** (American Society on Aging — flagship US
-   aging conference). CFP says "coming soon" and last year's window was
-   June–July — **check asaging.org/on-aging weekly starting now.**
-   Reviewer-selected; community practitioners are a normal presenter
-   profile there.
+   aging conference). CFP says "coming soon"; last cycle ran June 24 –
+   Aug 8 with acceptances Oct 1 — **check asaging.org/on-aging weekly
+   starting now.** Pure peer review, no voting. Cost catch: presenters
+   must register (~$595 member / $870 non-member last cycle) — apply,
+   and treat the fee as a fundable line item if accepted.
 3. **NDIA Net Inclusion 2027** — Columbus, Feb 23–25, 2027. The best-fit
    digital-inclusion event in the country; its CFP closed June 29, 2026
    (just missed). **Email them anyway now** — their form had an
    "I'd like to speak but can't submit a session" pool, and panels get
    filled late (digitalinclusion.org).
 4. **Conference on Crimes Against Women 2027** — Dallas, May 24–27,
-   2027 (verified). Curated by Genesis Women's Shelter; AI-enabled
+   2027 (verified). **Best speaker economics of any national venue:
+   CCAW comps speaker registration AND books speakers' hotel rooms.**
+   Standing speaker-proposal form at conferencecaw.org/speaker-proposal
+   — submit early (contact sguy@conferencecaw.org). AI-enabled
    exploitation (voice cloning, deepfakes) is a rising topic their
-   advocate audience needs. 2027 CFP timing UNVERIFIED — check
-   conferencecaw.org now; historically opens summer/fall.
+   advocate audience needs.
+5. **COABE 2027** — April 11–14, 2027, New Orleans; the flagship
+   national adult-education conference, strand-reviewer selection.
+   **Last cycle's CFP closed July 31 of the prior year — check
+   coabe.org/coabe2027 THIS WEEK; the window may be open right now
+   with a late-July deadline.** Presenters pay registration.
+6. **International Human Trafficking & Social Justice Conference**
+   (Univ. of Toledo) — **virtual**, Sept 23–25, 2026; the oldest
+   academic anti-trafficking conference, survivor-centered, abstract
+   review. The 2026 presentation application opened in January; close
+   date unverified — **email info@traffickingconference.com now** to
+   ask if it's still open. Virtual = zero travel cost.
 
 ## Free Austin stages — pitch this month, zero cost, zero voting
 
@@ -49,24 +63,56 @@ triangulated from multiple sources).
 - **TAASA** (Texas Association Against Sexual Assault) — annual August
   conference, staff/committee selected; CFP unpublished — email
   directly. Strong fit for the survivor-serving side.
+- **TALAE** (Texas Association for Literacy & Adult Education) — annual
+  February conference, recently held in Austin; organizer-selected
+  proposals, presenters pay (cheap) registration. The lowest-cost
+  conference debut possible — watch talae.org for the fall CFP.
+- **DECA — Digital Empowerment Community of Austin.** 100+ member orgs
+  convened by the City of Austin's Community Technology Division; join
+  as a member org — it's the city's own digital-inclusion podium and a
+  partnership pipeline (austintexas.gov/department/community-technology).
+- **NDIA Digital Inclusion Week, Oct 4–10, 2026.** Not a CFP — any org
+  self-hosts events and NDIA amplifies them nationally. Austin AI Hub
+  can headline its own senior AI-literacy events that week for free.
 
 ## Calendar for fall 2026 CFPs
 
-5. **NCOA Age+Action 2027** — CFP expected fall 2026 (last cycle closed
-   early Dec). Scam-protection fits their Economic Well-Being track
-   exactly; NCOA's senior-center network could adopt the whole program.
-6. **USAging Annual Conference 2027** — CFP expected fall 2026 (~Dec
-   deadline). Audience = Area Agencies on Aging, the natural replicators.
-7. **Freedom Network USA Conference 2027** — leading rights-based
+5. **LeadingAge Annual Meeting 2027** — Minneapolis, Nov 7–10, 2027;
+   peer-review committee, no voting, and **speakers get a complimentary
+   registration for their presentation day** (or $300 off the full
+   pass) — the best cost/selection profile in the aging category.
+   CFP expected to close ~Dec 7, 2026. 6,000+ aging-services providers.
+6. **NCOA Age+Action 2027** — CFP expected fall 2026 (last cycle closed
+   early Dec); presenter rate discounted (~$100). Scam-protection fits
+   their Economic Well-Being track exactly; NCOA runs the national
+   senior-center network that could adopt the whole program.
+7. **USAging Annual Conference 2027** — CFP expected fall 2026 (~Dec
+   deadline); presenters pay registration. Proposals are strongly
+   advised to include an Area Agency on Aging presenter — **co-submit
+   with the AAA of the Capital Area (Austin)**: that partnership is
+   both the admission ticket and a program ally.
+8. **Freedom Network USA Conference 2027** — leading rights-based
    anti-trafficking conference; survivor-informed review. 2027 RFP
    expected late summer/fall — email conference@freedomnetworkusa.org.
-8. **COABE 2027** — New Orleans; big adult-education audience with
-   digital-literacy strands. CFP typically closes early fall. UNVERIFIED.
-9. **Code for America Summit 2027** — Washington, D.C.; committee
+9. **NCVC National Training Institute 2027** — multidisciplinary
+   victim-services conference (80+ trainings); staff-reviewed CFP
+   ~Nov 2026–Feb 2027; presenters get a discounted $200 registration.
+   Their "cyber crime / serving victims" strand fits AI-scam training
+   exactly.
+10. **NCFL Families Learning 2027** — the 2026 edition is in San
+    Antonio (Nov 8–11, 2026 — attend to scout, CFP closed); the 2027
+    CFP runs ~Feb–April 2027. Scored rubric selection, presenter
+    discount.
+11. **ProLiteracy Conference 2027** (biennial, 25th-anniversary
+    edition) — CFP expected ~Feb 2027; literacy-nonprofit audience.
+12. **JuST Conference 2027** (Shared Hope) — spring 2027 CFP;
+    survivor-centered, some comped presenter registrations; narrower
+    (child/youth trafficking) fit.
+13. **Code for America Summit 2027** — Washington, D.C.; committee
    review, no voting, and breakout/lightning speakers get a **free
    ticket** (travel is the only cost). CFP expected ~November 2026 with
    a SHORT (~2-week) window — set a calendar alert now.
-10. **All Tech Is Human** — organizer-invited (no CFP): recommend
+14. **All Tech Is Human** — organizer-invited (no CFP): recommend
     yourself via hello@alltechishuman.org; their free Slack and
     livestreams are a no-cost on-ramp before the NYC summits.
 
@@ -81,11 +127,14 @@ triangulated from multiple sources).
   Angelo — its CFP closed May 8). Audience is Area Agency on Aging
   staff and senior-center managers: the best topical match in-state.
   Watch for the 2027 CFP (~March–May 2027).
-- **LeadingAge 2027** — committee-reviewed (~25% acceptance) but
-  speakers pay their own way and the provider-industry audience is a
-  looser fit. Lowest priority.
+- **M-Enabling Summit 2027** (accessibility + older adults + tech,
+  Arlington VA) — organizer-curated; the 2026 call closed in March, so
+  watch for the 2027 call around winter 2026–27.
 - **MozFest 2027** (Barcelona) — wrangler-curated, no voting; only
   worth it if funded travel appears.
+- **AARP** — no open speaking path: their Speakers Bureau sends AARP's
+  own speakers out, and their conferences are invitation-only. Partner
+  channel, not a CFP venue.
 
 ## Excluded on purpose (they use public voting)
 
