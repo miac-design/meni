@@ -89,11 +89,13 @@ Edit `js/lessons.js`. Each lesson is:
 }
 ```
 
-Each track is a 22-day journey (12 core lessons + 10 pack lessons).
+Each track is a 23–24 day journey (12 core lessons + 12 "everyday" or
+11 "work" pack lessons; the first-conversation finale stays last).
 Add the Spanish twin of any new lesson to `js/lessons.es.js` with the SAME
 id, then run `node tools/check-lessons.mjs` — it fails if the languages
-drift apart. Bump `CACHE` in `sw.js` whenever content or code changes so
-installed phones pick up the new version.
+drift apart, if pack sizes change unexpectedly, or if the finale moves.
+Bump `CACHE` in `sw.js` whenever content or code changes so installed
+phones pick up the new version.
 
 ## Languages
 
