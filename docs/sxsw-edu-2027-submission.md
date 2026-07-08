@@ -83,22 +83,23 @@ The strong half was always "the people tech forgot" — it stays.
   AI pile. Alternates: Accessibility & Inclusion, Community Initiatives.
   (Track names shift slightly per cycle — pick the closest on the form.)
 
-## FIELD 3 — Description (limit 600 characters; this is 590)
+## FIELD 3 — Description (limit 600 characters; this is 594)
 
 > AI use among adults 50+ nearly doubled in a year — and AI scams aimed
 > at them grew faster. Yet AI education has barely left the classroom:
 > older adults and trafficking survivors are learning AI nowhere. This
 > case study shares design evidence from community AI education in
-> Austin: why streaks, scores, and every mainstream engagement mechanic
+> Austin: why streaks, scores, and mainstream engagement mechanics
 > actively harm these learners; why progress became a garden that can
 > never wilt; why red ink is reserved for scam lessons; and why the
-> retention engine is a monthly human, not a notification. A senior
-> learner co-presents — and demos her own garden.
+> retention engine is a monthly human, not a notification. One of the
+> first learners co-presents — and demos her own garden.
 
-(Paste as one paragraph. Deliberately: no product name, no org bio —
-official guidance says the description is for content only. Verify the
-"nearly doubled" stat against the current AARP figure before submitting,
-and if the co-presenter is not confirmed, delete the last sentence.)
+(Paste as one paragraph. Deliberately: no product name, no org bio, and
+no person is ever labeled "senior" — the population framing ("adults
+50+", "older adults") describes the field, never a co-presenter. The
+stat is verified (AARP 2026 Tech Trends: 18%→30%). If no learner joins
+the lineup, delete the last sentence — 531 chars without it.)
 
 ## FIELD 4 — Three takeaways (limit 150 characters each)
 
@@ -158,16 +159,42 @@ diversity (gender, ethnicity, geography, expertise, lived experience).
   Hamed = "what the engineering had to unlearn." Avoid two people
   making the same points.
 
-- **Speaker 3 (still the strongest addition): a senior program
-  participant** who demos her own garden live. The research is clear
-  that end-user voice on stage is a winning, repeatedly-featured
-  pattern — a 70+ learner speaking for herself adds what no
-  professional can. Case Study allows up to 3 speakers, so Hamed does
-  not close this door. **Consent path:** private ask → show her the
-  stage format → written consent → rehearsal at office hours; she can
-  withdraw any time. If no learner joins, edit the description's last
-  sentence ("A senior learner co-presents…") accordingly.
-  Note: with 3+ speakers, SXSW expects demonstrated diversity across
+- **Speaker 3 — two candidates, ONE slot (Case Study caps at 3
+  speakers total). Decide before submitting:**
+
+  **Option A — Director at Magdalene House (survivor-services
+  partner).** Adds the survivor-side voice the right way: a partner
+  organization speaks to that work, no survivor is ever asked to
+  disclose on stage. Also fixes the lineup's one weakness — it becomes
+  cross-organization instead of two people from one org.
+
+  **Paste-ready bio skeleton (fill name/title, get her sign-off):**
+  > [Name] is [title] at Magdalene House, [one line on the org's
+  > survivor-services work]. She brings the practitioner view of what
+  > digital and AI literacy mean for people rebuilding their lives —
+  > and what trauma-informed delivery requires in practice.
+
+  **Diversity answer skeleton:**
+  > I contribute the survivor-services perspective: [X years] serving
+  > survivors of trafficking and exploitation, speaking for the
+  > delivery side of this work rather than the technology side.
+  > [Personal dimensions if she wishes.]
+
+  **Option B — a program participant demoing her own garden.**
+  Research says end-user voice on stage is the winning pattern — but
+  NEVER introduced as "a senior": by name, as "one of the program's
+  first learners." Consent path: private ask → show her the stage
+  format → written consent → rehearsal; she can withdraw anytime.
+
+  **Recommendation if both say yes:** lineup = Mia + Director +
+  learner (three distinct voices: program, partner, participant), and
+  Hamed moves to producing the video/demo — that's the strongest
+  possible shape for the diversity question and the co-creation story.
+  If the learner isn't ready: Mia + Hamed + Director, with the
+  learner's garden shown as a short video moment inside the session
+  (often kinder than live stage pressure anyway) — then delete the
+  description's last sentence.
+  Note: with 3 speakers, SXSW expects demonstrated diversity across
   the lineup — answer each speaker's diversity question distinctly.
 - **Trafficking-survivor side — do NOT put a survivor on stage.**
   If a third speaker is wanted, invite a staff member from a
@@ -188,9 +215,9 @@ Phone camera is officially fine ("no need for high-value production").
 > one idea, no streaks, no scores — a garden that only grows. And once
 > a month, a human. In this case study I'll share every design rule we
 > learned — including the ones that break everything the engagement
-> industry believes — and [co-presenter name], who's 7x years old,
-> will show you her garden herself. AI literacy for the people tech
-> forgot — see you in March."
+> industry believes — and [co-presenter name], one of our very first
+> learners, will show you her garden herself. AI literacy for the
+> people tech forgot — see you in March."
 
 Upload unlisted to YouTube and paste the link. Authenticity beats polish.
 
@@ -234,7 +261,8 @@ Plan:
 > about older adults and AI — while AI scams against them explode.
 > We proposed that session: the design playbook from teaching AI to
 > seniors and survivors in Austin, two minutes a day, no streaks, no
-> shame — co-presented by a 7x-year-old learner demoing her own garden.
+> shame — co-presented by one of the program's first learners, demoing
+> her own garden.
 > Voting is open Aug 5–23 (free account, one click): [VOTE LINK]
 > #SXSWEDU #AILiteracy #DigitalEquity
 
