@@ -11,10 +11,10 @@ triangulated from multiple sources).
 
 1. **Austin Forum on Technology & Society** — Austin, monthly, rolling.
    No CFP at all: pitch the executive director directly
-   (austinforum.org). Free to speak, zero travel. The fastest way to get
-   a polished version of the talk on record — and a recording to attach
-   to every other application below.
-2. **ASA "On Aging" 2027** (American Society on Asing — flagship US
+   (jay@austinforum.org / info@austinforum.org). Free to speak, zero
+   travel. The fastest way to get a polished version of the talk on
+   record — and a recording to attach to every other application below.
+2. **ASA "On Aging" 2027** (American Society on Aging — flagship US
    aging conference). CFP says "coming soon" and last year's window was
    June–July — **check asaging.org/on-aging weekly starting now.**
    Reviewer-selected; community practitioners are a normal presenter
@@ -30,6 +30,26 @@ triangulated from multiple sources).
    advocate audience needs. 2027 CFP timing UNVERIFIED — check
    conferencecaw.org now; historically opens summer/fall.
 
+## Free Austin stages — pitch this month, zero cost, zero voting
+
+- **Austin Public Library — Collaboration Request.** Propose senior
+  AI-literacy / scam-protection programs directly; a staff evaluation
+  team reviews requests about every three weeks
+  (library.austintexas.gov/collaboration-request,
+  lib.partnershipsandprograms@austintexas.gov). Reaches the exact
+  end-users, in English and Spanish, and builds the speaking résumé.
+- **TechSoup Connect Texas/Austin** — free nonprofit-tech events;
+  chapter organizers book speakers directly (events.techsoup.org).
+  Exactly the audience that adopts programs like this one.
+- **Austin AI Alliance and local AI meetups** (austin-ai.org,
+  AI Tinkerers Austin, ACM Austin) — organizer-booked talks; builds
+  local allies who become voters, partners, and referees.
+- **Nonprofit Austin at ACC / Mission Capital** — staff-curated
+  workshops for nonprofit professionals; pitch their program staff.
+- **TAASA** (Texas Association Against Sexual Assault) — annual August
+  conference, staff/committee selected; CFP unpublished — email
+  directly. Strong fit for the survivor-serving side.
+
 ## Calendar for fall 2026 CFPs
 
 5. **NCOA Age+Action 2027** — CFP expected fall 2026 (last cycle closed
@@ -42,19 +62,30 @@ triangulated from multiple sources).
    expected late summer/fall — email conference@freedomnetworkusa.org.
 8. **COABE 2027** — New Orleans; big adult-education audience with
    digital-literacy strands. CFP typically closes early fall. UNVERIFIED.
+9. **Code for America Summit 2027** — Washington, D.C.; committee
+   review, no voting, and breakout/lightning speakers get a **free
+   ticket** (travel is the only cost). CFP expected ~November 2026 with
+   a SHORT (~2-week) window — set a calendar alert now.
+10. **All Tech Is Human** — organizer-invited (no CFP): recommend
+    yourself via hello@alltechishuman.org; their free Slack and
+    livestreams are a no-cost on-ramp before the NYC summits.
 
 ## Lower priority / watch
 
-9. **Texas Library Association 2027** — San Antonio, Apr 19–22. Main CFP
-   closed June 24, 2026, but **poster sessions open January 2027** —
-   a genuinely low-barrier first credit, in-state.
-10. **LeadingAge 2027** — committee-reviewed (~25% acceptance) but
-    speakers pay their own way and the provider-industry audience is a
-    looser fit. Lowest priority.
-- **Aging in Texas Conference** (Waco, late July) — curated, cheap,
-  in-state; watch for the 2027 CFP.
-- **Code for America Summit 2027** — curated, but CFP windows are ~2
-  weeks long in November; set an alert.
+- **Texas Library Association 2027** — San Antonio, Apr 19–22. Main CFP
+  closed June 24, 2026; one research pass said poster sessions open
+  January 2027, another said the next window is the TLA 2028 CFP
+  (~May–June 2027) — VERIFY on conference.txla.org. Presenters pay
+  registration. Libraries remain the natural partner channel either way.
+- **Aging in Texas Conference** (T4A/TARC; 2026 edition July 28–31, San
+  Angelo — its CFP closed May 8). Audience is Area Agency on Aging
+  staff and senior-center managers: the best topical match in-state.
+  Watch for the 2027 CFP (~March–May 2027).
+- **LeadingAge 2027** — committee-reviewed (~25% acceptance) but
+  speakers pay their own way and the provider-industry audience is a
+  looser fit. Lowest priority.
+- **MozFest 2027** (Barcelona) — wrangler-curated, no voting; only
+  worth it if funded travel appears.
 
 ## Excluded on purpose (they use public voting)
 
