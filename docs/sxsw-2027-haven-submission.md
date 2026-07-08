@@ -65,9 +65,14 @@ no product or brand name.
 
 ## FIELD 2 — Format and track
 
-- **Format: Presentation (60 min, 1–2 speakers)** — confirmed on the
-  live form. Panels are the most-pitched format; a founder-led
-  presentation with one co-speaker reads differentiated.
+- **Format: Fireside Chat (60 min, 2 speakers)** — Mia's choice, and a
+  good one for a plain-language session: Hamed hosts the conversation
+  and carries the technical follow-ups; Mia answers in stories. Nobody
+  lectures. Structure the hour as ~10 planned questions (the three
+  beats below become the question arc) + audience Q&A at the end.
+  Trade-off noted honestly: firesides are often used for well-known
+  names, so the description and video must make the *story* the draw —
+  which the ITU credential and the 75% stat do.
 - **Level of Expertise: Intermediate.** Mia presents this in plain
   language (see the presenter track below); "Advanced" would promise
   mathematical depth the session deliberately doesn't lead with.
@@ -174,7 +179,11 @@ auto-captions: review and correct them). 60-second script:
 
 ## How Mia presents this without a technical background
 
-The session is a story with numbers, not math. Three beats:
+Fireside structure: Hamed asks, Mia tells. The session is a story with
+numbers, not math — the three beats below become the question arc
+(e.g., "What do three hotels miss that one network sees?" → "Explain it
+like I keep a diary" → "What happens when the alert is wrong?"). Three
+beats:
 
 1. **The problem is human.** 75% of survivors report hotel contact.
    Traffickers rotate properties on purpose: they know hotels cannot
