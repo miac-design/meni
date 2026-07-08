@@ -196,6 +196,39 @@ Hamed's role: the "how it really works" 5 minutes and technical Q&A.
 Every number in the talk is in the ITU case study and SSRN preprint —
 Mia never has to defend the math; she points to it.
 
+## Calibration vs. 2024–2026 accepted sessions (study, July 2026)
+
+A ~30-session study of what main SXSW actually selected found:
+
+- **Whitespace confirmed:** no anti-trafficking-tech session since
+  2016–17 ("Web Trafficked," Rights4Girls; "Lighting Up the Dark Web")
+  and zero federated-learning / privacy-preserving-ML sessions ever
+  found — while staff explicitly fill topic gaps.
+- **The best comp is encouraging:** "Inside the International Scam
+  Syndicate: How We Fight Back" (2026) — a 501(c)(3) founded ~2024,
+  founder-led, crime-fighting topic, selected via PanelPicker. Small
+  nonprofits do get picked (also: Music Fights Fraud Alliance, 2024).
+- **Nadia Murad's 2025 trafficking session was invited ("Featured"),
+  not a PanelPicker pick** — so the community-track lane for this
+  topic is genuinely open.
+- **Title style validated:** accepted crime/safety sessions use
+  fight-verb, plain-statement titles ("How We Fight Back," "Music
+  Fights Fraud") — ours matches the house style.
+- **Video is effectively mandatory:** a PanelPicker evaluator wrote
+  that no video is "almost an automatic No" for some reviewers. Treat
+  the video as REQUIRED, featuring both speakers.
+- **Weakest credential vs. the pool:** accepted comps present deployed
+  experience; ours is a 12-property *simulation*. Mitigate by leading
+  with ITU + SSRN validation and, if one exists by August, a real
+  pilot conversation with a hotel partner (mention only if true).
+- **Track note:** the 2026 scam-syndicate comp ran in the Culture
+  track, which no longer exists on the 2027 form — Tech & AI remains
+  the only genuine home (Lifestyle is identity/trends, not this).
+- **Calibrated odds: roughly 1-in-5 to 1-in-7 (~15–20%)** with video +
+  vote campaign executed — above the ~1-in-8-to-10 base rate, held
+  down by AI-lane crowding and the small vote network. Judgment, not
+  measurement.
+
 ## Checklist to submission
 
 - [ ] Book a July SXSW virtual office-hours slot; pressure-test the
