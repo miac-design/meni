@@ -1,0 +1,219 @@
+# SXSW EDU 2027 PanelPicker — complete submission kit
+
+Research-backed and paste-ready. Every field below is written to the
+verified limits (title ≤50 characters, description ≤600, exactly three
+takeaways ≤150 each) and character-counted. Sources: SXSW EDU's official
+PanelPicker pages, their published proposal-tips articles, and the actual
+2024–2026 accepted programs (research briefs summarized at the bottom).
+
+## The dates that matter (verified July 2026)
+
+| What | When |
+|---|---|
+| Entries close — **hard deadline** | **Sunday, July 26, 2026** |
+| Target submit date (buffer for form trouble) | **Wednesday, July 22** |
+| Community voting | **August 5 – 23, 2026** |
+| Expected announcement | late October 2026 |
+| SXSW EDU 2027 | March 13–16, 2027, Austin |
+
+Submission is free, at panelpicker.sxsw.com (create a free SXSW ID,
+choose "SXSW EDU"). One entry per account — the choices below are
+one-shot. The form is six steps and does NOT autosave; save each step.
+Before filling it in, download SXSW EDU's official PanelPicker Guide PDF
+from sxswedu.com/panelpicker (it confirms the current cycle's exact
+field limits and track names — verify the title limit is 50, not 60).
+
+## Why this entry can win (from the research)
+
+- Acceptance runs ~12–13% (178 of 1,400+ proposals in the 2026 cycle),
+  decided **40% advisory board / 30% public vote / 30% staff** — and
+  staff explicitly balance topic gaps and favor new speakers.
+- "AI in education" is saturated (32 titles with "AI" in 2025 alone) —
+  but **across three years of programs there is not one session about
+  older adults and AI**. Scam protection, bilingual community delivery,
+  trauma-informed design: all verified gaps. We are not in the pile;
+  we are the missing session.
+- Sessions that put directly affected people on stage (formerly
+  incarcerated speakers in 2024/2025/2026; "What Students Say About AI
+  Literacy" in 2026) are a recognized, repeatedly-featured pattern —
+  exactly our senior co-presenter plan.
+- Vulnerable-learner and equity sessions get promoted in SXSW EDU's own
+  announcements; Equity & Belonging was a top track in 2026.
+
+## FIELD 1 — Title (limit 50 characters)
+
+**Recommended:**
+
+> **AI Literacy for the People Tech Forgot** *(38 chars)*
+
+Alternates, both compliant:
+- "No Streaks, No Shame: Trauma-Informed AI Basics" *(47)* — leads with
+  the design insight; matches the dominant "Hook: Explanation" pattern.
+- "Deepfakes Call Grandma: AI Literacy as Protection" *(49)* — leads
+  with the scam angle, the most concrete unoccupied niche.
+
+Why the old title had to go: "The Anti-Duolingo: AI Literacy for the
+People Tech Forgot" is 58 characters (over the hard limit) and leads
+with a brand name — SXSW EDU's guidance explicitly disfavors
+brand-centered proposals, and accepted titles never carry product names.
+The strong half was always "the people tech forgot" — it stays.
+
+## FIELD 2 — Format and track
+
+- **Format: Case Study** (60 min, 1–3 speakers, findings + Q&A).
+  Panels are the most oversubscribed format; Case Study fits
+  evidence-from-an-initiative content and allows the co-presenter.
+  Fallback if no co-presenter can commit: **Future20** (20-min solo).
+- **Track: Equity & Belonging.** This is a who-gets-left-out-of-AI
+  session, not an AI-tools session — and it avoids the Future of Tech
+  AI pile. Alternates: Accessibility & Inclusion, Community Initiatives.
+  (Track names shift slightly per cycle — pick the closest on the form.)
+
+## FIELD 3 — Description (limit 600 characters; this is 590)
+
+> AI use among adults 50+ nearly doubled in a year — and AI scams aimed
+> at them grew faster. Yet AI education has barely left the classroom:
+> older adults and trafficking survivors are learning AI nowhere. This
+> case study shares design evidence from community AI education in
+> Austin: why streaks, scores, and every mainstream engagement mechanic
+> actively harm these learners; why progress became a garden that can
+> never wilt; why red ink is reserved for scam lessons; and why the
+> retention engine is a monthly human, not a notification. A senior
+> learner co-presents — and demos her own garden.
+
+(Paste as one paragraph. Deliberately: no product name, no org bio —
+official guidance says the description is for content only. Verify the
+"nearly doubled" stat against the current AARP figure before submitting,
+and if the co-presenter is not confirmed, delete the last sentence.)
+
+## FIELD 4 — Three takeaways (limit 150 characters each)
+
+1. > A tested playbook for teaching AI to older and trauma-affected
+   > adults: vision, motor, literacy, and trauma-informed rules that
+   > break engagement norms. *(150)*
+2. > Why spaced repetition and self-efficacy — never streaks, scores,
+   > or shame — make two-minute daily lessons stick for learners outside
+   > institutions. *(146)*
+3. > How to co-design with a community, not for it: preference tests,
+   > participant advisors, bilingual delivery, and a monthly human
+   > beating notifications. *(149)*
+
+## FIELD 5 — Speakers
+
+Every speaker entry must answer how they contribute to the session's
+diversity (gender, ethnicity, geography, expertise, lived experience).
+
+- **Organizer + speaker: Mia C, PhD — Founder, Austin AI Hub.**
+  Bio angle: runs free community AI workshops and monthly AI office
+  hours in Austin; built the program this case study reports on.
+  Diversity answer draft: woman founder of a community nonprofit;
+  [immigrant background — include if you wish]; practitioner
+  perspective from outside K-12 and higher ed, the sector SXSW EDU
+  hears from least.
+- **Co-presenter (strongest version): a senior program participant**
+  who demos her own garden live on stage. Diversity answer draft:
+  a 70+ learner speaking for herself — lived experience of the exact
+  population the session is about; end-user voice on stage.
+  **Consent path first:** private ask → show her the stage format →
+  written consent → rehearsal at office hours; she can withdraw any
+  time, and the session works solo if she does.
+- **Trafficking-survivor side — do NOT put a survivor on stage.**
+  If a third speaker is wanted, invite a staff member from a
+  survivor-serving partner org to speak to that work. Asking a survivor
+  to disclose publicly would contradict the session's own
+  trauma-informed thesis.
+
+## FIELD 6 — Video pitch (optional, strongly encouraged)
+
+Phone camera is officially fine ("no need for high-value production").
+60-second script:
+
+> [Mia, holding the vintage toy bear] "This is Meni. My grandmother's
+> generation is being targeted by AI scams — cloned voices, deepfake
+> video calls — and nobody is teaching them AI. Not apps built for
+> professionals, not classes they'd have to travel to. [show phone:
+> the garden] So we built a different kind of lesson: two minutes a day,
+> one idea, no streaks, no scores — a garden that only grows. And once
+> a month, a human. In this case study I'll share every design rule we
+> learned — including the ones that break everything the engagement
+> industry believes — and [co-presenter name], who's 7x years old,
+> will show you her garden herself. AI literacy for the people tech
+> forgot — see you in March."
+
+Upload unlisted to YouTube and paste the link. Authenticity beats polish.
+
+## Assets checklist (attach/link in the form)
+
+- [ ] Live demo URL — deploy the app publicly first (Vercel import or
+      GitHub Pages; the Claude artifact link is a stopgap, not a
+      public URL for reviewers)
+- [ ] 3 screenshots: garden, scam-alert lesson, Spanish lesson
+- [ ] Video pitch link (unlisted YouTube)
+- [ ] Austin AI Hub site (austinaihub.org) as the info link
+
+## Voting campaign — Aug 5–23 (the 30% you can move)
+
+Scale check that should encourage you: the 2026 cycle had ~53,000 votes
+across 1,400+ proposals — an **average of ~38 votes per proposal**.
+A few hundred real votes puts the entry far above the median. Your
+community can do that.
+
+Plan:
+1. **August office hours = voting party.** Bring printed cards
+   (print/vote-card.html — bilingual, big type, with a spot for the QR
+   code you'll generate from the entry's vote URL). Help attendees
+   create the free SXSW account on the spot; it takes two minutes and
+   is the biggest drop-off point.
+2. **Email to workshop alumni + partner orgs** (draft below).
+3. **One LinkedIn post** (draft below), reposted once mid-window.
+4. **Trade support with 3–4 friendly Austin education/senior/nonprofit
+   orgs** submitting their own entries.
+
+**Email draft (subject: "2 minutes to put our seniors on the SXSW EDU stage"):**
+> Friends — the AI-literacy program you've seen at our office hours is
+> a finalist-track proposal for SXSW EDU 2027, and 30% of the decision
+> is a public vote, open Aug 5–23. Voting takes two minutes: create a
+> free account, click the link, tap the up arrow. [VOTE LINK]
+> Every vote is a senior or survivor who gets found by this work.
+> — Mia
+
+**LinkedIn draft:**
+> In three years of SXSW EDU programs there has not been one session
+> about older adults and AI — while AI scams against them explode.
+> We proposed that session: the design playbook from teaching AI to
+> seniors and survivors in Austin, two minutes a day, no streaks, no
+> shame — co-presented by a 7x-year-old learner demoing her own garden.
+> Voting is open Aug 5–23 (free account, one click): [VOTE LINK]
+> #SXSWEDU #AILiteracy #DigitalEquity
+
+## Timeline to submission
+
+- [ ] **This week:** confirm the AARP/FTC stats used in the description;
+      consent conversation with the co-presenter candidate; create the
+      SXSW ID; download the official PanelPicker Guide PDF and verify
+      the title limit (50 vs 60) and current track names.
+- [ ] **By July 18:** record the 60-second video; deploy the public
+      demo URL; screenshots exported.
+- [ ] **July 22:** fill all six steps, save each, submit. Do not wait
+      for July 26.
+- [ ] **Aug 4:** cards printed with the QR of the vote URL; email queued.
+- [ ] **Aug 5–23:** campaign per above; one reminder email in week 3.
+
+## Research appendix (what the two briefs found)
+
+- Weighting 40% advisory board / 30% public / 30% staff; ~12–13%
+  acceptance; staff balance topic gaps and new-vs-veteran speakers.
+- Field limits: title 50 chars (verify on form), description 600,
+  exactly 3 takeaways × 150; per-speaker diversity question; optional
+  video pitch and resource links; free; one EDU entry per account;
+  no advertorial (brand-centered proposals disallowed); form does not
+  autosave.
+- Formats: Talk 30min, Future20 20min solo, Panel 60min (most
+  oversubscribed — avoid), Case Study 60min, Campfire, Workshop 2h.
+- Accepted-title patterns: "Hook: Plain Explanation" two-parters
+  dominate; no brand names; direct beats clever (their own tip).
+- Verified gaps our session fills: zero older-adult AI sessions
+  2024–2026; scam protection absent; community (non-institutional)
+  adult AI education nearly absent; end-user-on-stage is a winning,
+  repeatedly-featured pattern (prison-education sessions every year;
+  student-voice AI session in 2026).

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SXSW EDU voting cards — print and hand out</title>
+  <style>
+    /* Four bilingual big-print cards per letter page. Before printing:
+       1) submit the PanelPicker entry, 2) make a QR code of the vote URL
+       (on a phone: open the URL in Chrome → Share → QR code; or any free
+       QR site), 3) print the QR ~1.4in and glue/tape one onto each
+       card's marked square — or leave the square and write the short
+       URL below it in marker. */
+    * { box-sizing: border-box; margin: 0; }
+    @page { margin: 10mm; }
+    body {
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+      background: #FAF3E2; color: #1B2036; padding: 16px;
+    }
+    .sheet { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; max-width: 820px; margin: 0 auto; }
+    .card {
+      background: #FFFDF6; border: 2.5px solid #1B2036; border-radius: 16px;
+      padding: 16px 18px; display: flex; gap: 14px; align-items: center;
+      break-inside: avoid;
+    }
+    .qr {
+      width: 128px; height: 128px; flex: none;
+      border: 2.5px dashed #E8872B; border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      text-align: center; font-size: 11px; color: #3A405C; padding: 6px;
+    }
+    h2 { font-size: 17px; line-height: 1.25; margin-bottom: 6px; }
+    ol { padding-left: 18px; font-size: 13.5px; line-height: 1.45; }
+    li { margin-bottom: 3px; }
+    .es { color: #3A405C; }
+    .dates { font-weight: 700; font-size: 12.5px; margin-top: 6px; color: #B33418; }
+    .note { max-width: 820px; margin: 0 auto 14px; font-size: 14px; background: #E4EDD3; border-radius: 12px; padding: 10px 14px; }
+    @media print { .note { display: none; } body { background: #FFF; padding: 0; } }
+  </style>
+</head>
+<body>
+  <p class="note"><b>Before printing:</b> make a QR code of your PanelPicker vote URL
+  (open the URL in Chrome on your phone → Share → QR code) and tape one onto each
+  dashed square — or write the short URL under it in marker. This note doesn't print.</p>
+  <div class="sheet">
+    <!-- The card repeats 4x; edit once, copy-paste. -->
+    <div class="card">
+      <div class="qr">Tape the<br>vote QR<br>code here</div>
+      <div>
+        <h2>Help put our class on the SXSW stage!<br>
+        <span class="es" lang="es">¡Ayude a llevar nuestra clase al escenario de SXSW!</span></h2>
+        <ol>
+          <li>Scan the square with your phone camera <span class="es" lang="es">/ Escanee el cuadro con la cámara</span></li>
+          <li>Make a free account (we can help!) <span class="es" lang="es">/ Cree una cuenta gratis (¡le ayudamos!)</span></li>
+          <li>Tap the <b>up arrow ▲</b> to vote <span class="es" lang="es">/ Toque la flecha ▲ para votar</span></li>
+        </ol>
+        <p class="dates">Voting: August 5–23 · Votación: 5–23 de agosto</p>
+      </div>
+    </div>
+    <div class="card">
+      <div class="qr">Tape the<br>vote QR<br>code here</div>
+      <div>
+        <h2>Help put our class on the SXSW stage!<br>
+        <span class="es" lang="es">¡Ayude a llevar nuestra clase al escenario de SXSW!</span></h2>
+        <ol>
+          <li>Scan the square with your phone camera <span class="es" lang="es">/ Escanee el cuadro con la cámara</span></li>
+          <li>Make a free account (we can help!) <span class="es" lang="es">/ Cree una cuenta gratis (¡le ayudamos!)</span></li>
+          <li>Tap the <b>up arrow ▲</b> to vote <span class="es" lang="es">/ Toque la flecha ▲ para votar</span></li>
+        </ol>
+        <p class="dates">Voting: August 5–23 · Votación: 5–23 de agosto</p>
+      </div>
+    </div>
+    <div class="card">
+      <div class="qr">Tape the<br>vote QR<br>code here</div>
+      <div>
+        <h2>Help put our class on the SXSW stage!<br>
+        <span class="es" lang="es">¡Ayude a llevar nuestra clase al escenario de SXSW!</span></h2>
+        <ol>
+          <li>Scan the square with your phone camera <span class="es" lang="es">/ Escanee el cuadro con la cámara</span></li>
+          <li>Make a free account (we can help!) <span class="es" lang="es">/ Cree una cuenta gratis (¡le ayudamos!)</span></li>
+          <li>Tap the <b>up arrow ▲</b> to vote <span class="es" lang="es">/ Toque la flecha ▲ para votar</span></li>
+        </ol>
+        <p class="dates">Voting: August 5–23 · Votación: 5–23 de agosto</p>
+      </div>
+    </div>
+    <div class="card">
+      <div class="qr">Tape the<br>vote QR<br>code here</div>
+      <div>
+        <h2>Help put our class on the SXSW stage!<br>
+        <span class="es" lang="es">¡Ayude a llevar nuestra clase al escenario de SXSW!</span></h2>
+        <ol>
+          <li>Scan the square with your phone camera <span class="es" lang="es">/ Escanee el cuadro con la cámara</span></li>
+          <li>Make a free account (we can help!) <span class="es" lang="es">/ Cree una cuenta gratis (¡le ayudamos!)</span></li>
+          <li>Tap the <b>up arrow ▲</b> to vote <span class="es" lang="es">/ Toque la flecha ▲ para votar</span></li>
+        </ol>
+        <p class="dates">Voting: August 5–23 · Votación: 5–23 de agosto</p>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
